@@ -1,2 +1,2 @@
-# breathoscope
+# Breathoscope
 Breathoscope app
