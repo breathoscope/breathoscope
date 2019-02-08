@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Text dimensions-->
+    <dimen name="text_in_width">150dp</dimen>
+    <dimen name="text_in_height">32dp</dimen>
+
+</resources>
