@@ -34,5 +34,4 @@
         android:src="@drawable/malaria_camera_overlay"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
-
 </android.support.constraint.ConstraintLayout>

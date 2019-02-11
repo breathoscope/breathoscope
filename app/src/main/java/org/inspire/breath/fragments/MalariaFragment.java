@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.camerakit.CameraKitView;
-
 import org.inspire.breath.R;
 
 public class MalariaFragment extends Fragment implements View.OnClickListener {
@@ -28,7 +27,6 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.malaria_fragment, container, false);
         cameraKitView = v.findViewById(R.id.camera);
         Button cv = v.findViewById(R.id.button);
@@ -83,5 +81,4 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
 }
