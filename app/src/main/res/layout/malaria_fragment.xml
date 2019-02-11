@@ -5,7 +5,7 @@
     android:id="@+id/malaria"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".org.inspire.breath.fragments.MalariaFragment">
+    tools:context=".fragments.MalariaFragment">
 
     <TextView
         android:id="@+id/message"
