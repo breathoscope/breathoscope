@@ -28,7 +28,7 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
     private CameraKitView cameraKitView;
 =======
 
-import org.inspire.breath.activities.*;
+import org.inspire.breath.R;
 
 public class MalariaFragment extends Fragment {
 
