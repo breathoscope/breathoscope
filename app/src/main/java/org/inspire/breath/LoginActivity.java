@@ -19,15 +19,18 @@ import javax.crypto.spec.GCMParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 */
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private static final Class<?> NEXT_ACTIVITY = LoginActivity.class;
     ImageView mLogo;
 
     Button mLoginButton;
@@ -42,6 +45,49 @@ public class LoginActivity extends AppCompatActivity {
         this.mResetButton = findViewById(R.id.login_reset_btn);
         this.mUname = findViewById(R.id.login_uname);
         this.mPass = findViewById(R.id.login_pass);
+    }
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+        findViews();
+
+
+        this.mLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (LoginActivity.this.doLogin()) {
+                    startActivity(new Intent(LoginActivity.this, NEXT_ACTIVITY));
+                }
+                else {
+                    Toast.makeText(LoginActivity.this, R.string.login_incorrect_msg, Toast.LENGTH_SHORT).show();
+                }
+//                Cipher cipher = LoginActivity.this.getSymmetricKey(mPass.getText().toString());
+//                if (cipher != null) {
+//                    byte[] bytes = "password".getBytes();
+//                    byte[] output = new byte[0];
+//                    try {
+//                        output = cipher.doFinal(bytes);
+//                        String res = new String(output);
+//                        System.out.println()
+//                    } catch (BadPaddingException e) {
+//                        e.printStackTrace();
+//                    } catch (IllegalBlockSizeException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+            }
+        });
+
+
+
+    }
+
+    private boolean doLogin() {
+        return this.mUname.getText().toString().equals("uname");
     }
 
     /*private Cipher getSymmetricKey(String input) {
@@ -79,35 +125,4 @@ public class LoginActivity extends AppCompatActivity {
         }
         return null;
     }*/
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        findViews();
-
-
-        this.mLoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                Cipher cipher = LoginActivity.this.getSymmetricKey(mPass.getText().toString());
-//                if (cipher != null) {
-//                    byte[] bytes = "password".getBytes();
-//                    byte[] output = new byte[0];
-//                    try {
-//                        output = cipher.doFinal(bytes);
-//                        String res = new String(output);
-//                        System.out.println()
-//                    } catch (BadPaddingException e) {
-//                        e.printStackTrace();
-//                    } catch (IllegalBlockSizeException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-            }
-        });
-
-
-
-    }
 }
