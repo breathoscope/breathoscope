@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-<<<<<<< HEAD
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -26,14 +25,6 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
 
     private MalariaViewModel mViewModel;
     private CameraKitView cameraKitView;
-=======
-
-import org.inspire.breath.R;
-
-public class MalariaFragment extends Fragment {
-
-    private MalariaViewModel mViewModel;
->>>>>>> Added Base Malaria Activity and Fragment
 
     public static MalariaFragment newInstance() {
         return new MalariaFragment();
