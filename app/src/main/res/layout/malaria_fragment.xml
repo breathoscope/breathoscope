@@ -27,4 +27,12 @@
         tools:layout_editor_absoluteX="161dp"
         tools:layout_editor_absoluteY="666dp" />
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="408dp"
+        android:layout_height="727dp"
+        android:src="@drawable/malaria_camera_overlay"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
 </android.support.constraint.ConstraintLayout>

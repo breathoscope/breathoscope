@@ -18,6 +18,7 @@ import org.inspire.breath.R;
 public class MalariaFragment extends Fragment implements View.OnClickListener {
 
     private MalariaViewModel mViewModel;
+    private CameraKitView cameraKitView;
 
     public static MalariaFragment newInstance() {
         return new MalariaFragment();
@@ -41,9 +42,6 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
         mViewModel = ViewModelProviders.of(this).get(MalariaViewModel.class);
         // TODO: Use the ViewModel
     }
-
-    private CameraKitView cameraKitView;
-
 
     @Override
     public void onClick(View v) {
