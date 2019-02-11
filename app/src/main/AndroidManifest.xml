@@ -9,8 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+<<<<<<< HEAD
         <activity android:name=".activities.MalariaActivity"></activity>
         <activity android:name=".activities.LoginActivity">
+=======
+
+        <activity android:name=".LoginActivity"></activity>
+        <activity android:name=".activities.MalariaActivity">
+>>>>>>> Added Camera SurfaceView to Malaria Fragment
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

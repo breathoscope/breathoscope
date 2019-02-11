@@ -27,6 +27,7 @@
         tools:layout_editor_absoluteX="161dp"
         tools:layout_editor_absoluteY="666dp" />
 
+<<<<<<< HEAD
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="408dp"
@@ -34,4 +35,6 @@
         android:src="@drawable/malaria_camera_overlay"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
+=======
+>>>>>>> Added Camera SurfaceView to Malaria Fragment
 </android.support.constraint.ConstraintLayout>
