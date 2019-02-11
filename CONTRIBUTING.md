@@ -34,3 +34,6 @@ github.
 
 `Merge` moves master to your head. Again do this with the gui with a squash and
 merge (there's a singular button for both of these! real neato).
+
+
+Oh and delete your origin branches once you've merged and are done with them.
