@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -25,6 +26,14 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
 
     private MalariaViewModel mViewModel;
     private CameraKitView cameraKitView;
+=======
+
+import org.inspire.breath.activities.*;
+
+public class MalariaFragment extends Fragment {
+
+    private MalariaViewModel mViewModel;
+>>>>>>> Added Base Malaria Activity and Fragment
 
     public static MalariaFragment newInstance() {
         return new MalariaFragment();
@@ -34,7 +43,6 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.malaria_fragment, container, false);
         cameraKitView = v.findViewById(R.id.camera);
         Button cv = v.findViewById(R.id.button);
@@ -89,5 +97,4 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
 }
