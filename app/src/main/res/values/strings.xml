@@ -1,3 +1,11 @@
 <resources>
+    <!--Core Details-->
     <string name="app_name">My Application</string>
+
+    <!--Login text-->
+    <string name="login_login_btn">Login</string>
+    <string name="login_reset_btn">Reset</string>
+    <string name="login_uname_hint">Name</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_incorrect_msg">Invalid Login</string>
 </resources>
