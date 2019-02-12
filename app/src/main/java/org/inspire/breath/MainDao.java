@@ -11,7 +11,7 @@ import java.util.List;
 public interface MainDao {
 
     @Insert
-    void insertVolunteer(String firstName, String lastName);
+    void insertVolunteer(Volunteer volunteer);
 
     @Query("DELETE FROM volunteer_table")
     void deleteAllVolunteers();
