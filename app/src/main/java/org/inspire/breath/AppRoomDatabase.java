@@ -18,8 +18,10 @@ public abstract class AppRoomDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (AppRoomDatabase.class) {
                 if (INSTANCE == null) {
+
+                    // allowing main thread queries for testing
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppRoomDatabase.class, DATABASE_NAME).build();
+                            AppRoomDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
                 }
             }
         }

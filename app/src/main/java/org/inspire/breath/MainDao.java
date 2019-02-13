@@ -10,6 +10,7 @@ import java.util.List;
 @Dao
 public interface MainDao {
 
+
     @Insert
     void insertVolunteer(Volunteer volunteer);
 
@@ -18,6 +19,9 @@ public interface MainDao {
     
     @Query("SELECT * FROM volunteer_table ORDER BY lastName ASC")
     List<Volunteer> getAllVolunteers();
+
+    @Query("SELECT * FROM volunteer_table WHERE id = :id")
+    List<Volunteer> getVolunteerById(int id);
 
 
 }

@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static AppRoomDatabase db;
+
     private static final Class<?> NEXT_ACTIVITY = LoginActivity.class;
     ImageView mLogo;
 
@@ -32,9 +34,13 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        db = AppRoomDatabase.getDatabase(getApplicationContext());
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findViews();
+
 
 
         this.mLoginButton.setOnClickListener(new View.OnClickListener() {

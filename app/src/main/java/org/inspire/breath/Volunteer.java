@@ -15,11 +15,7 @@ public class Volunteer {
 
     private String firstName, lastName;
 
-    public Volunteer(int volunteerId, String firstName, String lastName) {
-        this.volunteerId = volunteerId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    // public getters and setters required for Room to work
 
     public int getVolunteerId() {
         return this.volunteerId;
@@ -31,6 +27,18 @@ public class Volunteer {
 
     public String getLastName() {
         return this.lastName;
+    }
+
+    public void setVolunteerId(int volunteerId) {
+        this.volunteerId = volunteerId;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
 }
