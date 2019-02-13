@@ -1,4 +1,4 @@
-package org.inspire.breath;
+package org.inspire.breath.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import org.inspire.breath.R;
 
 public class LoginActivity extends AppCompatActivity {
 
