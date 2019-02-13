@@ -13,7 +13,7 @@ import org.inspire.breath.R;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final Class<?> NEXT_ACTIVITY = LoginActivity.class;
+    private static final Class<?> NEXT_ACTIVITY = PatientsActivity.class;
     ImageView mLogo;
 
     Button mLoginButton;
