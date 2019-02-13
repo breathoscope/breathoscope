@@ -8,6 +8,11 @@ import java.util.List;
 /*
     This class is intended to demonstrate interaction with the database,
     *not* to be used as a helper
+    An instance of the database exists in LoginActivity.java, so should be
+    accessible with LoginActivity.db
+    For testing purposes, queries are allowed on main thread. They will need
+    to run in a worker thread for production, so don't push code with queries
+    running on the main thread.
  */
 public class DbExamples {
 
