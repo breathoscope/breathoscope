@@ -1,10 +1,13 @@
 package org.inspire.breath.fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +47,7 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MalariaViewModel.class);
+        mViewModel = ViewModelProviders.of(getActivity()).get(MalariaViewModel.class);
         // TODO: Use the ViewModel
     }
 
@@ -55,6 +58,11 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
             public void onImage(CameraKitView cameraKitView, final byte[] data) {
                 Toast.makeText(getActivity(), "Click",
                         Toast.LENGTH_LONG).show();
+                mViewModel.SetImage(BitmapFactory.decodeByteArray(data, 0, data.length));
+                FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment mFrag = new MalariaReviewFragment();
+                t.replace(R.id.container, mFrag);
+                t.commit();
             }
         });
     }
