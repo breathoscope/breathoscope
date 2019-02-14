@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,9 +48,9 @@ public class PatientsActivity extends AppCompatActivity {
 
             private TextView mText;
 
-            public PatientListViewHolder(@NonNull ConstraintLayout root) {
+            public PatientListViewHolder(@NonNull CardView root) {
                 super(root);
-                mText = root.findViewById(R.id.patient_text);
+                mText = root.findViewById(R.id.patient_list_holder_name);
             }
         }
 
@@ -63,7 +64,7 @@ public class PatientsActivity extends AppCompatActivity {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-            ConstraintLayout rootView = (ConstraintLayout) LayoutInflater.from(parent.getContext())
+            CardView rootView = (CardView) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.patient_list_holder, parent, false);
             return new PatientListViewHolder(rootView);
         }
