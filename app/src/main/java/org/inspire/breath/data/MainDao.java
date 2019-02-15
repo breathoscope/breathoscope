@@ -1,9 +1,8 @@
-package org.inspire.breath;
+package org.inspire.breath.data;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.arch.persistence.room.RoomDatabase;
 
 import java.util.List;
 

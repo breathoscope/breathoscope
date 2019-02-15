@@ -1,4 +1,4 @@
-package org.inspire.breath;
+package org.inspire.breath.data;
 
 import android.content.Context;
 import android.widget.Toast;

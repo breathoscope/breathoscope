@@ -1,4 +1,4 @@
-package org.inspire.breath;
+package org.inspire.breath.data;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;

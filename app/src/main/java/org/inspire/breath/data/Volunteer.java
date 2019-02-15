@@ -1,4 +1,4 @@
-package org.inspire.breath;
+package org.inspire.breath.data;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
