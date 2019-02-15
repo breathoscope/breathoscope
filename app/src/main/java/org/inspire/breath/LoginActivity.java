@@ -9,11 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.inspire.breath.data.AppRoomDatabase;
-
 public class LoginActivity extends AppCompatActivity {
-
-    public static AppRoomDatabase db;
 
     private static final Class<?> NEXT_ACTIVITY = LoginActivity.class;
     ImageView mLogo;
@@ -36,11 +32,9 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         findViews();
-
 
 
         this.mLoginButton.setOnClickListener(new View.OnClickListener() {
