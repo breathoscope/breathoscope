@@ -11,4 +11,7 @@
 
     <!-- Fallback values-->
     <string name="default_name">None/ Could not load</string>
+
+    <!-- Patient List -->
+    <string name="patient_list_select">Select</string>
 </resources>

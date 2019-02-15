@@ -9,7 +9,9 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.inspire.breath.R;
@@ -42,16 +44,35 @@ public class PatientsActivity extends AppCompatActivity {
         mPatientList.setAdapter(new PatientListAdapter(getPatients()));
     }
 
+    public void onPatientSelected(int id) {
+        System.out.println(id);
+    }
+
     public class PatientListAdapter extends RecyclerView.Adapter {
 
         public class PatientListViewHolder extends RecyclerView.ViewHolder {
 
             private TextView mText;
+            private Button mSelecter;
+
+            public int id;
 
             public PatientListViewHolder(@NonNull CardView root) {
                 super(root);
                 mText = root.findViewById(R.id.patient_list_holder_name);
+                mSelecter = root.findViewById(R.id.patient_list_select);
+                mSelecter.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PatientsActivity.this.onPatientSelected(id);
+                    }
+                });
             }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
         }
 
 
@@ -72,6 +93,7 @@ public class PatientsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
             PatientListViewHolder holder = (PatientListViewHolder) viewHolder;
+            holder.setId(i);
 //            Patient item = mPatients.get(i);
         }
 
