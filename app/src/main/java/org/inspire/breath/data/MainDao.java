@@ -9,18 +9,16 @@ import java.util.List;
 @Dao
 public interface MainDao {
 
-
     @Insert
-    void insertVolunteer(Volunteer volunteer);
+    void insertVolunteer(Patient volunteer);
 
-    @Query("DELETE FROM volunteer_table")
+    @Query("DELETE FROM patients")
     void deleteAllVolunteers();
     
-    @Query("SELECT * FROM volunteer_table ORDER BY lastName ASC")
-    List<Volunteer> getAllVolunteers();
+    @Query("SELECT * FROM patients ORDER BY lastName ASC")
+    List<Patient> getAllVolunteers();
 
-    @Query("SELECT * FROM volunteer_table WHERE id = :id")
-    List<Volunteer> getVolunteerById(int id);
-
+    @Query("SELECT * FROM patients WHERE id = :id")
+    List<Patient> getVolunteerById(int id);
 
 }

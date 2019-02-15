@@ -3,22 +3,22 @@ package org.inspire.breath.data;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.support.annotation.NonNull;
 
-@Entity(tableName = "volunteer_table")
-public class Volunteer {
+@Entity(tableName = "patients")
+public class Patient {
 
     // int is implicitly @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    private int volunteerId;
+    private int patientId;
 
     private String firstName, lastName;
+    private int age;
 
     // public getters and setters required for Room to work
 
     public int getVolunteerId() {
-        return this.volunteerId;
+        return this.patientId;
     }
 
     public String getFirstName() {
@@ -29,8 +29,10 @@ public class Volunteer {
         return this.lastName;
     }
 
+    public int getAge() { return this.age; }
+
     public void setVolunteerId(int volunteerId) {
-        this.volunteerId = volunteerId;
+        this.patientId = volunteerId;
     }
 
     public void setFirstName(String firstName) {
@@ -40,5 +42,7 @@ public class Volunteer {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void setAge(int age) { this.age = age; }
 
 }
