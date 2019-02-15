@@ -99,7 +99,7 @@ public class PatientsActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 5;
+            return 30;
         }
     }
 }
