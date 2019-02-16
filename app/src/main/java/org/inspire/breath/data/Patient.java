@@ -17,7 +17,7 @@ public class Patient {
 
     // public getters and setters required for Room to work
 
-    public int getVolunteerId() {
+    public int getPatientId() {
         return this.patientId;
     }
 
@@ -31,8 +31,8 @@ public class Patient {
 
     public int getAge() { return this.age; }
 
-    public void setVolunteerId(int volunteerId) {
-        this.patientId = volunteerId;
+    public void setPatientId(int patientId) {
+        this.patientId = patientId;
     }
 
     public void setFirstName(String firstName) {
