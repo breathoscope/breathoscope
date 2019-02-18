@@ -55,6 +55,8 @@ public class PatientsActivity extends AppCompatActivity {
             private TextView mText;
             private Button mSelecter;
 
+            private Patient mPatient;
+
             public int id;
 
             public PatientListViewHolder(@NonNull CardView root) {
@@ -71,6 +73,10 @@ public class PatientsActivity extends AppCompatActivity {
 
             public void setId(int id) {
                 this.id = id;
+            }
+
+            public void setPatient(Patient patient) {
+                this.mPatient = patient;
             }
 
         }
@@ -94,7 +100,7 @@ public class PatientsActivity extends AppCompatActivity {
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
             PatientListViewHolder holder = (PatientListViewHolder) viewHolder;
             holder.setId(i);
-//            Patient item = mPatients.get(i);
+//            Patient item = holder.setPatient(Patients.get(i));
         }
 
         @Override
