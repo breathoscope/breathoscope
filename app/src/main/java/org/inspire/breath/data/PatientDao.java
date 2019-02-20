@@ -7,7 +7,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 @Dao
-public interface MainDao {
+public interface PatientDao {
 
     @Insert
     void insertPatient(Patient patient);

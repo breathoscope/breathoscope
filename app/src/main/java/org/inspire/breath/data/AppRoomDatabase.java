@@ -7,7 +7,7 @@ import android.content.Context;
 
 @Database(entities = {Patient.class}, version = 1)
 public abstract class AppRoomDatabase extends RoomDatabase {
-    public abstract MainDao mainDao();
+    public abstract PatientDao patientDao();
 
     private static final String DATABASE_NAME = "breathoscope_database";
 
