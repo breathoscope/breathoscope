@@ -16,7 +16,7 @@ public interface PatientDao {
     void deleteAllPatients();
     
     @Query("SELECT * FROM patients ORDER BY lastName ASC")
-    List<Patient> getAllVPatients();
+    List<Patient> getAllPatients();
 
     @Query("SELECT * FROM patients WHERE id = :id")
     List<Patient> getPatientById(int id);
