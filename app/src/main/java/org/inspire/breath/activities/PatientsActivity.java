@@ -1,5 +1,6 @@
 package org.inspire.breath.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +25,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PatientsActivity extends AppCompatActivity {
+
+    // TODO change this to be an add patient screen
+    private final Class<?> NEXT_ACTIVITY = PatientsActivity.class;
 
     private RecyclerView mPatientList;
     private FloatingActionButton mAddPatientFAB;
@@ -84,8 +88,15 @@ public class PatientsActivity extends AppCompatActivity {
         findViews();
 
         initDB(); // needed for some debugging
-
         initList();
+
+        // init the floating action button for adding patients
+        mAddPatientFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(PatientsActivity.this, NEXT_ACTIVITY));
+            }
+        });
     }
 
     public void onPatientSelected(int id) {
