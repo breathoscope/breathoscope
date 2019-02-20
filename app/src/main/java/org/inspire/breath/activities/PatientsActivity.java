@@ -15,21 +15,56 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.inspire.breath.R;
+import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
+import org.inspire.breath.data.PatientDao;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class PatientsActivity extends AppCompatActivity {
 
     private RecyclerView mPatientList;
-    private List<Patient> dummyPatientData = null;
 
     private void findViews() {
         mPatientList = findViewById(R.id.patient_list_recycler);
     }
 
-    private List<Patient> getPatients() {
-        return dummyPatientData;
+    private List<Patient> getAllPatients() {
+        return AppRoomDatabase.getDatabase(this).patientDao().getAllPatients();
+    }
+
+
+    private List<Patient> getDummyPatientData() {
+        List<Patient> patients = new LinkedList<>();
+
+        Patient patientMC = new Patient();
+        patientMC.setFirstName("Max");
+        patientMC.setLastName("Caulfield");
+        patientMC.setAge(18);
+        patients.add(patientMC);
+
+        Patient patientCP = new Patient();
+        patientCP.setFirstName("Chloe");
+        patientCP.setLastName("Price");
+        patientCP.setAge(19);
+        patients.add(patientCP);
+
+        return patients;
+    }
+
+    private void initDB() {
+        List<Patient> dummies = getDummyPatientData();
+
+        PatientDao dao = AppRoomDatabase.getDatabase(this).patientDao();
+        List<Patient> allPatients = dao.getAllPatients();
+
+        if (!allPatients.equals(dummies)) {
+            dao.deleteAllPatients();
+            for (Patient patient : dummies) {
+                dao.insertPatient(patient);
+            }
+        }
     }
 
     @Override
@@ -38,10 +73,12 @@ public class PatientsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_patients);
         findViews();
 
+        initDB(); // needed for some debugging
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mPatientList.setLayoutManager(layoutManager);
 
-        mPatientList.setAdapter(new PatientListAdapter(getPatients()));
+        mPatientList.setAdapter(new PatientListAdapter(getAllPatients()));
     }
 
     public void onPatientSelected(int id) {
@@ -59,16 +96,16 @@ public class PatientsActivity extends AppCompatActivity {
 
             public int id;
 
-            public PatientListViewHolder(@NonNull CardView root) {
+            public PatientListViewHolder(@NonNull CardView root, Patient patient) {
                 super(root);
                 mText = root.findViewById(R.id.patient_list_holder_name);
-                mSelecter = root.findViewById(R.id.patient_list_select);
-                mSelecter.setOnClickListener(new View.OnClickListener() {
+                root.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         PatientsActivity.this.onPatientSelected(id);
                     }
                 });
+                this.setPatient(patient);
             }
 
             public void setId(int id) {
@@ -77,6 +114,7 @@ public class PatientsActivity extends AppCompatActivity {
 
             public void setPatient(Patient patient) {
                 this.mPatient = patient;
+                this.mText.setText(mPatient.getFirstName() + ' ' + mPatient.getLastName());
             }
 
         }
@@ -93,19 +131,19 @@ public class PatientsActivity extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
             CardView rootView = (CardView) LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.patient_list_holder, parent, false);
-            return new PatientListViewHolder(rootView);
+            return new PatientListViewHolder(rootView, mPatients.get(i));
         }
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
             PatientListViewHolder holder = (PatientListViewHolder) viewHolder;
             holder.setId(i);
-//            Patient item = holder.setPatient(Patients.get(i));
+            holder.setPatient(mPatients.get(i));
         }
 
         @Override
         public int getItemCount() {
-            return 30;
+            return mPatients.size();
         }
     }
 }
