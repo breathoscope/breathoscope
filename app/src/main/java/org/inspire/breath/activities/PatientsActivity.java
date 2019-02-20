@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,9 +26,11 @@ import java.util.List;
 public class PatientsActivity extends AppCompatActivity {
 
     private RecyclerView mPatientList;
+    private FloatingActionButton mAddPatientFAB;
 
     private void findViews() {
         mPatientList = findViewById(R.id.patient_list_recycler);
+        mAddPatientFAB = findViewById(R.id.patient_list_add_patient);
     }
 
     private List<Patient> getAllPatients() {
@@ -67,6 +70,13 @@ public class PatientsActivity extends AppCompatActivity {
         }
     }
 
+    private void initList() {
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mPatientList.setLayoutManager(layoutManager);
+
+        mPatientList.setAdapter(new PatientListAdapter(getAllPatients()));
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,10 +85,7 @@ public class PatientsActivity extends AppCompatActivity {
 
         initDB(); // needed for some debugging
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mPatientList.setLayoutManager(layoutManager);
-
-        mPatientList.setAdapter(new PatientListAdapter(getAllPatients()));
+        initList();
     }
 
     public void onPatientSelected(int id) {
