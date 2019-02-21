@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.MainDao;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -62,6 +63,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void resetAccount() {
+        MainDao mainDao = AppRoomDatabase.getDatabase(this).mainDao();
+        mainDao.deleteAllPatients();
     }
 
     private boolean doLogin() {
