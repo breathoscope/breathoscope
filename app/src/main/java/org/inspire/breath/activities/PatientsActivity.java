@@ -68,13 +68,6 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
 
     private void initPager() {
         List<Fragment> fragments = new LinkedList<>();
-
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PatientsActivity.this.onPatientSelected(0); // TODO pass this in correctly
-            }
-        };
         fragments.add(new Listings());
         fragments.add(new Listings());
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(),fragments);
