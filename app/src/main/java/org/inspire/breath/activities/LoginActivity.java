@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.inspire.breath.R;
+import org.inspire.breath.data.AppRoomDatabase;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -51,8 +52,16 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        this.mResetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetAccount();
+            }
+        });
 
+    }
 
+    private void resetAccount() {
     }
 
     private boolean doLogin() {
