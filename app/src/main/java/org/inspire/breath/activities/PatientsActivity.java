@@ -24,8 +24,9 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     // TODO change this to be an add patient screen
     private final Class<?> NEXT_ACTIVITY = PatientsActivity.class;
 
-    private ViewPager mPager;
+    private List<Fragment> mFragments;
 
+    private ViewPager mPager;
     private FloatingActionButton mAddPatientFAB;
 
     private void findViews() {
@@ -66,11 +67,10 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     }
 
 
-    private void initPager() {
-        List<Fragment> fragments = new LinkedList<>();
-        fragments.add(new Listings());
-        fragments.add(new Listings());
-        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(),fragments);
+    private void initPager() {mFragments = new LinkedList<>();
+        mFragments.add(new Listings());
+        mFragments.add(new Listings());
+        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(),mFragments);
         mPager.setAdapter(adapter);
     }
 
@@ -81,23 +81,21 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         findViews();
 
         initDB(); // needed for some debugging
-//        initList();
 
         initPager();
 
         // init the floating action button for adding patients TODO remove this but implement in listings
-//        mAddPatientFAB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(PatientsActivity.this, NEXT_ACTIVITY));
-//            }
-//        });
+        mAddPatientFAB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayAddPatient();
+            }
+        });
     }
 
-    public void onPatientSelected(int id) {
-        System.out.println(id);
+    public void displayAddPatient() {
+        mPager.setCurrentItem(mPager.getCurrentItem() + 1,true);
     }
-
 
     @Override
     public void onSelected(Patient patient) {
