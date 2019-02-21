@@ -1,5 +1,6 @@
 package org.inspire.breath.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +14,7 @@ import org.inspire.breath.adapters.PatientListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.PatientDao;
-import org.inspire.breath.fragments.Listings;
+import org.inspire.breath.fragments.patients.Listings;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
 
 import java.util.LinkedList;
@@ -21,8 +22,7 @@ import java.util.List;
 
 public class PatientsActivity extends AppCompatActivity implements PatientListAdapter.PatientCallback {
 
-    // TODO change this to be an add patient screen
-    private final Class<?> NEXT_ACTIVITY = PatientsActivity.class;
+    private final Class<?> RECORDING_ACTIVITY = LoginActivity.class;
 
     private List<Fragment> mFragments;
 
@@ -84,7 +84,7 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
 
         initPager();
 
-        // init the floating action button for adding patients TODO remove this but implement in listings
+        // init the floating action button for adding patients
         mAddPatientFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +99,11 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
 
     @Override
     public void onSelected(Patient patient) {
-        System.out.println(patient.getFirstName());
+        startRecordingFor(patient);
+    }
+
+    public void startRecordingFor(Patient patient) {
+        Intent intent = new Intent(this, RECORDING_ACTIVITY);
+        startActivity(intent);
     }
 }

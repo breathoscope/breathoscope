@@ -1,4 +1,4 @@
-package org.inspire.breath.fragments;
+package org.inspire.breath.fragments.patients;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,9 +15,7 @@ import org.inspire.breath.activities.PatientsActivity;
 import org.inspire.breath.adapters.PatientListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
-import org.inspire.breath.data.PatientDao;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class Listings extends Fragment {
