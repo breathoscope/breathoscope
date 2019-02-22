@@ -6,6 +6,6 @@ import android.os.Parcel;
 public class TextRecording extends Recording {
     public TextRecording(int patientId) {
         this.setKind("Text");
-        this.setPatient_id(patientId);
+        this.setPatientId(patientId);
     }
 }
