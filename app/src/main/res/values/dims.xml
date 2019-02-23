@@ -16,4 +16,7 @@
     <!--Cards-->
     <dimen name="card_default_corner">8dp</dimen>
     <dimen name="card_default_elevation">8dp</dimen>
+
+    <dimen name="spacer_input">16dp</dimen>
+    <dimen name="spacer_long">64dp</dimen>
 </resources>
