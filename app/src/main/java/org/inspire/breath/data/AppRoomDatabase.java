@@ -32,7 +32,6 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
                     SafeHelperFactory factory= SafeHelperFactory.fromUser(password.getText());
 
-
                     // allowing main thread queries for testing
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AppRoomDatabase.class, DATABASE_NAME).allowMainThreadQueries()
