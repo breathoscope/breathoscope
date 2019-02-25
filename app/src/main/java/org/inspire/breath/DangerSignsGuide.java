@@ -15,28 +15,84 @@ public class DangerSignsGuide extends AppCompatActivity {
 
     Button yesButton;
     Button noButton;
+    Button nextButton;
 
     String answer;
     int questionNumber = 0;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danger_signs_guide);
+        hideAnswer();
+        questionView = (TextView)findViewById(R.id.question_txt);
+        answerView = (TextView)findViewById(R.id.answer_txt);
+        yesButton = (Button)findViewById(R.id.yes_btn);
+        noButton = (Button)findViewById(R.id.no_btn);
+        nextButton = (Button)findViewById(R.id.next_btn);
 
-
+        updateQuestion();
 
         //Button listener 1
-        buttonChoice1.setOnClickListener(new View.OnClickListener(){
+        yesButton.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View view){
                 //Button logic
 
-                if (buttonChoice1.getText() == )
+                if (yesButton.getText() == "Yes"){
+                    answer = "Yes";
+                    displayAnswer();
+                }
+                else{
+                    answer = "";
+                }
             }
-        }
+        });
+
+        //Button listener 1
+        noButton.setOnClickListener(new View.OnClickListener(){
+            @Override public void onClick(View view){
+                //Button logic
+
+                if (noButton.getText() == "No"){
+                    answer = "No";
+                    questionNumber++;
+                    updateQuestion();
+                }
+                else{
+                    answer = "";
+                }
+            }
+        });
+
+        //Button listener 1
+        nextButton.setOnClickListener(new View.OnClickListener(){
+            @Override public void onClick(View view){
+                //Button logic
+
+                if (nextButton.getText() == "Next"){
+                    questionNumber++;
+                    hideAnswer();
+                    updateQuestion();
+                }
+                else{
+                    answer = "";
+                }
+            }
+        });
     }
 
+    private void displayAnswer(){
+        if(answer == "Yes"){
+            answerView.setText(questions.retA(questionNumber));
+            answerView.setVisibility(View.VISIBLE);
+        }
+    }
+    private void hideAnswer(){
+        answerView.setVisibility(View.GONE);
+    }
+    private void updateQuestion(){
+        questionView.setText(questions.retQ(questionNumber));
 
+    }
 }
