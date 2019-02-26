@@ -67,10 +67,11 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     }
 
 
-    private void initPager() {mFragments = new LinkedList<>();
+    private void initPager() {
+        mFragments = new LinkedList<>();
         mFragments.add(new Listings());
         mFragments.add(new Listings());
-        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(),mFragments);
+        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(), mFragments);
         mPager.setAdapter(adapter);
     }
 
@@ -94,7 +95,7 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     }
 
     public void displayAddPatient() {
-        mPager.setCurrentItem(mPager.getCurrentItem() + 1,true);
+        mPager.setCurrentItem(mPager.getCurrentItem() + 1, true);
     }
 
     @Override

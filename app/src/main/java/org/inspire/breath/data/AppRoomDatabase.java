@@ -10,7 +10,7 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
     // DAOs
     public abstract PatientDao patientDao();
-    public abstract RecordingDao recordingDAO();
+    public abstract RecordingDao recordingDao();
 
     private static final String DATABASE_NAME = "breathoscope_database";
 

@@ -2,6 +2,7 @@ package org.inspire.breath.data;
 
 
 import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
@@ -12,7 +13,6 @@ import android.arch.persistence.room.PrimaryKey;
                                     parentColumns = "id",
                                     onDelete = ForeignKey.CASCADE),
         tableName = "recordings")
-
 public class Recording {
 
     @PrimaryKey(autoGenerate = true)
@@ -23,6 +23,7 @@ public class Recording {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
     private byte[] blob;
 
+    @Embedded
     private String kind;
 
     public int getId() {
