@@ -8,6 +8,7 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.interfaces.IBlobbable;
 
 import java.util.Date;
@@ -28,6 +29,8 @@ public class Recording {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Fever")
     private byte[] feverTestResult;
 
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Malaria")
+    private byte[] malariaTestResult;
 
     public int getId() {
         return id;
@@ -45,6 +48,13 @@ public class Recording {
         feverTestResult = result.toBlob();
     }
 
+    public MalariaTestResult getMalariaTestResult() {
+        return new MalariaTestResult().consumeBlob(malariaTestResult);
+    }
+
+    public void setMalariaTestResult(MalariaTestResult result) {
+        malariaTestResult = result.toBlob();
+    }
     public int getPatientId() {
         return patientId;
     }
