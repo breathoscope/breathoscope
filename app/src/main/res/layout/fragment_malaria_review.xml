@@ -8,19 +8,34 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="0dp"
         android:src="@drawable/overlay"
+        android:scaleType="fitXY"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
-
-    <Button
-        android:id="@+id/button"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Take"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="666dp" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonRETRY"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Retake"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="666dp" />
+
+        <Button
+            android:id="@+id/buttonOK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="666dp" />
+
+    </LinearLayout>
 
 </RelativeLayout>
