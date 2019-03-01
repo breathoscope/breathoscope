@@ -7,6 +7,11 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.interfaces.IBlobbable;
+
+import java.util.Date;
+
 // Encapsulates any sort of recording and the actions that can be performed on it
 @Entity(foreignKeys = @ForeignKey(entity = Patient.class,
                                     childColumns = "patientId",
@@ -20,11 +25,9 @@ public class Recording {
     private int id;
     private int patientId;
 
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB)
-    private byte[] blob;
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Fever")
+    private byte[] feverTestResult;
 
-    @Embedded
-    private String kind;
 
     public int getId() {
         return id;
@@ -34,20 +37,12 @@ public class Recording {
         this.id = id;
     }
 
-    public byte[] getBlob() {
-        return blob;
+    public FeverTestResult getFeverTestResult() {
+        return new FeverTestResult().consumeBlob(feverTestResult);
     }
 
-    public void setBlob(byte[] blob) {
-        this.blob = blob;
-    }
-
-    public String getKind() {
-        return kind;
-    }
-
-    public void setKind(String kind) {
-        this.kind = kind;
+    public void setFeverTestResult(FeverTestResult result) {
+        feverTestResult = result.toBlob();
     }
 
     public int getPatientId() {
