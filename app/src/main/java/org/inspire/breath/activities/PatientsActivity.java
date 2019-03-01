@@ -74,6 +74,7 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         mFragments = new LinkedList<>();
         mFragments.add(new Listings());
         Profile profile = new Profile();
+        profile.setArguments(new Bundle());
         mFragments.add(profile);
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(), mFragments);
         mPager.setAdapter(adapter);
@@ -113,5 +114,15 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     public void startRecordingFor(Patient patient) {
         Intent intent = new Intent(this, RECORDING_ACTIVITY);
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mPager.getCurrentItem() > 0) {
+            mPager.setCurrentItem(mPager.getCurrentItem() - 1, true);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }
