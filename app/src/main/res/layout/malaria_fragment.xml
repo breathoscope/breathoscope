@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/malaria"
@@ -19,19 +19,26 @@
         app:camera_permissions="camera"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Take"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="666dp" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            tools:layout_editor_absoluteX="161dp"
+            tools:layout_editor_absoluteY="666dp" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="408dp"
-        android:layout_height="727dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/overlay"
         tools:layout_editor_absoluteX="0dp"
         tools:layout_editor_absoluteY="0dp" />
+<<<<<<< HEAD
 </android.support.constraint.ConstraintLayout>
+=======
+
+</RelativeLayout>
+>>>>>>> Malaria Confirmation

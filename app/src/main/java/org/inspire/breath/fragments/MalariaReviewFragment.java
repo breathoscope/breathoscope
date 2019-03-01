@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,28 @@ public class MalariaReviewFragment extends Fragment {
         mViewModel = ViewModelProviders.of(getActivity()).get(MalariaViewModel.class);
         ImageView image = getView().findViewById(R.id.imageView);
         image.setImageBitmap(mViewModel.image);
+        Button ok = (Button) getView().findViewById(R.id.buttonOK);
+        Button retry = (Button) getView().findViewById(R.id.buttonRETRY);
+        ok.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                //TODO - Store Photo
+            }
+        });
+
+        retry.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment mFrag = new MalariaFragment();
+                t.replace(R.id.container, mFrag);
+                t.commit();
+            }
+        });
     }
 
     @Override
