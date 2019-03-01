@@ -16,6 +16,7 @@ import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.PatientDao;
 import org.inspire.breath.fragments.patients.Listings;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
+import org.inspire.breath.fragments.patients.Profile;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,6 +26,8 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     private final Class<?> RECORDING_ACTIVITY = LoginActivity.class;
 
     private List<Fragment> mFragments;
+
+    private Profile mProfile;
 
     private ViewPager mPager;
     private FloatingActionButton mAddPatientFAB;
@@ -70,7 +73,8 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     private void initPager() {
         mFragments = new LinkedList<>();
         mFragments.add(new Listings());
-        mFragments.add(new Listings());
+        Profile profile = new Profile();
+        mFragments.add(profile);
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(), mFragments);
         mPager.setAdapter(adapter);
     }
@@ -100,7 +104,10 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
 
     @Override
     public void onSelected(Patient patient) {
-        startRecordingFor(patient);
+        Bundle args = new Bundle();
+        args.putInt(Profile.PATIENT_ID_KEY,patient.getPatientId());
+        mProfile.setArguments(args);
+        //startRecordingFor(patient);
     }
 
     public void startRecordingFor(Patient patient) {
