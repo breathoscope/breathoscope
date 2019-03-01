@@ -1,11 +1,10 @@
 package org.inspire.breath.data;
-
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "patients")
-public class Patient {
+public class Patient implements Comparable {
 
     // int is implicitly @NonNull
     @PrimaryKey(autoGenerate = true)
@@ -45,4 +44,13 @@ public class Patient {
 
     public void setAge(int age) { this.age = age; }
 
+    @Override
+    public int compareTo(Object o) {
+        int id = ((Patient) o).getPatientId();
+        if (id == this.getPatientId())
+            return 0;
+        else {
+            return id < this.getPatientId() ? 1 : -1;
+        }
+    }
 }

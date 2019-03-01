@@ -5,9 +5,12 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-@Database(entities = {Patient.class}, version = 1)
+@Database(entities = {Patient.class, Recording.class}, version = 2)
 public abstract class AppRoomDatabase extends RoomDatabase {
-    public abstract MainDao mainDao();
+
+    // DAOs
+    public abstract PatientDao patientDao();
+    public abstract RecordingDao recordingDao();
 
     private static final String DATABASE_NAME = "breathoscope_database";
 
@@ -21,7 +24,9 @@ public abstract class AppRoomDatabase extends RoomDatabase {
 
                     // allowing main thread queries for testing
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppRoomDatabase.class, DATABASE_NAME).allowMainThreadQueries().build();
+                            AppRoomDatabase.class, DATABASE_NAME).allowMainThreadQueries()
+                                                                    .fallbackToDestructiveMigration()
+                                                                    .build();
                 }
             }
         }

@@ -7,7 +7,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 @Dao
-public interface MainDao {
+public interface PatientDao {
 
     @Insert
     void insertPatient(Patient patient);
@@ -16,7 +16,7 @@ public interface MainDao {
     void deleteAllPatients();
     
     @Query("SELECT * FROM patients ORDER BY lastName ASC")
-    List<Patient> getAllVPatients();
+    List<Patient> getAllPatients();
 
     @Query("SELECT * FROM patients WHERE id = :id")
     List<Patient> getPatientById(int id);
