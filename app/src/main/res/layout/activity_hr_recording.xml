@@ -1,41 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_hr_coordinator"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".activities.HrRecordingActivity">
+    android:layout_height="match_parent">
 
-    <ImageButton
-        android:id="@+id/hr_record_btn"
-        android:layout_width="75dp"
-        android:layout_height="85dp"
-        android:layout_marginBottom="120dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_baseline_mic_24px" />
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.HrRecordingActivity">
 
-    <ImageButton
-        android:id="@+id/hr_pause_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/hr_stop_btn"
-        app:layout_constraintEnd_toStartOf="@+id/hr_stop_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/hr_stop_btn"
-        app:srcCompat="@drawable/ic_baseline_pause_24px" />
+        <ImageButton
+            android:id="@+id/hr_record_btn"
+            android:layout_width="75dp"
+            android:layout_height="85dp"
+            android:layout_marginBottom="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_baseline_mic_24px" />
 
-    <ImageButton
-        android:id="@+id/hr_stop_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="17dp"
-        android:layout_marginBottom="168dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/hr_pause_btn"
-        app:srcCompat="@drawable/ic_baseline_stop_24px" />
+        <ImageButton
+            android:id="@+id/hr_pause_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/hr_stop_btn"
+            app:layout_constraintEnd_toStartOf="@+id/hr_stop_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/hr_stop_btn"
+            app:srcCompat="@drawable/ic_baseline_pause_24px" />
 
-</android.support.constraint.ConstraintLayout>
+        <ImageButton
+            android:id="@+id/hr_stop_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="17dp"
+            android:layout_marginBottom="168dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/hr_pause_btn"
+            app:srcCompat="@drawable/ic_baseline_stop_24px" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.design.widget.CoordinatorLayout>

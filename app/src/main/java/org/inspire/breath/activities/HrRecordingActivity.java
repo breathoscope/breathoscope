@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import java.io.IOException;
 
 public class HrRecordingActivity extends AppCompatActivity {
 
+    private Snackbar snackbar;
     private MediaRecorder recorder;
     private ImageButton mRecordBtn, mPauseBtn, mStopBtn;
     String fileName;
@@ -45,6 +47,8 @@ public class HrRecordingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_hr_recording);
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
+        displaySnackbar();
 
         findViews();
         mPauseBtn.setVisibility(View.GONE);
@@ -117,6 +121,13 @@ public class HrRecordingActivity extends AppCompatActivity {
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
         recorder.setOutputFile(fileName);
         recorder.prepare();
+    }
+
+    void displaySnackbar() {
+        snackbar = Snackbar.make(findViewById(R.id.activity_hr_coordinator),
+                getString(R.string.snackbar_mic_warning),
+                Snackbar.LENGTH_INDEFINITE);
+        snackbar.show();
     }
 
 }
