@@ -1,6 +1,8 @@
 package org.inspire.breath.adapters;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +21,7 @@ public class TestListAdapter extends RecyclerView.Adapter {
         private Test test;
         public TestHolder(@NonNull View itemView, Test test) {
             super(itemView);
-            this.root = itemView;
+            this.root = itemView.findViewById(R.id.home_test_root);
             this.test = test;
         }
 
@@ -30,18 +32,20 @@ public class TestListAdapter extends RecyclerView.Adapter {
 
     public TestListAdapter(List<Test> tests) {
         this.tests = tests;
+        this.setHasStableIds(true);
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new TestHolder(LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.home_test_item, viewGroup), tests.get(i));
+                .inflate(R.layout.home_test_item, viewGroup, false), tests.get(i));
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-        ((TestHolder) viewHolder).bind(tests.get(i));
+        TestHolder holder = (TestHolder) viewHolder;
+        holder.bind(tests.get(i));
     }
 
     @Override

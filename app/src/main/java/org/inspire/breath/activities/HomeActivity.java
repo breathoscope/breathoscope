@@ -3,6 +3,7 @@ package org.inspire.breath.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,7 +45,6 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void findViews() {
-        this.mTestsList = findViewById(R.id.home_test_list);
         this.mPatientName = findViewById(R.id.home_patient_name);
         this.mPatientAge = findViewById(R.id.home_patient_age);
         this.mPatientSex = findViewById(R.id.home_patient_sex);
@@ -57,13 +57,16 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         findViews();
         getData();
-
-        this.mTestsList.setLayoutManager(new LinearLayoutManager(this));
-        this.mTestsList.setAdapter(new TestListAdapter(getTests()));
     }
 
     private List<Test> getTests() {
-        return new ArrayList<Test>(TEST_COUNT);
+        List<Test> dummyData = new ArrayList<Test>(TEST_COUNT);
+        dummyData.add(null);
+        dummyData.add(null);
+        dummyData.add(null);
+        dummyData.add(null);
+        dummyData.add(null);
+        return dummyData;
     }
 
 }
