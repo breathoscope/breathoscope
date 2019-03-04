@@ -1,6 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/home_patient_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+        <ImageView
+            android:id="@+id/home_patient_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/home_patient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/load_failed"
+            android:background="@drawable/light_outline"
+            android:layout_marginLeft="8dp"
+            android:padding="4dp"
+            app:layout_constraintLeft_toRightOf="@id/home_patient_picture"
+            app:layout_constraintTop_toTopOf="@id/home_patient_picture"/>
+        <TextView
+            android:id="@+id/home_patient_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/load_failed"
+            android:background="@drawable/light_outline"
+            android:layout_marginTop="8dp"
+            android:padding="4dp"
+            app:layout_constraintLeft_toLeftOf="@id/home_patient_name"
+            app:layout_constraintTop_toBottomOf="@id/home_patient_name"/>
+        <TextView
+            android:id="@+id/home_patient_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/load_failed"
+            android:layout_marginTop="8dp"
+            android:padding="4dp"
+            android:background="@drawable/light_outline"
+            app:layout_constraintLeft_toLeftOf="@id/home_patient_age"
+            app:layout_constraintTop_toBottomOf="@id/home_patient_age" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <GridView
+        android:id="@+id/home_test_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:numColumns="auto_fit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_patient_details" />
 
 </android.support.constraint.ConstraintLayout>

@@ -23,7 +23,7 @@ import java.util.List;
 
 public class PatientsActivity extends AppCompatActivity implements PatientListAdapter.PatientCallback {
 
-    private final Class<?> RECORDING_ACTIVITY = LoginActivity.class;
+    private final Class<?> RECORDING_ACTIVITY = HomeActivity.class;
 
     private List<Fragment> mFragments;
 
@@ -73,9 +73,9 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     private void initPager() {
         mFragments = new LinkedList<>();
         mFragments.add(new Listings());
-        Profile profile = new Profile();
-        profile.setArguments(new Bundle());
-        mFragments.add(profile);
+        mProfile = new Profile();
+        mProfile.setArguments(new Bundle());
+        mFragments.add(mProfile);
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(), mFragments);
         mPager.setAdapter(adapter);
     }
@@ -108,11 +108,12 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         Bundle args = new Bundle();
         args.putInt(Profile.PATIENT_ID_KEY,patient.getPatientId());
         mProfile.setArguments(args);
-        //startRecordingFor(patient);
+        startRecordingFor(patient);
     }
 
     public void startRecordingFor(Patient patient) {
         Intent intent = new Intent(this, RECORDING_ACTIVITY);
+        intent.putExtra(HomeActivity.PATIENT_ID_KEY, patient.getPatientId());
         startActivity(intent);
     }
 
