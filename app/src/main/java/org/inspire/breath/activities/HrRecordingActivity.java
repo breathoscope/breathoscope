@@ -1,51 +1,92 @@
 package org.inspire.breath.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.media.MediaRecorder;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.inspire.breath.R;
 
-//import static android.media.MediaRecorder.AudioSource.MIC;
+import java.io.IOException;
 
 public class HrRecordingActivity extends AppCompatActivity {
 
-    //private MediaRecorder recorder;
+    private MediaRecorder recorder;
     private ImageButton mRecordBtn, mPauseBtn, mStopBtn;
     String fileName;
+
+    // Requesting permission to RECORD_AUDIO
+    private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
+    private boolean permissionToRecordAccepted = false;
+    private String [] permissions = {Manifest.permission.RECORD_AUDIO};
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode){
+            case REQUEST_RECORD_AUDIO_PERMISSION:
+                permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                break;
+        }
+        if (!permissionToRecordAccepted ) finish();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hr_recording);
 
+        ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
+
         findViews();
         mPauseBtn.setVisibility(View.GONE);
         mStopBtn.setVisibility(View.GONE);
 
         mRecordBtn.setOnClickListener((v) -> {
-            Toast.makeText(HrRecordingActivity.this, "Recording started",
-                    Toast.LENGTH_SHORT).show();
+
             toggleVisibleButtons();
+
+            try {
+                initRecorder();
+            } catch (IOException e) {
+                Log.e("tag","initRecorder() failed");
+            }
+
+            Toast.makeText(HrRecordingActivity.this, "Recording to " + fileName,
+                    Toast.LENGTH_LONG).show();
+
+            recorder.start();
+
         });
 
         mPauseBtn.setOnClickListener((v) -> {
             toggleVisibleButtons();
         });
 
-        // mRecordBtn.setVisibility(View.INVISIBLE);
+        mStopBtn.setOnClickListener((v) -> {
+            toggleVisibleButtons();
+            Toast.makeText(HrRecordingActivity.this, "Recording stopped",
+                    Toast.LENGTH_SHORT).show();
+            recorder.stop();
+        });
 
     }
-//
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        if (recorder != null) {
-//            recorder.release();
-//        }
-//    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (recorder != null) {
+            recorder.release();
+        }
+    }
 
     private void findViews() {
         this.mRecordBtn = findViewById(R.id.hr_record_btn);
@@ -65,17 +106,17 @@ public class HrRecordingActivity extends AppCompatActivity {
         }
     }
 
-//    private void initRecorder() throws IOException {
-//        fileName = getExternalCacheDir().getAbsolutePath();
+    private void initRecorder() throws IOException {
+        fileName = getExternalCacheDir().getAbsolutePath();
 //        fileName += "/test.3gp";
-//        Toast.makeText(HrRecordingActivity.this, fileName, Toast.LENGTH_LONG).show();
-//        recorder = new MediaRecorder();
-//        recorder.setAudioSource(MIC);
-//        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-//        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-//        recorder.setOutputFile(fileName);
-//        recorder.prepare();
-//
-//    }
+        fileName += "/test.wav"; // changing file extension because my phone reads 3gp as video
+        Toast.makeText(HrRecordingActivity.this, fileName, Toast.LENGTH_LONG).show();
+        recorder = new MediaRecorder();
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        recorder.setOutputFile(fileName);
+        recorder.prepare();
+    }
 
 }
