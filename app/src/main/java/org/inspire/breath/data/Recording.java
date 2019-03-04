@@ -13,12 +13,12 @@ import org.inspire.breath.interfaces.IBlobbable;
 
 import java.util.Date;
 
-// Encapsulates any sort of recording and the actions that can be performed on it
+// Encapsulates a session and the actions that can be performed on it
 @Entity(foreignKeys = @ForeignKey(entity = Patient.class,
                                     childColumns = "patientId",
                                     parentColumns = "id",
                                     onDelete = ForeignKey.CASCADE),
-        tableName = "recordings")
+                                    tableName = "recordings")
 public class Recording {
 
     @PrimaryKey(autoGenerate = true)
@@ -27,10 +27,10 @@ public class Recording {
     private int patientId;
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Fever")
-    private byte[] feverTestResult;
+    private byte[] feverTestResultBlob;
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Malaria")
-    private byte[] malariaTestResult;
+    private byte[] malariaTestResultBlob;
 
     public int getId() {
         return id;
@@ -41,25 +41,43 @@ public class Recording {
     }
 
     public FeverTestResult getFeverTestResult() {
-        return new FeverTestResult().consumeBlob(feverTestResult);
+        return new FeverTestResult().consumeBlob(feverTestResultBlob);
     }
 
     public void setFeverTestResult(FeverTestResult result) {
-        feverTestResult = result.toBlob();
+        feverTestResultBlob = result.toBlob();
     }
 
     public MalariaTestResult getMalariaTestResult() {
-        return new MalariaTestResult().consumeBlob(malariaTestResult);
+        return new MalariaTestResult().consumeBlob(malariaTestResultBlob);
     }
 
     public void setMalariaTestResult(MalariaTestResult result) {
-        malariaTestResult = result.toBlob();
+        malariaTestResultBlob = result.toBlob();
     }
+
     public int getPatientId() {
         return patientId;
     }
 
     public void setPatientId(int patientId) {
-        this.patientId = patientId;
+      this.patientId = patientId;
     }
+
+    public byte[] getFeverTestResultBlob(){
+        return feverTestResultBlob;
+    }
+
+    public void setFeverTestResultBlob(byte[] blob) {
+        feverTestResultBlob = blob;
+    }
+
+    public byte[] getMalariaTestResultBlob(){
+        return malariaTestResultBlob;
+    }
+
+    public void setMalariaTestResultBlob(byte[] blob) {
+        malariaTestResultBlob = blob;
+    }
+
 }
