@@ -46,14 +46,15 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        Toast.makeText(getActivity(), "Click",
+                Toast.LENGTH_LONG).show();
         cameraKitView.captureImage(new CameraKitView.ImageCallback() {
             @Override
             public void onImage(CameraKitView cameraKitView, final byte[] data) {
-                Toast.makeText(getActivity(), "Click",
-                        Toast.LENGTH_LONG).show();
                 mViewModel.SetImage(BitmapFactory.decodeByteArray(data, 0, data.length));
                 FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment mFrag = new MalariaReviewFragment();
+                t.addToBackStack("malariareview");
                 t.replace(R.id.container, mFrag);
                 t.commit();
             }
