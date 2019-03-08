@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.MediaRecorder;
+import android.media.AudioRecord;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +12,6 @@ import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-
-import android.media.AudioRecord;
 
 import org.inspire.breath.R;
 
@@ -32,11 +31,9 @@ public class HrRecordingActivity extends AppCompatActivity {
             RECORDER_AUDIO_FORMAT
     );
 
-    private Snackbar snackbar;
-
     private Thread writeThread;
 
-    private AudioRecord newRecorder;
+    private AudioRecord recorder;
     private boolean isRecording;
 
     private ImageButton mRecordBtn, mPauseBtn, mStopBtn;
@@ -50,12 +47,12 @@ public class HrRecordingActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_RECORD_AUDIO_PERMISSION:
                 permissionToRecordAccepted  = grantResults[0] == PackageManager.PERMISSION_GRANTED;
                 break;
         }
-        if (!permissionToRecordAccepted ) finish();
+        if (!permissionToRecordAccepted) finish();
 
     }
 
@@ -64,28 +61,28 @@ public class HrRecordingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hr_recording);
 
-        initNewRecorder();
+        initRecorder();
         isRecording = false;
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         displaySnackbar();
 
-        findViews();
-        mPauseBtn.setVisibility(View.GONE);
-        mStopBtn.setVisibility(View.GONE);
+        initViews();
 
         mRecordBtn.setOnClickListener((v) -> {
 
             toggleVisibleButtons();
 
-            newRecorder.startRecording();
+            recorder.startRecording();
             isRecording = true;
             writeThread = new Thread(new AudioFileWriter());
             writeThread.start();
 
         });
 
+
+        // TODO make pause btn a restart btn instead
         mPauseBtn.setOnClickListener((v) -> {
             toggleVisibleButtons();
         });
@@ -93,17 +90,20 @@ public class HrRecordingActivity extends AppCompatActivity {
         mStopBtn.setOnClickListener((v) -> {
             toggleVisibleButtons();
             isRecording = false;
-            newRecorder.stop();
-            newRecorder.release();
+            recorder.stop();
+            recorder.release();
             writeThread = null;
         });
 
     }
 
-    private void findViews() {
+    private void initViews() {
         this.mRecordBtn = findViewById(R.id.hr_record_btn);
         this.mPauseBtn = findViewById(R.id.hr_pause_btn);
         this.mStopBtn = findViewById(R.id.hr_stop_btn);
+
+        mPauseBtn.setVisibility(View.GONE);
+        mStopBtn.setVisibility(View.GONE);
     }
 
     private void toggleVisibleButtons() {
@@ -118,9 +118,9 @@ public class HrRecordingActivity extends AppCompatActivity {
         }
     }
 
-    private void initNewRecorder() {
+    private void initRecorder() {
 
-        newRecorder = new AudioRecord.Builder()
+        recorder = new AudioRecord.Builder()
                 .setAudioSource(RECORDER_AUDIO_SOURCE)
                 .setAudioFormat(new AudioFormat.Builder()
                         .setEncoding(RECORDER_AUDIO_FORMAT)
@@ -134,7 +134,7 @@ public class HrRecordingActivity extends AppCompatActivity {
 
 
     void displaySnackbar() {
-        snackbar = Snackbar.make(findViewById(R.id.activity_hr_coordinator),
+        Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_hr_coordinator),
                 getString(R.string.snackbar_mic_warning),
                 Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
@@ -155,7 +155,7 @@ public class HrRecordingActivity extends AppCompatActivity {
             }
 
             while (isRecording) {
-                newRecorder.read(audioData, 0, RECORDER_BUF_SIZE);
+                recorder.read(audioData, 0, RECORDER_BUF_SIZE);
 
                 try {
                     os.write(audioData, 0, RECORDER_BUF_SIZE );
