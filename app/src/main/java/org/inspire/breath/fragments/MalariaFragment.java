@@ -14,6 +14,12 @@ import android.widget.Toast;
 import com.camerakit.CameraKitView;
 
 import org.inspire.breath.R;
+import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Patient;
+import org.inspire.breath.data.PatientDao;
+import org.inspire.breath.data.Recording;
+import org.inspire.breath.data.RecordingDao;
+import org.inspire.breath.data.blobs.FeverTestResult;
 
 public class MalariaFragment extends Fragment implements View.OnClickListener {
 
