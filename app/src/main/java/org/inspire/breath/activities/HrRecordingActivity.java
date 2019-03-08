@@ -2,25 +2,43 @@ package org.inspire.breath.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.media.AudioFormat;
 import android.media.MediaRecorder;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
+
+import android.media.AudioRecord;
 
 import org.inspire.breath.R;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class HrRecordingActivity extends AppCompatActivity {
 
+    private static final int RECORDER_AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
+    private static final int RECORDER_SAMPLE_RATE = 44100;
+    private static final int RECORDER_CHANNEL_CFG = AudioFormat.CHANNEL_IN_MONO;
+    private static final int RECORDER_AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+    private static final int RECORDER_BUF_SIZE = AudioRecord.getMinBufferSize(
+            RECORDER_SAMPLE_RATE,
+            RECORDER_CHANNEL_CFG,
+            RECORDER_AUDIO_FORMAT
+    );
+
     private Snackbar snackbar;
-    private MediaRecorder recorder;
+
+    private Thread writeThread;
+
+    private AudioRecord newRecorder;
+    private boolean isRecording;
+
     private ImageButton mRecordBtn, mPauseBtn, mStopBtn;
     String fileName;
 
@@ -46,6 +64,9 @@ public class HrRecordingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hr_recording);
 
+        initNewRecorder();
+        isRecording = false;
+
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
         displaySnackbar();
@@ -58,16 +79,10 @@ public class HrRecordingActivity extends AppCompatActivity {
 
             toggleVisibleButtons();
 
-            try {
-                initRecorder();
-            } catch (IOException e) {
-                Log.e("tag","initRecorder() failed");
-            }
-
-            Toast.makeText(HrRecordingActivity.this, "Recording to " + fileName,
-                    Toast.LENGTH_LONG).show();
-
-            recorder.start();
+            newRecorder.startRecording();
+            isRecording = true;
+            writeThread = new Thread(new AudioFileWriter());
+            writeThread.start();
 
         });
 
@@ -77,19 +92,12 @@ public class HrRecordingActivity extends AppCompatActivity {
 
         mStopBtn.setOnClickListener((v) -> {
             toggleVisibleButtons();
-            Toast.makeText(HrRecordingActivity.this, "Recording stopped",
-                    Toast.LENGTH_SHORT).show();
-            recorder.stop();
+            isRecording = false;
+            newRecorder.stop();
+            newRecorder.release();
+            writeThread = null;
         });
 
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (recorder != null) {
-            recorder.release();
-        }
     }
 
     private void findViews() {
@@ -110,24 +118,53 @@ public class HrRecordingActivity extends AppCompatActivity {
         }
     }
 
-    private void initRecorder() throws IOException {
-        fileName = getExternalCacheDir().getAbsolutePath();
-//        fileName += "/test.3gp";
-        fileName += "/test.wav"; // changing file extension because my phone reads 3gp as video
-        Toast.makeText(HrRecordingActivity.this, fileName, Toast.LENGTH_LONG).show();
-        recorder = new MediaRecorder();
-        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-        recorder.setOutputFile(fileName);
-        recorder.prepare();
+    private void initNewRecorder() {
+
+        newRecorder = new AudioRecord.Builder()
+                .setAudioSource(RECORDER_AUDIO_SOURCE)
+                .setAudioFormat(new AudioFormat.Builder()
+                        .setEncoding(RECORDER_AUDIO_FORMAT)
+                        .setSampleRate(RECORDER_SAMPLE_RATE)
+                        .setChannelMask(RECORDER_CHANNEL_CFG)
+                        .build())
+                .setBufferSizeInBytes(RECORDER_BUF_SIZE)
+                .build();
+
     }
+
 
     void displaySnackbar() {
         snackbar = Snackbar.make(findViewById(R.id.activity_hr_coordinator),
                 getString(R.string.snackbar_mic_warning),
                 Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
+    }
+
+    class AudioFileWriter implements Runnable {
+        public void run() {
+
+            byte[] audioData = new byte[RECORDER_BUF_SIZE];
+
+            fileName = getExternalCacheDir().getAbsolutePath();
+            fileName += "/test.pcm";
+            FileOutputStream os = null;
+            try {
+                os = new FileOutputStream(fileName);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            while (isRecording) {
+                newRecorder.read(audioData, 0, RECORDER_BUF_SIZE);
+
+                try {
+                    os.write(audioData, 0, RECORDER_BUF_SIZE );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
     }
 
 }
