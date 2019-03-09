@@ -58,7 +58,7 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     private void initDB() {
         List<Patient> dummies = getDummyPatientData();
 
-        PatientDao dao = AppRoomDatabase.getDatabase(this).patientDao();
+        PatientDao dao = AppRoomDatabase.getDatabase().patientDao();
         List<Patient> allPatients = dao.getAllPatients();
 
         if (!allPatients.equals(dummies)) {
