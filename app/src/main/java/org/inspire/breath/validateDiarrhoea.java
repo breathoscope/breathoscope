@@ -45,22 +45,10 @@ public class validateDiarrhoea extends AppCompatActivity {
         answerNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(questionNum == 0){
-                    question.setText(mQuestions.getAnswer(questionNum));
-                    answerYes.setVisibility(View.GONE);
-                    answerNo.setVisibility(View.GONE);
-                }
-                else if(questionNum == 1){
-                    question.setText(mQuestions.getAnswer(questionNum));
-                    answerYes.setVisibility(View.GONE);
-                    answerNo.setVisibility(View.GONE);
-                }
-                else if(questionNum >= 2){
-                    question.setText(mQuestions.getAnswer(questionNum));
-                    answerYes.setVisibility(View.GONE);
-                    answerNo.setVisibility(View.GONE);
+                question.setText(mQuestions.getAnswer(questionNum));
+                answerYes.setVisibility(View.GONE);
+                answerNo.setVisibility(View.GONE);
 
-                }
             }
         });
 
