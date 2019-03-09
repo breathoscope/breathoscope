@@ -3,27 +3,21 @@ package org.inspire.breath.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.inspire.breath.R;
-import org.inspire.breath.adapters.TestListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.Recording;
-import org.inspire.breath.data.Test;
+import org.inspire.breath.data.blobs.BreathTestResult;
+import org.inspire.breath.data.blobs.DangerTestResult;
+import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -40,19 +34,10 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView mPatientPicture;
 
     // Tests
-    private TextView mFeverTitle;
     private AppCompatCheckBox mFeverTick;
-
-    private TextView mDangerTitle;
     private AppCompatCheckBox mDangerTick;
-
-    private TextView mDiarrhoeaTitle;
     private AppCompatCheckBox mDiarrhoeaTick;
-
-    private TextView mMalariaTitle;
     private AppCompatCheckBox mMalariaTick;
-
-    private TextView mBreathTitle;
     private AppCompatCheckBox mBreathTick;
 
     public void getData() {
@@ -70,9 +55,20 @@ public class HomeActivity extends AppCompatActivity {
         // Test data
         FeverTestResult feverTestResult = this.mSession.getFeverTestResult();
         MalariaTestResult malariaTestResult = this.mSession.getMalariaTestResult();
+        BreathTestResult breathTestResult = this.mSession.getBreathTestResult();
+        DiarrhoeaTestResult diarrhoeaTestResult = this.mSession.getDiarrhoeaTestResult();
+        DangerTestResult dangerTestResult = this.mSession.getDangerTestResult();
 
-
-
+        if (feverTestResult != null)
+            mFeverTick.setChecked(true);
+        if (malariaTestResult != null)
+            mMalariaTick.setChecked(true);
+        if (diarrhoeaTestResult != null)
+            mDiarrhoeaTick.setChecked(true);
+        if (dangerTestResult != null)
+            mDangerTick.setChecked(true);
+        if (breathTestResult != null)
+            mBreathTick.setChecked(true);
     }
 
 
@@ -81,6 +77,12 @@ public class HomeActivity extends AppCompatActivity {
         this.mPatientAge = findViewById(R.id.home_patient_age);
         this.mPatientSex = findViewById(R.id.home_patient_sex);
         this.mPatientPicture = findViewById(R.id.home_patient_picture);
+
+        this.mBreathTick = findViewById(R.id.home_test_breath_tick);
+        this.mDangerTick = findViewById(R.id.home_test_danger_tick);
+        this.mDiarrhoeaTick = findViewById(R.id.home_test_diarrhoea_tick);
+        this.mFeverTick = findViewById(R.id.home_test_fever_tick);
+        this.mMalariaTick = findViewById(R.id.home_test_malaria_tick);
     }
 
     @Override
