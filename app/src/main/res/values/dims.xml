@@ -19,4 +19,8 @@
 
     <dimen name="spacer_input">16dp</dimen>
     <dimen name="spacer_long">64dp</dimen>
+
+    <!-- Checkbox -->
+    <dimen name="checkbox_large_width">64dp</dimen>
+    <dimen name="checkbox_large_height">64dp</dimen>
 </resources>
