@@ -62,14 +62,4 @@ public class HomeActivity extends AppCompatActivity {
         getData();
     }
 
-    private List<Test> getTests() {
-        List<Test> dummyData = new ArrayList<Test>(TEST_COUNT);
-        dummyData.add(null);
-        dummyData.add(null);
-        dummyData.add(null);
-        dummyData.add(null);
-        dummyData.add(null);
-        return dummyData;
-    }
-
 }
