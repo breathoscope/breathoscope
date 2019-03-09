@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import com.commonsware.cwac.saferoom.SafeHelperFactory;
 
-@Database(entities = {Patient.class, Recording.class}, version = 4, exportSchema = false)
+@Database(entities = {Patient.class, Recording.class}, version = 5, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     // DAOs
