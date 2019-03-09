@@ -26,6 +26,8 @@ public class Recording {
     private int id;
     private int patientId;
 
+    private long timestamp;
+
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Fever")
     private byte[] feverTestResultBlob;
 
@@ -80,4 +82,11 @@ public class Recording {
         malariaTestResultBlob = blob;
     }
 
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
 }
