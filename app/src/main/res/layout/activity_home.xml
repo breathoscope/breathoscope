@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:text="@string/load_failed"
             android:background="@drawable/light_outline"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:padding="4dp"
             app:layout_constraintLeft_toRightOf="@id/home_patient_picture"
             app:layout_constraintTop_toTopOf="@id/home_patient_picture"/>
@@ -75,13 +75,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/large_font_size"
-                android:text="@string/load_failed"
+                android:text="@string/breath_title"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
-                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
                 android:clickable="false"
                 android:button="@null"
                 android:background="?android:attr/listChoiceIndicatorMultiple"
@@ -114,13 +114,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/large_font_size"
-                android:text="@string/load_failed"
+                android:text="@string/fever_title"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
-                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
                 android:clickable="false"
                 android:button="@null"
                 android:background="?android:attr/listChoiceIndicatorMultiple"
@@ -153,17 +153,17 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/large_font_size"
-                android:text="@string/load_failed"
+                android:text="@string/danger_title"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
-                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
                 android:clickable="false"
                 android:button="@null"
                 android:background="?android:attr/listChoiceIndicatorMultiple"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -192,13 +192,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/large_font_size"
-                android:text="@string/load_failed"
+                android:text="@string/diarrhoea_title"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
-                android:layout_marginRight="@dimen/default_margin"
+                android:layout_marginEnd="@dimen/default_margin"
                 android:clickable="false"
                 android:button="@null"
                 android:background="?android:attr/listChoiceIndicatorMultiple"
@@ -231,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/default_margin"
                 android:textSize="@dimen/large_font_size"
-                android:text="@string/load_failed"
+                android:text="@string/malaria_title"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox

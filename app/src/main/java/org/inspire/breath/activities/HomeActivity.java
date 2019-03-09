@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -38,6 +39,22 @@ public class HomeActivity extends AppCompatActivity {
     private TextView mPatientSex;
     private ImageView mPatientPicture;
 
+    // Tests
+    private TextView mFeverTitle;
+    private AppCompatCheckBox mFeverTick;
+
+    private TextView mDangerTitle;
+    private AppCompatCheckBox mDangerTick;
+
+    private TextView mDiarrhoeaTitle;
+    private AppCompatCheckBox mDiarrhoeaTick;
+
+    private TextView mMalariaTitle;
+    private AppCompatCheckBox mMalariaTick;
+
+    private TextView mBreathTitle;
+    private AppCompatCheckBox mBreathTick;
+
     public void getData() {
         Intent intent = getIntent();
         int patient_id = intent.getIntExtra(PATIENT_ID_KEY, -1);
@@ -51,6 +68,10 @@ public class HomeActivity extends AppCompatActivity {
         this.mPatientSex.setText(mPatient.getSex());
 
         // Test data
+        FeverTestResult feverTestResult = this.mSession.getFeverTestResult();
+        MalariaTestResult malariaTestResult = this.mSession.getMalariaTestResult();
+
+
 
     }
 
