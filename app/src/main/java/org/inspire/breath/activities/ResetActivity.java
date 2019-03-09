@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.inspire.breath.LoginActivity;
 import org.inspire.breath.R;
 
 import java.security.MessageDigest;
