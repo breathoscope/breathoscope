@@ -7,6 +7,9 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
+import org.inspire.breath.data.blobs.BreathTestResult;
+import org.inspire.breath.data.blobs.DangerTestResult;
+import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.interfaces.IBlobbable;
@@ -26,11 +29,24 @@ public class Recording {
     private int id;
     private int patientId;
 
+    private long timestamp;
+
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Fever")
     private byte[] feverTestResultBlob;
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Malaria")
     private byte[] malariaTestResultBlob;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "diarrhoea")
+    private byte[] diarrhoeaTestResultBlob;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Breath")
+    private byte[] breathTestResultBlob;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Danger")
+    private byte[] dangerTestResultBlob;
+
+
 
     public int getId() {
         return id;
@@ -56,6 +72,42 @@ public class Recording {
         malariaTestResultBlob = result.toBlob();
     }
 
+    public byte[] getDangerTestResultBlob() {
+        return dangerTestResultBlob;
+    }
+
+    public void setDangerTestResultBlob(byte[] dangerTestResultBlob) {
+        this.dangerTestResultBlob = dangerTestResultBlob;
+    }
+
+    public DangerTestResult getDangerTestResult() {
+        return new DangerTestResult().consumeBlob(this.dangerTestResultBlob);
+    }
+
+    public byte[] getBreathTestResultBlob() {
+        return breathTestResultBlob;
+    }
+
+    public void setBreathTestResultBlob(byte[] breathTestResultBlob) {
+        this.breathTestResultBlob = breathTestResultBlob;
+    }
+
+    public BreathTestResult getBreathTestResult() {
+        return new BreathTestResult().consumeBlob(this.breathTestResultBlob);
+    }
+
+    public byte[] getDiarrhoeaTestResultBlob() {
+        return diarrhoeaTestResultBlob;
+    }
+
+    public void setDiarrhoeaTestResultBlob(byte[] diarrhoeaTestResultBlob) {
+        this.diarrhoeaTestResultBlob = diarrhoeaTestResultBlob;
+    }
+
+    public DiarrhoeaTestResult getDiarrhoeaTestResult() {
+        return new DiarrhoeaTestResult().consumeBlob(this.diarrhoeaTestResultBlob);
+    }
+
     public int getPatientId() {
         return patientId;
     }
@@ -79,5 +131,20 @@ public class Recording {
     public void setMalariaTestResultBlob(byte[] blob) {
         malariaTestResultBlob = blob;
     }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+
+
+
+
+
+
 
 }
