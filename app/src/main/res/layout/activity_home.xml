@@ -66,12 +66,29 @@
         app:cardElevation="@dimen/card_default_elevation"
         app:cardBackgroundColor="@color/cardview_light_background">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/large_font_size"
-            android:text="@string/load_failed"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:textSize="@dimen/large_font_size"
+                android:text="@string/load_failed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="@dimen/checkbox_large_width"
+                android:layout_height="@dimen/checkbox_large_height"
+                android:layout_marginRight="@dimen/default_margin"
+                android:clickable="false"
+                android:button="@null"
+                android:background="?android:attr/listChoiceIndicatorMultiple"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -87,11 +104,29 @@
         app:cardElevation="@dimen/card_default_elevation"
         app:cardBackgroundColor="@color/cardview_light_background">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/large_font_size"
-            android:text="@string/load_failed"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:textSize="@dimen/large_font_size"
+                android:text="@string/load_failed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="@dimen/checkbox_large_width"
+                android:layout_height="@dimen/checkbox_large_height"
+                android:layout_marginRight="@dimen/default_margin"
+                android:clickable="false"
+                android:button="@null"
+                android:background="?android:attr/listChoiceIndicatorMultiple"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -107,11 +142,29 @@
         app:cardElevation="@dimen/card_default_elevation"
         app:cardBackgroundColor="@color/cardview_light_background">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/large_font_size"
-            android:text="@string/load_failed"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:textSize="@dimen/large_font_size"
+                android:text="@string/load_failed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="@dimen/checkbox_large_width"
+                android:layout_height="@dimen/checkbox_large_height"
+                android:layout_marginRight="@dimen/default_margin"
+                android:clickable="false"
+                android:button="@null"
+                android:background="?android:attr/listChoiceIndicatorMultiple"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -127,11 +180,29 @@
         app:cardElevation="@dimen/card_default_elevation"
         app:cardBackgroundColor="@color/cardview_light_background">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/large_font_size"
-            android:text="@string/load_failed"/>
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:textSize="@dimen/large_font_size"
+                android:text="@string/load_failed"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="@dimen/checkbox_large_width"
+                android:layout_height="@dimen/checkbox_large_height"
+                android:layout_marginRight="@dimen/default_margin"
+                android:clickable="false"
+                android:button="@null"
+                android:background="?android:attr/listChoiceIndicatorMultiple"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
@@ -168,8 +239,8 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
-
         </android.support.constraint.ConstraintLayout>
+
     </android.support.v7.widget.CardView>
 
 </android.support.constraint.ConstraintLayout>
