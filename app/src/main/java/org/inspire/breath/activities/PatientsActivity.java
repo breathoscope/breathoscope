@@ -48,12 +48,14 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         patientMC.setFirstName("Max");
         patientMC.setLastName("Caulfield");
         patientMC.setAge(18);
+        patientMC.setSex(Patient.FEMALE);
         patients.add(patientMC);
 
         Patient patientCP = new Patient();
         patientCP.setFirstName("Chloe");
         patientCP.setLastName("Price");
         patientCP.setAge(19);
+        patientCP.setSex(Patient.FEMALE);
         patients.add(patientCP);
 
         return patients;
