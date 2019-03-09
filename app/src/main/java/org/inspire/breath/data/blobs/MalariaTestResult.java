@@ -20,6 +20,8 @@ public class MalariaTestResult implements IBlobbable {
 
     @Override
     public MalariaTestResult consumeBlob(byte[] blob) {
+        if (blob == null)
+            return null;
         data = blob;
         return this;
     }

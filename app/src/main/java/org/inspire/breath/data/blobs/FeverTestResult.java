@@ -18,6 +18,8 @@ public class FeverTestResult implements IBlobbable {
 
     @Override
     public FeverTestResult consumeBlob(byte[] blob) {
+        if (blob == null)
+            return null;
         temperature = ByteBuffer.wrap(blob).getFloat();
         return this;
     }
