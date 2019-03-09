@@ -80,7 +80,7 @@ public class Recording {
         this.dangerTestResultBlob = dangerTestResultBlob;
     }
 
-    public DangerTestResult getDangerTest() {
+    public DangerTestResult getDangerTestResult() {
         return new DangerTestResult().consumeBlob(this.dangerTestResultBlob);
     }
 
