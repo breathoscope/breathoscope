@@ -79,6 +79,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/home_test_breath_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
                 android:layout_marginEnd="@dimen/default_margin"
@@ -118,6 +119,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/home_test_fever_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
                 android:layout_marginEnd="@dimen/default_margin"
@@ -157,6 +159,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/home_test_danger_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
                 android:layout_marginEnd="@dimen/default_margin"
@@ -196,6 +199,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/home_test_diarrhoea_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
                 android:layout_marginEnd="@dimen/default_margin"
@@ -235,6 +239,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
             <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/home_test_malaria_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
                 android:layout_marginRight="@dimen/default_margin"
