@@ -4,7 +4,7 @@
     <!--Text dimensions-->
     <dimen name="text_in_width">150dp</dimen>
     <dimen name="text_in_height">32dp</dimen>
-    <dimen name="large_font_size">16dp</dimen>
+    <dimen name="large_font_size">24sp</dimen>
 
     <!-- Image dimensions -->
     <dimen name="profile_thumb_height">60dp</dimen>
