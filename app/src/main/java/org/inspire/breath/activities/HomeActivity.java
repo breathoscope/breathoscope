@@ -18,6 +18,8 @@ import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.Recording;
 import org.inspire.breath.data.Test;
+import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.MalariaTestResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
 
     public static final String PATIENT_ID_KEY = "PATIENT_ID_KEY";
+    public static final String SESSION_ID_KEY = "SESSION_ID_KEY";
     private static final int TEST_COUNT = 5;
 
     private Patient mPatient;
@@ -38,9 +41,9 @@ public class HomeActivity extends AppCompatActivity {
     public void getData() {
         Intent intent = getIntent();
         int patient_id = intent.getIntExtra(PATIENT_ID_KEY, -1);
+        int session_id = intent.getIntExtra(SESSION_ID_KEY, -1);
         this.mPatient = AppRoomDatabase.getDatabase().patientDao().getPatientById(patient_id).get(0);
-//        this.mSession = AppRoomDatabase.getDatabase(this).recordingDao().getAllRecordings().get(0);
-        // TODO fill data
+        this.mSession = AppRoomDatabase.getDatabase().recordingDao().getRecordingById(session_id).get(0);
     }
 
 
