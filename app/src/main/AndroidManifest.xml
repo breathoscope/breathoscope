@@ -13,8 +13,8 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activities.PatientsActivity"/>
         <activity android:name=".activities.MalariaActivity"/>
-        <activity android:name=".activities.ThermometerActivity" />
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.ThermometerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

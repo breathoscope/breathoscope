@@ -16,6 +16,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.content.Context;
 import android.media.AudioManager;
@@ -65,8 +66,10 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
                 requestReadMsgPermission();
             }
         }
-
-        return inflater.inflate(R.layout.thermometer_fragment, container, false);
+        View v = inflater.inflate(R.layout.thermometer_fragment, container, false);
+        Button cv = v.findViewById(R.id.thermometerRecord);
+        cv.setOnClickListener(this);
+        return v;
     }
 
     @Override
@@ -82,12 +85,7 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        RecordingDao recordings = AppRoomDatabase.getDatabase().recordingDao();
-        Recording currentRecording = recordings.getRecordingById(0);
-        FeverTestResult result = new FeverTestResult();
-        result.setTemperature(fTemperatureCelsius);
-        currentRecording.setFeverTestResult(result);
-        recordings.updateRecording(currentRecording);
+
     }
 
     @Override
