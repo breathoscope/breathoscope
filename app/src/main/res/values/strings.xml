@@ -14,5 +14,15 @@
     <string name="patient_list_select">Select</string>
     <!-- shared preferences -->
     <string name="preference_pass_hash">password_hash</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Patient Profile -->
+    <string name="load_failed">Failed to load</string>
+
+    <!-- Test Titles -->
+    <string name="malaria_title">Malaria</string>
+    <string name="danger_title">Danger Signs</string>
+    <string name="fever_title">Fever</string>
+    <string name="breath_title">Breath</string>
+    <string name="diarrhoea_title">Diarrhoea</string>
+
 </resources>

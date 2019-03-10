@@ -46,7 +46,7 @@ public class Listings extends Fragment {
     }
 
     private List<Patient> getAllPatients() {
-        return AppRoomDatabase.getDatabase(getContext()).patientDao().getAllPatients();
+        return AppRoomDatabase.getDatabase().patientDao().getAllPatients();
     }
 
 

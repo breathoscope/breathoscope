@@ -19,4 +19,9 @@ public interface RecordingDao {
     @Query("Select * from recordings ORDER BY id ASC")
     List<Recording> getAllRecordings();
 
+    @Query("Select * from recordings WHERE id = :recordingId")
+    List<Recording> getRecordingById(int recordingId);
+
+    @Query("Select * from recordings WHERE patientId = :p_id ORDER BY timestamp DESC")
+    List<Recording> getRecordings(int p_id);
 }
