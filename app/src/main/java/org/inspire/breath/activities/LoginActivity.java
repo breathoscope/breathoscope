@@ -19,7 +19,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final Class<?> NEXT_ACTIVITY = PatientsActivity.class;
+    private static final Class<?> NEXT_ACTIVITY = ThermometerActivity.class;
     ImageView mLogo;
 
     Button mLoginButton;

@@ -80,12 +80,11 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
         myTextUnits = (TextView)getView().findViewById(R.id.textUnits);
 
         mViewModel = ViewModelProviders.of(this).get(ThermometerViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     @Override
     public void onClick(View v) {
-
+        // TODO: Store data into session passed via Bundle
     }
 
     @Override
