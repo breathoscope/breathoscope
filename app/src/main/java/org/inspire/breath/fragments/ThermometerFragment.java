@@ -2,14 +2,12 @@ package org.inspire.breath.fragments;
 
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -19,39 +17,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.AudioFormat;
 import android.media.AudioManager;
-import android.media.AudioRecord;
-import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import org.inspire.breath.R;
 
-public class ThermometerFragment extends Fragment {
+import org.inspire.breath.R;
+import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Recording;
+import org.inspire.breath.data.RecordingDao;
+import org.inspire.breath.data.blobs.FeverTestResult;
+
+public class ThermometerFragment extends Fragment implements View.OnClickListener {
 
     private ThermometerViewModel mViewModel;
     TextView myTextFrequency;
     TextView myTextTemperature;
     TextView myTextUnits;
 
-
+    public float currentRecording;
     public float fTemperatureCelsius;
     public float frequency;
     public int number_of_periods;
@@ -92,6 +78,16 @@ public class ThermometerFragment extends Fragment {
 
         mViewModel = ViewModelProviders.of(this).get(ThermometerViewModel.class);
         // TODO: Use the ViewModel
+    }
+
+    @Override
+    public void onClick(View v) {
+        RecordingDao recordings = AppRoomDatabase.getDatabase().recordingDao();
+        Recording currentRecording = recordings.getRecordingById(0);
+        FeverTestResult result = new FeverTestResult();
+        result.setTemperature(fTemperatureCelsius);
+        currentRecording.setFeverTestResult(result);
+        recordings.updateRecording(currentRecording);
     }
 
     @Override

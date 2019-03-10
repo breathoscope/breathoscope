@@ -43,4 +43,16 @@
         android:textAlignment="center"
         android:textColor="@android:color/black" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.23" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.23"
+        android:text="@string/temperature_store" />
+
 </LinearLayout>
