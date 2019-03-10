@@ -6,6 +6,9 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity(tableName = "patients")
 public class Patient implements Comparable {
 
+    public static final String FEMALE = "female";
+    public static final String MALE = "male";
+
     // int is implicitly @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
@@ -13,6 +16,7 @@ public class Patient implements Comparable {
 
     private String firstName, lastName;
     private int age;
+    private String sex;
 
     // public getters and setters required for Room to work
 
@@ -29,6 +33,14 @@ public class Patient implements Comparable {
     }
 
     public int getAge() { return this.age; }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
     public void setPatientId(int patientId) {
         this.patientId = patientId;

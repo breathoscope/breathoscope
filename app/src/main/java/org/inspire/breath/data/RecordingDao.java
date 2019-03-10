@@ -36,4 +36,9 @@ public abstract class RecordingDao {
     @Query("SELECT * from recordings where id = :id LIMIT 1")
     public abstract Recording getRecordingById(long id);
 
+    @Query("Select * from recordings WHERE id = :recordingId")
+    List<Recording> getRecordingById(int recordingId);
+
+    @Query("Select * from recordings WHERE patientId = :p_id ORDER BY timestamp DESC")
+    List<Recording> getRecordings(int p_id);
 }

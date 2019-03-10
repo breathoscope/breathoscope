@@ -14,20 +14,27 @@ import org.inspire.breath.adapters.PatientListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.PatientDao;
+import org.inspire.breath.data.Recording;
+import org.inspire.breath.data.RecordingDao;
 import org.inspire.breath.fragments.patients.Listings;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
+import org.inspire.breath.fragments.patients.Profile;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class PatientsActivity extends AppCompatActivity implements PatientListAdapter.PatientCallback {
 
-    private final Class<?> RECORDING_ACTIVITY = LoginActivity.class;
+    private final Class<?> RECORDING_ACTIVITY = HomeActivity.class;
 
     private List<Fragment> mFragments;
 
+    private Profile mProfile;
+
     private ViewPager mPager;
     private FloatingActionButton mAddPatientFAB;
+
+    private Recording mSession;
 
     private void findViews() {
         mAddPatientFAB = findViewById(R.id.patient_list_add_patient);
@@ -41,12 +48,14 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         patientMC.setFirstName("Max");
         patientMC.setLastName("Caulfield");
         patientMC.setAge(18);
+        patientMC.setSex(Patient.FEMALE);
         patients.add(patientMC);
 
         Patient patientCP = new Patient();
         patientCP.setFirstName("Chloe");
         patientCP.setLastName("Price");
         patientCP.setAge(19);
+        patientCP.setSex(Patient.FEMALE);
         patients.add(patientCP);
 
         return patients;
@@ -70,7 +79,9 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     private void initPager() {
         mFragments = new LinkedList<>();
         mFragments.add(new Listings());
-        mFragments.add(new Listings());
+        mProfile = new Profile();
+        mProfile.setArguments(new Bundle());
+        mFragments.add(mProfile);
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(), mFragments);
         mPager.setAdapter(adapter);
     }
@@ -84,6 +95,9 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         initDB(); // needed for some debugging
 
         initPager();
+
+        mSession = new Recording();
+        mSession.setTimestamp(System.currentTimeMillis()/1000);
 
         // init the floating action button for adding patients
         mAddPatientFAB.setOnClickListener(new View.OnClickListener() {
@@ -100,11 +114,30 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
 
     @Override
     public void onSelected(Patient patient) {
+        Bundle args = new Bundle();
+        args.putInt(Profile.PATIENT_ID_KEY,patient.getPatientId());
+        mProfile.setArguments(args);
         startRecordingFor(patient);
     }
 
     public void startRecordingFor(Patient patient) {
+        mSession.setPatientId(patient.getPatientId());
+
+        AppRoomDatabase.getDatabase().recordingDao().insertRecording(mSession);
+        Recording session = AppRoomDatabase.getDatabase().recordingDao().getRecordings(patient.getPatientId()).get(0);
         Intent intent = new Intent(this, RECORDING_ACTIVITY);
+        intent.putExtra(HomeActivity.PATIENT_ID_KEY, patient.getPatientId());
+        intent.putExtra(HomeActivity.SESSION_ID_KEY, session.getId());
         startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mPager.getCurrentItem() > 0) {
+            mPager.setCurrentItem(mPager.getCurrentItem() - 1, true);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }
