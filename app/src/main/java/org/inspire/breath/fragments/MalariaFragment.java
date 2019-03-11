@@ -1,10 +1,13 @@
 package org.inspire.breath.fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +15,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.camerakit.CameraKitView;
-
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
@@ -34,7 +36,6 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.malaria_fragment, container, false);
         cameraKitView = v.findViewById(R.id.camera);
         Button cv = v.findViewById(R.id.button);
@@ -45,17 +46,23 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(MalariaViewModel.class);
+        mViewModel = ViewModelProviders.of(getActivity()).get(MalariaViewModel.class);
         // TODO: Use the ViewModel
     }
 
     @Override
     public void onClick(View v) {
+        Toast.makeText(getActivity(), "Click",
+                Toast.LENGTH_LONG).show();
         cameraKitView.captureImage(new CameraKitView.ImageCallback() {
             @Override
             public void onImage(CameraKitView cameraKitView, final byte[] data) {
-                Toast.makeText(getActivity(), "Click",
-                        Toast.LENGTH_LONG).show();
+                mViewModel.SetImage(BitmapFactory.decodeByteArray(data, 0, data.length));
+                FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment mFrag = new MalariaReviewFragment();
+                t.addToBackStack("malariareview");
+                t.replace(R.id.container, mFrag);
+                t.commit();
             }
         });
     }
@@ -89,5 +96,4 @@ public class MalariaFragment extends Fragment implements View.OnClickListener {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
 }
