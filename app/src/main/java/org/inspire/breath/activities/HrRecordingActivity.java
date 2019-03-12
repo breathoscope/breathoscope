@@ -45,7 +45,7 @@ public class HrRecordingActivity extends AppCompatActivity {
     private AudioRecord recorder;
     private boolean isRecording;
 
-    private ImageButton mRecordBtn, mPauseBtn, mStopBtn;
+    private ImageButton mRecordBtn, mRestartBtn, mStopBtn;
 
     // Requesting permission to RECORD_AUDIO
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -71,7 +71,7 @@ public class HrRecordingActivity extends AppCompatActivity {
 
         rawOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.pcm";
         wavOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.wav";
-        
+
         isRecording = false;
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
@@ -93,42 +93,35 @@ public class HrRecordingActivity extends AppCompatActivity {
 
         });
 
-
-        // TODO make pause btn a restart btn instead
-        mPauseBtn.setOnClickListener((v) -> {
-            toggleVisibleButtons();
+        mRestartBtn.setOnClickListener((v) -> {
+            stopRecording();
+            Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
         });
 
         mStopBtn.setOnClickListener((v) -> {
-            toggleVisibleButtons();
-            isRecording = false;
-            recorder.stop();
-            recorder.release();
-            writeThread = null;
-
+            stopRecording();
             rawToWav();
-
         });
 
     }
 
     private void initViews() {
         this.mRecordBtn = findViewById(R.id.hr_record_btn);
-        this.mPauseBtn = findViewById(R.id.hr_pause_btn);
+        this.mRestartBtn = findViewById(R.id.hr_restart_btn);
         this.mStopBtn = findViewById(R.id.hr_stop_btn);
 
-        mPauseBtn.setVisibility(View.GONE);
+        mRestartBtn.setVisibility(View.GONE);
         mStopBtn.setVisibility(View.GONE);
     }
 
     private void toggleVisibleButtons() {
         if (mRecordBtn.getVisibility() == View.VISIBLE) {
             mRecordBtn.setVisibility(View.GONE);
-            mPauseBtn.setVisibility(View.VISIBLE);
+            mRestartBtn.setVisibility(View.VISIBLE);
             mStopBtn.setVisibility(View.VISIBLE);
         } else {
             mRecordBtn.setVisibility(View.VISIBLE);
-            mPauseBtn.setVisibility(View.GONE);
+            mRestartBtn.setVisibility(View.GONE);
             mStopBtn.setVisibility(View.GONE);
         }
     }
@@ -145,6 +138,14 @@ public class HrRecordingActivity extends AppCompatActivity {
                 .setBufferSizeInBytes(RECORDER_BUF_SIZE)
                 .build();
 
+    }
+
+    private void stopRecording() {
+        toggleVisibleButtons();
+        isRecording = false;
+        recorder.stop();
+        recorder.release();
+        writeThread = null;
     }
 
 
