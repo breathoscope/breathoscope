@@ -67,7 +67,6 @@ public class HrRecordingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hr_recording);
 
-        initRecorder();
         isRecording = false;
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
@@ -77,6 +76,8 @@ public class HrRecordingActivity extends AppCompatActivity {
         initViews();
 
         mRecordBtn.setOnClickListener((v) -> {
+
+            initRecorder();
 
             toggleVisibleButtons();
 
@@ -151,16 +152,11 @@ public class HrRecordingActivity extends AppCompatActivity {
 
     private void rawToWav() {
 
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {}
-
         try {
             new RawToWavConverter(RECORDER_SAMPLE_RATE).rawToWave(
                     new File(getExternalCacheDir().getAbsolutePath() + "/test.pcm"),
                     new File(getExternalCacheDir().getAbsolutePath() + "/test.wav")
             );
-
 
         } catch (Exception e) {
             Toast.makeText(HrRecordingActivity.this, "WAV CONVERSION FAILED", Toast.LENGTH_SHORT).show();
