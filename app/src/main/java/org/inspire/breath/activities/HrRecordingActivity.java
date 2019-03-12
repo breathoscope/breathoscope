@@ -12,14 +12,20 @@ import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import org.inspire.breath.utils.RawToWavConverter;
 
 import org.inspire.breath.R;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class HrRecordingActivity extends AppCompatActivity {
+
+    // TODO switch main activity back to LoginActivity before merge
 
     private static final int RECORDER_AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
     private static final int RECORDER_SAMPLE_RATE = 44100;
@@ -93,6 +99,9 @@ public class HrRecordingActivity extends AppCompatActivity {
             recorder.stop();
             recorder.release();
             writeThread = null;
+
+            rawToWav();
+
         });
 
     }
@@ -138,6 +147,25 @@ public class HrRecordingActivity extends AppCompatActivity {
                 getString(R.string.snackbar_mic_warning),
                 Snackbar.LENGTH_INDEFINITE);
         snackbar.show();
+    }
+
+    private void rawToWav() {
+
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {}
+
+        try {
+            new RawToWavConverter(RECORDER_SAMPLE_RATE).rawToWave(
+                    new File(getExternalCacheDir().getAbsolutePath() + "/test.pcm"),
+                    new File(getExternalCacheDir().getAbsolutePath() + "/test.wav")
+            );
+
+
+        } catch (Exception e) {
+            Toast.makeText(HrRecordingActivity.this, "WAV CONVERSION FAILED", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     class AudioFileWriter implements Runnable {
