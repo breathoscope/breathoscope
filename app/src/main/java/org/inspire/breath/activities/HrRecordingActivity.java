@@ -27,15 +27,18 @@ public class HrRecordingActivity extends AppCompatActivity {
 
     // TODO switch main activity back to LoginActivity before merge
 
-    private static final int RECORDER_AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
-    private static final int RECORDER_SAMPLE_RATE = 44100;
-    private static final int RECORDER_CHANNEL_CFG = AudioFormat.CHANNEL_IN_MONO;
-    private static final int RECORDER_AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
-    private static final int RECORDER_BUF_SIZE = AudioRecord.getMinBufferSize(
+    private final int RECORDER_AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
+    private final int RECORDER_SAMPLE_RATE = 44100;
+    private final int RECORDER_CHANNEL_CFG = AudioFormat.CHANNEL_IN_MONO;
+    private final int RECORDER_AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+    private final int RECORDER_BUF_SIZE = AudioRecord.getMinBufferSize(
             RECORDER_SAMPLE_RATE,
             RECORDER_CHANNEL_CFG,
             RECORDER_AUDIO_FORMAT
     );
+
+    private String rawOutputPath;
+    private String wavOutputPath;
 
     private Thread writeThread;
 
@@ -43,7 +46,6 @@ public class HrRecordingActivity extends AppCompatActivity {
     private boolean isRecording;
 
     private ImageButton mRecordBtn, mPauseBtn, mStopBtn;
-    String fileName;
 
     // Requesting permission to RECORD_AUDIO
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -67,6 +69,9 @@ public class HrRecordingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hr_recording);
 
+        rawOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.pcm";
+        wavOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.wav";
+        
         isRecording = false;
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
@@ -154,8 +159,8 @@ public class HrRecordingActivity extends AppCompatActivity {
 
         try {
             new RawToWavConverter(RECORDER_SAMPLE_RATE).rawToWave(
-                    new File(getExternalCacheDir().getAbsolutePath() + "/test.pcm"),
-                    new File(getExternalCacheDir().getAbsolutePath() + "/test.wav")
+                    new File(rawOutputPath),
+                    new File(wavOutputPath)
             );
 
         } catch (Exception e) {
@@ -164,23 +169,22 @@ public class HrRecordingActivity extends AppCompatActivity {
 
     }
 
+    // thread to save raw data to app's cache directory
+    // overwrites previous recording
     class AudioFileWriter implements Runnable {
         public void run() {
 
             byte[] audioData = new byte[RECORDER_BUF_SIZE];
 
-            fileName = getExternalCacheDir().getAbsolutePath();
-            fileName += "/test.pcm";
             FileOutputStream os = null;
             try {
-                os = new FileOutputStream(fileName);
+                os = new FileOutputStream(rawOutputPath);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
 
             while (isRecording) {
                 recorder.read(audioData, 0, RECORDER_BUF_SIZE);
-
                 try {
                     os.write(audioData, 0, RECORDER_BUF_SIZE );
                 } catch (IOException e) {
