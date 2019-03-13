@@ -104,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
         this.mMalariaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(HomeActivity.this, MalariaActivity.class));
             }
         });
         this.mDangerCard.setOnClickListener(new View.OnClickListener() {
