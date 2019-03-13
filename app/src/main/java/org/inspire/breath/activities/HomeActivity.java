@@ -30,7 +30,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private Patient mPatient;
     private Recording mSession;
-    private RecyclerView mTestsList;
     private TextView mPatientName;
     private TextView mPatientAge;
     private TextView mPatientSex;
