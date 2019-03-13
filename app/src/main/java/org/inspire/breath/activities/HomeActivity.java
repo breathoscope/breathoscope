@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
@@ -39,6 +42,13 @@ public class HomeActivity extends AppCompatActivity {
     private AppCompatCheckBox mDiarrhoeaTick;
     private AppCompatCheckBox mMalariaTick;
     private AppCompatCheckBox mBreathTick;
+
+    // Cards
+    private CardView mMalariaCard;
+    private CardView mFeverCard;
+    private CardView mDangerCard;
+    private CardView mDiarrhoeaCard;
+    private CardView mBreathCard;
 
     public void getData() {
         Intent intent = getIntent();
@@ -83,6 +93,45 @@ public class HomeActivity extends AppCompatActivity {
         this.mDiarrhoeaTick = findViewById(R.id.home_test_diarrhoea_tick);
         this.mFeverTick = findViewById(R.id.home_test_fever_tick);
         this.mMalariaTick = findViewById(R.id.home_test_malaria_tick);
+
+        this.mMalariaCard = findViewById(R.id.home_test_malaria_card);
+        this.mBreathCard = findViewById(R.id.home_test_breath_card);
+        this.mDiarrhoeaCard = findViewById(R.id.home_test_diarrhoea_card);
+        this.mFeverCard = findViewById(R.id.home_test_fever_card);
+        this.mDangerCard = findViewById(R.id.home_test_danger_card);
+    }
+
+    private void setupListeners() {
+        this.mMalariaCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+            }
+        });
+        this.mDangerCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+            }
+        });
+        this.mFeverCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+            }
+        });
+        this.mBreathCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+            }
+        });
+        this.mDiarrhoeaCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -90,6 +139,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         findViews();
+        setupListeners();
         getData();
     }
 
