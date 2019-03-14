@@ -28,7 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-// TODO tidy up view switching for readabilit
+// TODO tidy up view switching for readability
 // TODO fix bug where play button only works on second click
 
 public class HrRecordingActivity extends AppCompatActivity {
@@ -98,7 +98,7 @@ public class HrRecordingActivity extends AppCompatActivity {
 
             toggleVisibleButtons();
 
-            mRecordBtn.setVisibility(View.GONE);
+            mPlayBtn.setVisibility(View.GONE);
 
             recorder.startRecording();
             isRecording = true;
@@ -155,6 +155,7 @@ public class HrRecordingActivity extends AppCompatActivity {
             mRestartBtn.setVisibility(View.GONE);
             mStopBtn.setVisibility(View.GONE);
         }
+
     }
 
     private void initRecorder() {
