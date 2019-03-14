@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.Understanding_results">
+    <TextView
+        android:id="@+id/intro_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/question"
+        android:text="@string/Test_malria_question"
+        android:textColor="#000000"
+        android:textSize="25sp"
+        android:textStyle="bold"
+
+        />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView" >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/positive_result_button"
+                android:paddingTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFF"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/positive_result"
+                android:onClick="Positive_Click"
+                />
+
+            <Button
+                android:id="@+id/negative_result_button"
+                android:paddingTop="80dp"
+                android:paddingBottom="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#FFF"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/negative_mal_result"
+                android:onClick="Negative_Click"/>
+
+            <Button
+                android:id="@+id/invalid_result_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="40dp"
+                android:backgroundTint="#FFF"
+                android:layout_gravity="center"
+                android:drawableRight="@drawable/invalid_result"
+                android:onClick="Invalid_Click"/>
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</LinearLayout>
