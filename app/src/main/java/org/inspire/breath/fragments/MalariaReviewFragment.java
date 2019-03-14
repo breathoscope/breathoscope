@@ -57,6 +57,10 @@ public class MalariaReviewFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
+                FragmentTransaction t = getActivity().getSupportFragmentManager().beginTransaction();
+                Fragment mFrag = new MalariaFragment();
+                t.replace(R.id.container, mFrag);
+                t.commit();
                 getFragmentManager().popBackStack();
             }
         });

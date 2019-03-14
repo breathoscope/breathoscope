@@ -14,6 +14,9 @@
     <string name="patient_list_select">Select</string>
     <!-- shared preferences -->
     <string name="preference_pass_hash">password_hash</string>
+  
+    <!--Thermometer Text-->
+    <string name="temperature_store">Record</string>
 
     <!-- Snackbar message(s) -->
     <string name="snackbar_mic_warning">Please make sure microphone is plugged in correctly</string>
@@ -26,5 +29,4 @@
     <string name="fever_title">Fever</string>
     <string name="breath_title">Breath</string>
     <string name="diarrhoea_title">Diarrhoea</string>
-
 </resources>
