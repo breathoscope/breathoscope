@@ -12,7 +12,11 @@ public class Severe_And_Pos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_severe_and_pos);
+
+        setContentView(R.layout.activity_severe__and__pos);
+
 
     }
 

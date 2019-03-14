@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import org.inspire.breath.R;
+
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.MalariaTestResult;
@@ -13,6 +14,7 @@ public class Understanding_results extends AppCompatActivity {
 
     private Session session ;//session object
     private int age;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +25,18 @@ public class Understanding_results extends AppCompatActivity {
         age = Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).getAge());
 
 
-
     }
 
 
-
     public void Positive_Click(View view) {
-
         setAnswer("yes");
+
         Intent intent = new Intent(this, Severe_malaria.class);
         startActivity(intent);
     }
 
     public void Negative_Click(View view) {
+
         setAnswer("no");
 
         Intent intent = new Intent(this, Refer_HC.class);
@@ -43,6 +44,7 @@ public class Understanding_results extends AppCompatActivity {
     }
 
     public void Invalid_Click(View view) {
+
         setAnswer("invalid");
 
         Intent intent = new Intent(this, MalariaActivity.class);
@@ -59,4 +61,9 @@ public class Understanding_results extends AppCompatActivity {
         //store in database
         AppRoomDatabase.getDatabase().sessionDao().upsertRecording(session);
     }
+
+
+
+
+
 }
