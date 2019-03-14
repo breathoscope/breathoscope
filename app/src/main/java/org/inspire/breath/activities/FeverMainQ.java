@@ -25,7 +25,7 @@ public class FeverMainQ extends AppCompatActivity {
 
     public void No_Click(View view)
     {
-        Intent intent = new Intent(this,Understanding_results.class);
+        Intent intent = new Intent(this,PneumoniaSeveritySigns.class);
         startActivity(intent);
 
     }

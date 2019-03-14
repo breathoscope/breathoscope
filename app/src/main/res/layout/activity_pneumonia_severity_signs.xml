@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.PneumoniaSeveritySigns">
+
+    <TextView
+        android:id="@+id/intro_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="72dp"
+        android:paddingTop="90dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/question"
+        android:text="@string/pneu_danger_question"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:textStyle="bold"
+
+        />
+
+    <TextView
+        android:id="@+id/question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="93dp"
+        android:layout_marginTop="8dp"
+        android:padding="5dp"
+        android:paddingLeft="110dp"
+        android:text="@string/pneu_danger_signs"
+        android:textColor="#000000"
+        android:textSize="29sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intro_question" />
+
+    <Button
+        android:id="@+id/Yes_choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:background="#0091EA"
+        android:padding="0dp"
+        android:text="Yes"
+        android:textColor="#fff"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/No_choice"
+        app:layout_constraintTop_toBottomOf="@id/question"
+        android:onClick="YesPnSev_Click"/>
+
+    <Button
+        android:id="@+id/No_choice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#0091EA"
+        android:onClick="NoPnSev_Click"
+        android:padding="8dp"
+        android:text="No"
+        android:textColor="#fff"
+        app:layout_constraintTop_toBottomOf="@id/question"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/Yes_choice"
+        android:layout_marginTop="64dp"/>
+
+    />
+
+
+</android.support.constraint.ConstraintLayout>
