@@ -61,28 +61,8 @@ public class MalariaReviewFragment extends Fragment {
                 Fragment mFrag = new MalariaFragment();
                 t.replace(R.id.container, mFrag);
                 t.commit();
+                getFragmentManager().popBackStack();
             }
         });
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
 }
