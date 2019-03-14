@@ -19,7 +19,8 @@ public class FeverQuestions {
             "Option 1: Refer to HC for slide/review: risk of treatment failure especially is soon after first treatment." +
                     "Option 2: If CHW has access to 2nd line treatment consider 2nd line ACTs(careful documentation)." +
                     "Option 3: If no access to blood film or 2nd line treatment: retreat with 1st line ACTs with warning to return of worsens.",
-            "Simple Malaria: Treat with oral ACT as per protocol (directly observe 1st dose) plus one dose paracetamol."
+            "Simple Malaria: Treat with oral ACT as per protocol (directly observe 1st dose) plus one dose paracetamol.",
+            "Press Next"
     };
 
 
@@ -44,7 +45,7 @@ public class FeverQuestions {
     };
 
     private String ansToQ5[] = {
-            "No OR diagnosis/treatment/adherence not known",
+            "No", //OR diagnosis/treatment/adherence not known"
             "Yes"
     };
 
