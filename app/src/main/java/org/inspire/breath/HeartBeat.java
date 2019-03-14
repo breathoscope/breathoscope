@@ -15,10 +15,9 @@ public class HeartBeat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heart_beat);
 
-        InputStream in = getResources().openRawResource(R.raw.heartbeat02a);
 
         try {
-            InputStream is = getResources().openRawResource(R.raw.heartbeat02a);
+            InputStream is = getResources().openRawResource(R.raw.heartbeat2);
 
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
 
@@ -37,7 +36,7 @@ public class HeartBeat extends AppCompatActivity {
             fos.write(arr);
             int cnt = reader.getResult(tempFile);
             heartBeats = (TextView)findViewById(R.id.res_field);
-            heartBeats.setText(""+cnt);
+            heartBeats.setText(""+cnt/2*6); // mult by 6, because file 10 sec long
         }
         catch (Exception e){
             System.out.println("no read");

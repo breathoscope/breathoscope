@@ -23,7 +23,7 @@ public class WawReader {
             int numChannels = wavFile.getNumChannels();
 
             // Create a buffer of 100 frames
-            double[] buffer = new double[100 * numChannels];
+            double[] buffer = new double[80 * numChannels];
 
             int framesRead;
             double min = Double.MAX_VALUE;
@@ -32,7 +32,7 @@ public class WawReader {
             do
             {
                 // Read frames into buffer
-                framesRead = wavFile.readFrames(buffer, 100);
+                framesRead = wavFile.readFrames(buffer, 80);
 
                 // Loop through frames and look for minimum and maximum value
                 for (int s=0 ; s<framesRead * numChannels ; s++)
