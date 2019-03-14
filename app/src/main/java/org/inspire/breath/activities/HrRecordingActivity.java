@@ -124,6 +124,9 @@ public class HrRecordingActivity extends AppCompatActivity {
         });
 
         mPlayBtn.setOnClickListener((v) -> {
+
+            isPlaying = false; // debugging -> solves double click issue... y u no work (╯°□°)╯︵ ┻━┻ should be false already...
+
             if (!isPlaying) {
                 playAudio();
             } else {
@@ -180,7 +183,6 @@ public class HrRecordingActivity extends AppCompatActivity {
         writeThread = null;
     }
 
-
     void displaySnackbar() {
         Snackbar snackbar = Snackbar.make(findViewById(R.id.activity_hr_coordinator),
                 getString(R.string.snackbar_mic_warning),
@@ -204,7 +206,6 @@ public class HrRecordingActivity extends AppCompatActivity {
 
     private void playAudio() {
 
-        isPlaying = false; // temporary hack
         isPlaying = true;
         mp = new MediaPlayer();
         try {
@@ -220,6 +221,7 @@ public class HrRecordingActivity extends AppCompatActivity {
     private void stopPlayingAudio() {
         isPlaying = false;
         mp.stop();
+        mp.release();
     }
 
     // thread to save raw data to app's cache directory
