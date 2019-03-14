@@ -37,8 +37,8 @@ public abstract class RecordingDao {
     public abstract Recording getRecordingById(long id);
 
     @Query("Select * from recordings WHERE id = :recordingId")
-    List<Recording> getRecordingById(int recordingId);
+    public abstract List<Recording> getRecordingById(int recordingId);
 
     @Query("Select * from recordings WHERE patientId = :p_id ORDER BY timestamp DESC")
-    List<Recording> getRecordings(int p_id);
+    public abstract List<Recording> getRecordings(int p_id);
 }
