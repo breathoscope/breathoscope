@@ -1,6 +1,6 @@
 <resources>
     <!--Core Details-->
-    <string name="app_name">My Application</string>
+    <string name="app_name">Breathoscope</string>
 
     <!--Login text-->
     <string name="login_login_btn">Login</string>
@@ -8,10 +8,8 @@
     <string name="login_uname_hint">Name</string>
     <string name="login_password_hint">Password</string>
     <string name="login_incorrect_msg">Invalid Login</string>
-
     <!-- Fallback values-->
     <string name="default_name">None/ Could not load</string>
-
     <!-- Patient List -->
     <string name="patient_list_select">Select</string>
     <!-- shared preferences -->
@@ -19,5 +17,14 @@
 
     <!-- Snackbar message(s) -->
     <string name="snackbar_mic_warning">Please make sure microphone is plugged in correctly</string>
+    <!-- Patient Profile -->
+    <string name="load_failed">Failed to load</string>
+
+    <!-- Test Titles -->
+    <string name="malaria_title">Malaria</string>
+    <string name="danger_title">Danger Signs</string>
+    <string name="fever_title">Fever</string>
+    <string name="breath_title">Breath</string>
+    <string name="diarrhoea_title">Diarrhoea</string>
 
 </resources>

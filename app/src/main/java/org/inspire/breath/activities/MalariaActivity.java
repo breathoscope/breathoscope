@@ -7,7 +7,7 @@ import org.inspire.breath.fragments.MalariaFragment;
 import org.inspire.breath.R;
 
 public class MalariaActivity extends AppCompatActivity {
-
+    int patientID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

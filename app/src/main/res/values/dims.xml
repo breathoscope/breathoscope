@@ -4,10 +4,18 @@
     <!--Text dimensions-->
     <dimen name="text_in_width">150dp</dimen>
     <dimen name="text_in_height">32dp</dimen>
+    <dimen name="large_font_size">24sp</dimen>
 
     <!-- Image dimensions -->
     <dimen name="profile_thumb_height">60dp</dimen>
     <dimen name="profile_thumb_width">60dp</dimen>
+
+    <dimen name="home_thumb_height">80dp</dimen>
+    <dimen name="home_thumb_width">80dp</dimen>
+
+    <dimen name="home_icon_large_height">64dp</dimen>
+    <dimen name="home_icon_large_width">64dp</dimen>
+
 
     <!--Margins-->
     <dimen name="default_margin">8dp</dimen>
@@ -19,4 +27,8 @@
 
     <dimen name="spacer_input">16dp</dimen>
     <dimen name="spacer_long">64dp</dimen>
+
+    <!-- Checkbox -->
+    <dimen name="checkbox_large_width">64dp</dimen>
+    <dimen name="checkbox_large_height">64dp</dimen>
 </resources>
