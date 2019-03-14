@@ -25,8 +25,24 @@
         <activity android:name=".activities.MalariaActivity" />
         <activity android:name=".activities.ThermometerActivity" />
         <activity android:name=".activities.BreathRateActivity" />
+
         <activity android:name=".activities.HrRecordingActivity" />
         <activity android:name=".activities.ValidateDiarrhoeaActivity" />
+
+
+
+        <activity android:name=".activities.Understanding_results"></activity>
+        <activity android:name=".activities.Severe_malaria" />
+        <activity
+            android:name=".activities.Severe_And_Pos"
+            android:label="@string/title_activity_severe__and__pos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.ChildAge$Severe_AND_Pos" />
+        <activity android:name=".activities.NonSevereMalariaTreatment" />
+        <activity android:name=".activities.Refer_HC" />
+        <activity android:name=".activities.ChildAge" />
+        <activity android:name=".activities.FeverMainQ" />
+
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,8 +53,12 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
         <activity android:name=".activities.ResetActivity" />
         <activity android:name=".activities.HomeActivity" />
+
+
+
     </application>
 
 </manifest>
