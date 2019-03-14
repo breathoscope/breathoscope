@@ -25,8 +25,6 @@ import java.io.IOException;
 
 public class HrRecordingActivity extends AppCompatActivity {
 
-    // TODO switch main activity back to LoginActivity before merge
-
     private final int RECORDER_AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
     private final int RECORDER_SAMPLE_RATE = 44100;
     private final int RECORDER_CHANNEL_CFG = AudioFormat.CHANNEL_IN_MONO;
