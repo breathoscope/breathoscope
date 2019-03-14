@@ -15,22 +15,15 @@ public class FeverMainQ extends AppCompatActivity {
         setContentView(R.layout.activity_fever_main_q);
     }
 
-
     public void Yes_Click(View view)
     {
         Intent intent = new Intent(this,MalariaActivity.class);
         startActivity(intent);
-
     }
-
-
 
     public void No_Click(View view)
     {
-
         Intent intent = new Intent(this,PneumoniaSeveritySigns.class);
-
-
         startActivity(intent);
 
     }

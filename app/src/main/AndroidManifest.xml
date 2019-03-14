@@ -37,7 +37,6 @@
         <activity android:name=".activities.SeverePneumoniaTreatment"></activity>
         <activity android:name=".activities.PneumoniaSeveritySigns" />
         <activity android:name=".activities.NonSeverePneumoniaTreatment" />
-
         <activity android:name=".activities.Severe_malaria" />
         <activity
             android:name=".activities.Severe_And_Pos"
