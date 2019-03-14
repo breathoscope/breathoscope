@@ -15,6 +15,8 @@
     <!-- shared preferences -->
     <string name="preference_pass_hash">password_hash</string>
 
+    <!-- Snackbar message(s) -->
+    <string name="snackbar_mic_warning">Please make sure microphone is plugged in correctly</string>
     <!-- Patient Profile -->
     <string name="load_failed">Failed to load</string>
 
