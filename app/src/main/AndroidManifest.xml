@@ -14,6 +14,8 @@
         <activity android:name=".activities.PatientsActivity"/>
         <activity android:name=".activities.MalariaActivity"/>
         <activity android:name=".activities.ThermometerActivity" />
+        <activity android:name=".activities.HrRecordingActivity">
+        </activity>
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
