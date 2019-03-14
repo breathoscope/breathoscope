@@ -25,4 +25,63 @@
     <string name="breath_title">Breath</string>
     <string name="diarrhoea_title">Diarrhoea</string>
 
+    <!--Malaria testing -->
+    <string name="Test_malria_question">Which of these pictures matches the results</string>
+
+
+    <!-- Malaria servity signs -->
+    <string name="mal_danger_question">Does he/she display these signs of Severe Malaria: </string>
+    <string name="mal_danger_signs">- Unconscious/prostrate
+                \n- Convulsions
+                \n- Lethargy
+                \n- Severe pallor
+                \n- Unable to drink/vomiting
+                \n- Respiratory sistres
+                \n- Cyanosis</string>
+
+
+    <string name="pneu_danger_question">Does he/she display these signs of Severe Pneumonia ?:</string>
+
+    <!-- Malaria servity signs -->
+    <string name="pneu_danger_signs">-Chest Indrawing
+                \n- Stridor
+                \n- Nasal Flaring
+                \n- Cyanosis</string>
+
+
+    <string name="Severe_Pneumonia">\Give First Dose of Amoxicillin:
+    \n </string>
+
+    <!-- for non severe Pneumonia-->
+
+    <string name="Pneumonia">\Treat with Amoxicillin
+    \n </string>
+
+
+    <string name="Treat_with">\Treat with:
+    \n </string>
+
+    <string name="Non_Sev_Mal_">\Oral AnitMalaria
+    \n </string>
+
+    <!-- Fever main Question  -->
+
+    <string name="Fever_Q">Fever or History of fever in past 48 hours</string>
+
+    <string name="Child_Age">How old is she/he</string>
+
+
+    <string name="title_activity_pref__mal_test">Pref_Mal_test</string>
+
+    <string name="title_activity_refer__hc">Refer_HC</string>
+
+    <string name="Refer_HC">Refer To Health Clinic</string>
+
+    <string name="Refer_hospital_3">\Refer to Hospital URGENTLY!!</string>
+
+    <string name="Refer_hospital_2">\and</string>
+
+    <string name="Refer_hospital_1">\Give pre- referral Artesunate</string>
+    <string name="title_activity_severe__and__pos">Severe_And_Pos</string>
+
 </resources>
