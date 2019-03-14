@@ -3,6 +3,7 @@ package org.inspire.breath.activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.AudioRecord;
 import android.support.annotation.NonNull;
@@ -11,8 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+
 
 import org.inspire.breath.utils.RawToWavConverter;
 
@@ -22,6 +26,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+
+// TODO tidy up view switching for readabilit
+// TODO fix bug where play button only works on second click
 
 public class HrRecordingActivity extends AppCompatActivity {
 
@@ -35,6 +43,8 @@ public class HrRecordingActivity extends AppCompatActivity {
             RECORDER_AUDIO_FORMAT
     );
 
+    MediaPlayer mp;
+
     private String rawOutputPath;
     private String wavOutputPath;
 
@@ -44,6 +54,9 @@ public class HrRecordingActivity extends AppCompatActivity {
     private boolean isRecording;
 
     private ImageButton mRecordBtn, mRestartBtn, mStopBtn;
+    private Button mPlayBtn;
+
+    boolean isPlaying;
 
     // Requesting permission to RECORD_AUDIO
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -71,6 +84,7 @@ public class HrRecordingActivity extends AppCompatActivity {
         wavOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.wav";
 
         isRecording = false;
+        isPlaying = false;
 
         ActivityCompat.requestPermissions(this, permissions, REQUEST_RECORD_AUDIO_PERMISSION);
 
@@ -84,6 +98,8 @@ public class HrRecordingActivity extends AppCompatActivity {
 
             toggleVisibleButtons();
 
+            mRecordBtn.setVisibility(View.GONE);
+
             recorder.startRecording();
             isRecording = true;
             writeThread = new Thread(new AudioFileWriter());
@@ -92,6 +108,9 @@ public class HrRecordingActivity extends AppCompatActivity {
         });
 
         mRestartBtn.setOnClickListener((v) -> {
+
+            mPlayBtn.setVisibility(View.GONE);
+
             stopRecording();
             Toast.makeText(HrRecordingActivity.this, "Session cancelled", Toast.LENGTH_SHORT).show();
         });
@@ -99,6 +118,17 @@ public class HrRecordingActivity extends AppCompatActivity {
         mStopBtn.setOnClickListener((v) -> {
             stopRecording();
             rawToWav();
+
+            mPlayBtn.setVisibility(View.VISIBLE);
+
+        });
+
+        mPlayBtn.setOnClickListener((v) -> {
+            if (!isPlaying) {
+                playAudio();
+            } else {
+                stopPlayingAudio();
+            }
         });
 
     }
@@ -107,12 +137,15 @@ public class HrRecordingActivity extends AppCompatActivity {
         this.mRecordBtn = findViewById(R.id.hr_record_btn);
         this.mRestartBtn = findViewById(R.id.hr_restart_btn);
         this.mStopBtn = findViewById(R.id.hr_stop_btn);
+        this.mPlayBtn = findViewById(R.id.recording_play_button);
 
         mRestartBtn.setVisibility(View.GONE);
         mStopBtn.setVisibility(View.GONE);
+        mPlayBtn.setVisibility(View.GONE);
     }
 
     private void toggleVisibleButtons() {
+
         if (mRecordBtn.getVisibility() == View.VISIBLE) {
             mRecordBtn.setVisibility(View.GONE);
             mRestartBtn.setVisibility(View.VISIBLE);
@@ -168,6 +201,26 @@ public class HrRecordingActivity extends AppCompatActivity {
 
     }
 
+    private void playAudio() {
+
+        isPlaying = false; // temporary hack
+        isPlaying = true;
+        mp = new MediaPlayer();
+        try {
+           // mp.setDataSource(getExternalCacheDir().getAbsolutePath() + "/out.wav");
+            mp.setDataSource(wavOutputPath);
+            mp.prepare();
+            mp.start();
+        } catch (IOException e) {
+            Toast.makeText(HrRecordingActivity.this, "IOException", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void stopPlayingAudio() {
+        isPlaying = false;
+        mp.stop();
+    }
+
     // thread to save raw data to app's cache directory
     // overwrites previous recording
     class AudioFileWriter implements Runnable {
@@ -190,7 +243,6 @@ public class HrRecordingActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-
         }
     }
 
