@@ -3,10 +3,6 @@ import java.io.*;
 
 public class WawReader {
 
-    public static void main(String[] args)
-    {
-
-    }
 
 
     public static int getResult(File res){
