@@ -30,31 +30,6 @@ public class FeverQuestions {
             {"Yes", "No"}
     };
 
-    private String ansToQ1[] = {
-            "Yes",
-            "No"
-    };
-
-    private String ansToQ2[] = {
-            "No",
-            "Yes"
-    };
-
-    private String ansToQ3[] = {
-            "Negative",
-            "Positive"
-    };
-
-    private String ansToQ4[] = {
-            "Yes",
-            "No"
-    };
-
-    private String ansToQ5[] = {
-            "No", //OR diagnosis/treatment/adherence not known"
-            "Yes"
-    };
-
     /*Returns a specific question*/
     public String retQ(int i){
         return this.qList[i];
@@ -67,25 +42,5 @@ public class FeverQuestions {
 
     public String retAQ(int i, int j){
         return this.ansToQ[i][j];
-    }
-
-    public String retAQ1(int i){
-        return this.ansToQ1[i];
-    }
-
-    public String retAQ2(int i){
-        return this.ansToQ2[i];
-    }
-
-    public String retAQ3(int i){
-        return this.ansToQ3[i];
-    }
-
-    public String retAQ4(int i){
-        return this.ansToQ4[i];
-    }
-
-    public String retAQ5(int i){
-        return this.ansToQ5[i];
     }
 }
