@@ -29,8 +29,8 @@ public class FeverGuide extends AppCompatActivity {
         nextButton = (Button)findViewById(R.id.next_btn);
 
         questionView.setText(questions.retQ(questionNumber));
-        leftButton.setText(questions.retAQ1(0));
-        rightButton.setText(questions.retAQ1(1));
+        leftButton.setText(questions.retAQ(questionNumber, 0));
+        rightButton.setText(questions.retAQ(questionNumber, 1));
         answerView.setVisibility(View.GONE);
         nextButton.setVisibility(View.GONE);
 
@@ -65,39 +65,16 @@ public class FeverGuide extends AppCompatActivity {
             }
         });
 
-        //Button listener 1
+        //Button listener 3
         nextButton.setOnClickListener(new View.OnClickListener(){
             @Override public void onClick(View view){
-                if (questionNumber==0){
+                if (questionNumber<4){
                     questionNumber++;
                     questionView.setText(questions.retQ(questionNumber));
                     answerView.setVisibility(View.GONE);
-                    leftButton.setText(questions.retAQ2(0));
-                    rightButton.setText(questions.retAQ2(1));
-                    nextButton.setVisibility(View.GONE);
-                }
-                else if(questionNumber==1){
-                    questionNumber++;
-                    questionView.setText(questions.retQ(questionNumber));
-                    answerView.setVisibility(View.GONE);
-                    leftButton.setText(questions.retAQ3(0));
-                    rightButton.setText(questions.retAQ3(1));
-                    nextButton.setVisibility(View.GONE);
-                }
-                else if(questionNumber==2){
-                    questionNumber++;
-                    questionView.setText(questions.retQ(questionNumber));
-                    answerView.setVisibility(View.GONE);
-                    leftButton.setText(questions.retAQ4(0));
-                    rightButton.setText(questions.retAQ4(1));
-                    nextButton.setVisibility(View.GONE);
-                }
-                else if(questionNumber==3){
-                    questionNumber++;
-                    questionView.setText(questions.retQ(questionNumber));
-                    answerView.setVisibility(View.GONE);
-                    leftButton.setText(questions.retAQ5(0));
-                    rightButton.setText(questions.retAQ5(1));
+
+                    leftButton.setText(questions.retAQ(questionNumber, 0));
+                    rightButton.setText(questions.retAQ(questionNumber, 1));
                     nextButton.setVisibility(View.GONE);
                 }
                 else if(questionNumber==4){

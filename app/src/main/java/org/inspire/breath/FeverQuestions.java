@@ -23,6 +23,12 @@ public class FeverQuestions {
             "Press Next"
     };
 
+    private String ansToQ[][] = {
+            {"Yes", "No"},
+            {"No", "Yes"},
+            {"Negative", "Positive"},
+            {"Yes", "No"}
+    };
 
     private String ansToQ1[] = {
             "Yes",
@@ -57,6 +63,10 @@ public class FeverQuestions {
     /*Returns a specific answer*/
     public String retA(int i){
         return this.aList[i];
+    }
+
+    public String retAQ(int i, int j){
+        return this.ansToQ[i][j];
     }
 
     public String retAQ1(int i){
