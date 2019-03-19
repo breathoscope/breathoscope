@@ -22,10 +22,17 @@ public class DangerSignsQuestions {
 
     /*A message that is to be displayed when any of the questions have been answered positively*/
     public String anyDangerSigns() {
-        return "\nThe patient needs urgent referral to a health center or hospital. While awaiting referral, full assessment should be performed on the patient," +
+        return "The patient needs urgent referral to a health center or hospital. While awaiting referral, full assessment should be performed on the patient," +
             " including if possible a malaria rapid diagnostic test, and be given rectal artesunate as a pre-referral treatment in case of severe malaria. Don't delay the referral whilst waiting for a test result." +
             " In that case, give rectal artesunate presumptively.";
     }
+
+    private String reviewAnswers[][] = {
+            {"The patient doesn't have convulsions.", "The patient has convulsions."},
+            {"The patient is not lethargic or unconscious.", "The patient is lethargic or unconscious."},
+            {"The patient is not vomiting everything.", "The patient is vomiting everything."},
+            {"The patient is able to breastfeed or drink.", "The patient is unable to breastfeed or drink."}
+    };
 
     /*Potential answers*/
     private String oList[] = {
@@ -45,5 +52,9 @@ public class DangerSignsQuestions {
 
     public String retO(int i){
         return this.oList[i];
+    }
+
+    public String retRA(int i, int j){
+        return this.reviewAnswers[i][j];
     }
 }
