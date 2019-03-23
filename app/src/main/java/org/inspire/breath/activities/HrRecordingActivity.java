@@ -16,21 +16,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-
-
 import org.inspire.breath.utils.RawToWavConverter;
-
 import org.inspire.breath.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-
-
-// TODO tidy up view switching for readability
-// TODO fix bug where play button only works on second click
 
 public class HrRecordingActivity extends AppCompatActivity {
 
@@ -46,7 +39,8 @@ public class HrRecordingActivity extends AppCompatActivity {
 
     MediaPlayer mp;
 
-    private ArrayList<Byte> recording;
+    private ByteArrayOutputStream baos;
+    private byte[] recordingAsByteArray;
 
     private String rawOutputPath;
     private String wavOutputPath;
@@ -80,6 +74,7 @@ public class HrRecordingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hr_recording);
 
@@ -121,7 +116,7 @@ public class HrRecordingActivity extends AppCompatActivity {
         mStopBtn.setOnClickListener((v) -> {
             stopRecording();
             rawToWav();
-
+            this.recordingAsByteArray = baos.toByteArray();
             mPlayBtn.setVisibility(View.VISIBLE);
 
         });
@@ -216,7 +211,6 @@ public class HrRecordingActivity extends AppCompatActivity {
         });
 
         try {
-           // mp.setDataSource(getExternalCacheDir().getAbsolutePath() + "/out.wav");
             mp.setDataSource(wavOutputPath);
             mp.prepare();
             mp.start();
@@ -239,16 +233,12 @@ public class HrRecordingActivity extends AppCompatActivity {
     class AudioFileWriter implements Runnable {
         public void run() {
 
-
-            recording = new ArrayList<>();
-            int offset = 0;
-
             byte[] audioData = new byte[RECORDER_BUF_SIZE];
-
 
             FileOutputStream os = null;
             try {
                 os = new FileOutputStream(rawOutputPath);
+                baos = new ByteArrayOutputStream();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
@@ -256,6 +246,7 @@ public class HrRecordingActivity extends AppCompatActivity {
             while (isRecording) {
                 recorder.read(audioData, 0, RECORDER_BUF_SIZE);
                 try {
+                    baos.write(audioData);
                     os.write(audioData, 0, RECORDER_BUF_SIZE );
 
                 } catch (IOException e) {
