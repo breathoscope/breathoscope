@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 // TODO tidy up view switching for readability
@@ -44,6 +45,8 @@ public class HrRecordingActivity extends AppCompatActivity {
     );
 
     MediaPlayer mp;
+
+    private ArrayList<Byte> recording;
 
     private String rawOutputPath;
     private String wavOutputPath;
@@ -98,7 +101,7 @@ public class HrRecordingActivity extends AppCompatActivity {
 
             toggleVisibleButtons();
 
-            mPlayBtn.setVisibility(View.GONE);
+            mPlayBtn.setVisibility(View.INVISIBLE);
 
             recorder.startRecording();
             isRecording = true;
@@ -109,7 +112,7 @@ public class HrRecordingActivity extends AppCompatActivity {
 
         mRestartBtn.setOnClickListener((v) -> {
 
-            mPlayBtn.setVisibility(View.GONE);
+            mPlayBtn.setVisibility(View.INVISIBLE);
 
             stopRecording();
             Toast.makeText(HrRecordingActivity.this, "Session cancelled", Toast.LENGTH_SHORT).show();
@@ -124,9 +127,6 @@ public class HrRecordingActivity extends AppCompatActivity {
         });
 
         mPlayBtn.setOnClickListener((v) -> {
-
-            isPlaying = false; // debugging -> solves double click issue... y u no work (╯°□°)╯︵ ┻━┻ should be false already...
-
             if (!isPlaying) {
                 playAudio();
             } else {
@@ -142,21 +142,21 @@ public class HrRecordingActivity extends AppCompatActivity {
         this.mStopBtn = findViewById(R.id.hr_stop_btn);
         this.mPlayBtn = findViewById(R.id.recording_play_button);
 
-        mRestartBtn.setVisibility(View.GONE);
-        mStopBtn.setVisibility(View.GONE);
-        mPlayBtn.setVisibility(View.GONE);
+        mRestartBtn.setVisibility(View.INVISIBLE);
+        mStopBtn.setVisibility(View.INVISIBLE);
+        mPlayBtn.setVisibility(View.INVISIBLE);
     }
 
     private void toggleVisibleButtons() {
 
         if (mRecordBtn.getVisibility() == View.VISIBLE) {
-            mRecordBtn.setVisibility(View.GONE);
+            mRecordBtn.setVisibility(View.INVISIBLE);
             mRestartBtn.setVisibility(View.VISIBLE);
             mStopBtn.setVisibility(View.VISIBLE);
         } else {
             mRecordBtn.setVisibility(View.VISIBLE);
-            mRestartBtn.setVisibility(View.GONE);
-            mStopBtn.setVisibility(View.GONE);
+            mRestartBtn.setVisibility(View.INVISIBLE);
+            mStopBtn.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -206,8 +206,15 @@ public class HrRecordingActivity extends AppCompatActivity {
 
     private void playAudio() {
 
+        mPlayBtn.setText(R.string.recording_stop);
+
         isPlaying = true;
         mp = new MediaPlayer();
+        mp.setOnCompletionListener((c) -> {
+           isPlaying = false;
+           mPlayBtn.setText(getString(R.string.recording_play));
+        });
+
         try {
            // mp.setDataSource(getExternalCacheDir().getAbsolutePath() + "/out.wav");
             mp.setDataSource(wavOutputPath);
@@ -219,6 +226,9 @@ public class HrRecordingActivity extends AppCompatActivity {
     }
 
     private void stopPlayingAudio() {
+
+        mPlayBtn.setText(getString(R.string.recording_play));
+
         isPlaying = false;
         mp.stop();
         mp.release();
@@ -229,7 +239,12 @@ public class HrRecordingActivity extends AppCompatActivity {
     class AudioFileWriter implements Runnable {
         public void run() {
 
+
+            recording = new ArrayList<>();
+            int offset = 0;
+
             byte[] audioData = new byte[RECORDER_BUF_SIZE];
+
 
             FileOutputStream os = null;
             try {
@@ -242,6 +257,7 @@ public class HrRecordingActivity extends AppCompatActivity {
                 recorder.read(audioData, 0, RECORDER_BUF_SIZE);
                 try {
                     os.write(audioData, 0, RECORDER_BUF_SIZE );
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
