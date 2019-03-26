@@ -1,6 +1,7 @@
 package org.inspire.breath.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.MediaPlayer;
@@ -16,6 +17,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Recording;
+import org.inspire.breath.data.RecordingDao;
 import org.inspire.breath.utils.RawToWavConverter;
 import org.inspire.breath.R;
 
@@ -25,6 +29,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+
+// TODO restore main activity
 public class HrRecordingActivity extends AppCompatActivity {
 
     private final int RECORDER_AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
@@ -40,7 +46,9 @@ public class HrRecordingActivity extends AppCompatActivity {
     MediaPlayer mp;
 
     private ByteArrayOutputStream baos;
-    private byte[] recordingAsByteArray;
+    String sessionId;
+    Recording r;
+    RecordingDao dao;
 
     private String rawOutputPath;
     private String wavOutputPath;
@@ -77,6 +85,8 @@ public class HrRecordingActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hr_recording);
+
+        initDb();
 
         rawOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.pcm";
         wavOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.wav";
@@ -116,7 +126,6 @@ public class HrRecordingActivity extends AppCompatActivity {
         mStopBtn.setOnClickListener((v) -> {
             stopRecording();
             rawToWav();
-            this.recordingAsByteArray = baos.toByteArray();
             mPlayBtn.setVisibility(View.VISIBLE);
 
         });
@@ -176,6 +185,11 @@ public class HrRecordingActivity extends AppCompatActivity {
         recorder.stop();
         recorder.release();
         writeThread = null;
+
+        // TODO untested, take off main thread maybe
+        r.setHrRecordingBlob(baos.toByteArray());
+
+
     }
 
     void displaySnackbar() {
@@ -226,6 +240,16 @@ public class HrRecordingActivity extends AppCompatActivity {
         isPlaying = false;
         mp.stop();
         mp.release();
+    }
+
+    // untested
+    private void initDb() {
+        Intent i = getIntent();
+        // TODO confirm following string name
+        sessionId = i.getStringExtra("sessionId");
+
+        dao = AppRoomDatabase.getDatabase().recordingDao();
+        r = dao.getRecordingById(Integer.parseInt(sessionId)).get(0);
     }
 
     // thread to save raw data to app's cache directory
