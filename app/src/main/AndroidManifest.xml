@@ -13,7 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< Updated upstream
         <activity android:name=".activities.PatientsActivity"/>
         <activity android:name=".activities.MalariaActivity"/>
         <activity android:name=".activities.ThermometerActivity" />
