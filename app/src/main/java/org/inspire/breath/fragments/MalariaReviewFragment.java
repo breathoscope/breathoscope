@@ -18,8 +18,12 @@ import android.widget.Toast;
 import com.camerakit.CameraKitView;
 
 import org.inspire.breath.R;
+import org.inspire.breath.activities.HomeActivity;
+import org.inspire.breath.activities.TestActivity;
+import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.blobs.MalariaTestResult;
 
-public class MalariaReviewFragment extends Fragment {
+public class MalariaReviewFragment extends TestFragment {
 
     private MalariaViewModel mViewModel;
 
@@ -48,7 +52,6 @@ public class MalariaReviewFragment extends Fragment {
             @Override
             public void onClick(View v)
             {
-                //TODO - Store Photo
             }
         });
 
