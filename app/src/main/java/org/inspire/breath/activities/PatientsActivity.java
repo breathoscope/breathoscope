@@ -18,7 +18,6 @@ import org.inspire.breath.data.Session;
 import org.inspire.breath.fragments.patients.Create;
 import org.inspire.breath.fragments.patients.Listings;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
-import org.inspire.breath.fragments.patients.Profile;
 
 import java.util.LinkedList;
 import java.util.List;
