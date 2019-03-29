@@ -52,6 +52,7 @@ public class MalariaReviewFragment extends TestFragment {
             @Override
             public void onClick(View v)
             {
+                //TODO save image
             }
         });
 
