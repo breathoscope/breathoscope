@@ -7,6 +7,10 @@ import android.widget.TextView;
 import android.widget.Button;
 
 import org.inspire.breath.R;
+import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Recording;
+import org.inspire.breath.data.RecordingDao;
+import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 
 
 public class ValidateDiarrhoeaActivity extends AppCompatActivity {
@@ -45,20 +49,29 @@ public class ValidateDiarrhoeaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validate_diarrhoea);
 
+
         answerYes = (Button) findViewById(R.id.buttonYes);
         answerNo = (Button) findViewById(R.id.buttonNo);
         question = (TextView) findViewById(R.id.question);
+
 
         question.setText(getQuestion(questionNum));
         answerYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (questionNum<2) {
+                if (questionNum<(mQuestions.length-1)) {
                     questionNum++;
                     question.setText(getQuestion(questionNum));
                 }
-                else if (questionNum>=2){
+                else if (questionNum>=(mQuestions.length-1)){
                     question.setText(getAnswer(1));
+
+                    DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
+                    writer.setResult(1);
+
+
+
+
                     answerYes.setVisibility(View.GONE);
                     answerNo.setVisibility(View.GONE);
                 }
@@ -70,6 +83,7 @@ public class ValidateDiarrhoeaActivity extends AppCompatActivity {
         answerNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 question.setText(getAnswer(questionNum));
                 answerYes.setVisibility(View.GONE);
                 answerNo.setVisibility(View.GONE);
