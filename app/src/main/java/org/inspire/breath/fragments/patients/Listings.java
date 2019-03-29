@@ -18,7 +18,7 @@ import org.inspire.breath.data.Patient;
 
 import java.util.List;
 
-public class Listings extends Fragment {
+public class Listings extends PatientsFragment {
 
     private RecyclerView mPatientList;
 
@@ -54,5 +54,11 @@ public class Listings extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mPatientList.setLayoutManager(layoutManager);
         mPatientList.setAdapter(new PatientListAdapter(getAllPatients(), (PatientsActivity) getActivity()));
+    }
+
+    @Override
+    public void onFocus() {
+        super.onFocus();
+        getPatientsActivity().mAddPatientFAB.show();
     }
 }
