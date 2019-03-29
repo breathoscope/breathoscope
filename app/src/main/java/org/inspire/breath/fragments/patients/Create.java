@@ -35,9 +35,12 @@ public class Create extends PatientsFragment  {
     }
 
     private void setupData() {
-        this.mSexSpinner.setAdapter(ArrayAdapter.createFromResource(getActivity(),
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.sexes_array,
-                android.R.layout.simple_spinner_item));
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.mSexSpinner.setAdapter(adapter);
+
     }
 
     @Override
