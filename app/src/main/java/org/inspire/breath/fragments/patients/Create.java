@@ -1,7 +1,8 @@
 package org.inspire.breath.fragments.patients;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -24,7 +25,6 @@ import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Calendar;
 
 public class Create extends PatientsFragment {
 
@@ -32,7 +32,7 @@ public class Create extends PatientsFragment {
 
     EditText mFirstName;
     EditText mSurName;
-    EditText mBirthday;
+    EditText mAge;
     Spinner mSexSpinner;
 
     ConstraintLayout mPictureHolder;
@@ -43,7 +43,7 @@ public class Create extends PatientsFragment {
     void findViews(View root) {
         this.mFirstName = root.findViewById(R.id.create_first_name);
         this.mSurName = root.findViewById(R.id.create_surname);
-        this.mBirthday = root.findViewById(R.id.create_birthday);
+        this.mAge = root.findViewById(R.id.create_age);
         this.mSexSpinner = root.findViewById(R.id.create_sex_spinner);
 
         this.mPictureHolder = root.findViewById(R.id.create_picture_holder);
@@ -71,36 +71,33 @@ public class Create extends PatientsFragment {
         this.mPictureHolder.setOnClickListener(v -> {
             startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), IMAGE_REQUEST_CODE);
         });
-        this.mBirthday.setOnClickListener(v -> {
-            Calendar now = Calendar.getInstance();
-            new DatePickerDialog(getActivity(),
-                    (view, year, month, dayOfMonth) -> {
-                        mBirthday.setText(new String(dayOfMonth + "/" + (month+1) + "/" + year));
-                    },
-                    now.get(Calendar.YEAR),
-                    now.get(Calendar.MONTH),
-                    now.get(Calendar.DAY_OF_MONTH)).show();
-        });
-        this.mSave.setOnClickListener(v -> {
-            String fName = mFirstName.getText().toString();
-            String sName = mSurName.getText().toString();
-            String bDay = mBirthday.getText().toString();
-            String sex = mSexSpinner.getSelectedItem().toString();
-            Bitmap bmp = ((BitmapDrawable) mProfilePicture.getDrawable()).getBitmap();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            Patient patient = new Patient();
-            patient.setSex(sex);
-            patient.setBirthDay(bDay);
-            patient.setLastName(sName);
-            patient.setFirstName(fName);
-            patient.setThumb(stream.toByteArray());
 
-            AppRoomDatabase.getDatabase()
-                    .patientDao()
-                    .insertPatient(patient);
+        this.mSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String fName = mFirstName.getText().toString();
+                String sName = mSurName.getText().toString();
+                String age = mAge.getText().toString();
+                String sex = mSexSpinner.getSelectedItem().toString();
+                if (!(mProfilePicture.getDrawable() instanceof BitmapDrawable)) {
+                    return;
+                }
+                Bitmap bmp = ((BitmapDrawable) mProfilePicture.getDrawable()).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                Patient patient = new Patient();
+                patient.setSex(sex);
+                patient.setAge(age);
+                patient.setLastName(sName);
+                patient.setFirstName(fName);
+                patient.setThumb(stream.toByteArray());
 
-            getActivity().onBackPressed();
+                AppRoomDatabase.getDatabase()
+                        .patientDao()
+                        .insertPatient(patient);
+
+                getActivity().onBackPressed();
+            }
         });
     }
 
@@ -117,6 +114,25 @@ public class Create extends PatientsFragment {
     public void onFocus() {
         super.onFocus();
         getPatientsActivity().mAddPatientFAB.hide();
+        clearFields();
+    }
+
+    private void clearFields() {
+        mSurName.setText("");
+        mFirstName.setText("");
+        mAge.setText("");
+        mSexSpinner.setSelection(0);
+        Resources.Theme appTheme = getActivity().getTheme();
+        mProfilePicture.setImageDrawable(getResources()
+                .getDrawable(R.drawable.ic_baseline_add_photo_alternate_24px, appTheme));
+        ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(mProfilePicture.getLayoutParams());
+        layoutParams.width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        layoutParams.height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+        layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParams.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        mProfilePicture.setLayoutParams(layoutParams);
     }
 
     @Override
@@ -126,7 +142,14 @@ public class Create extends PatientsFragment {
             Bundle extras = data.getExtras();
             Bitmap bmp = (Bitmap) extras.get("data");
             mProfilePicture.setImageBitmap(bmp);
-            mProfilePicture.setLayoutParams(new ConstraintLayout.LayoutParams(Constraints.LayoutParams.MATCH_PARENT,Constraints.LayoutParams.MATCH_PARENT));
+            ConstraintLayout.LayoutParams layoutParams = new ConstraintLayout.LayoutParams(mProfilePicture.getLayoutParams());
+            layoutParams.width = ConstraintLayout.LayoutParams.MATCH_PARENT;
+            layoutParams.height = ConstraintLayout.LayoutParams.MATCH_PARENT;
+            layoutParams.leftToLeft = ConstraintLayout.LayoutParams.PARENT_ID;
+            layoutParams.rightToRight = ConstraintLayout.LayoutParams.PARENT_ID;
+            layoutParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+            layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+            mProfilePicture.setLayoutParams(layoutParams);
         }
     }
 }

@@ -58,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Patient data
         this.mPatientName.setText(mPatient.getFirstName() + " " + mPatient.getLastName());
-        this.mPatientAge.setText(mPatient.getBirthDay());
+        this.mPatientAge.setText(mPatient.getAge());
         this.mPatientSex.setText(mPatient.getSex());
         byte[] bmp = mPatient.getThumb();
         this.mPatientPicture.setImageBitmap(BitmapFactory.decodeByteArray(bmp, 0, bmp.length));

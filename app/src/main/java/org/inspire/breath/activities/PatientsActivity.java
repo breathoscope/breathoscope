@@ -14,8 +14,8 @@ import org.inspire.breath.adapters.PatientListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.PatientDao;
-import org.inspire.breath.data.Session;
-import org.inspire.breath.fragments.patients.Create;
+
+import org.inspire.breath.data.Session;import org.inspire.breath.fragments.patients.Create;
 import org.inspire.breath.fragments.patients.Listings;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
 
@@ -47,14 +47,14 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         Patient patientMC = new Patient();
         patientMC.setFirstName("Max");
         patientMC.setLastName("Caulfield");
-        patientMC.setBirthDay("1/1/2001");
+        patientMC.setAge("1/1/2001");
         patientMC.setSex(Patient.FEMALE);
         patients.add(patientMC);
 
         Patient patientCP = new Patient();
         patientCP.setFirstName("Chloe");
         patientCP.setLastName("Price");
-        patientCP.setBirthDay("1/1/2000");
+        patientCP.setAge("1/1/2000");
         patientCP.setSex(Patient.FEMALE);
         patients.add(patientCP);
 

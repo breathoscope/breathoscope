@@ -17,7 +17,7 @@ public class Patient implements Comparable {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "thumb")
     private byte[] thumb;
     private String firstName, lastName;
-    private String birthDay;
+    private String age;
     private String sex;
 
     // public getters and setters required for Room to work
@@ -34,7 +34,7 @@ public class Patient implements Comparable {
         return this.lastName;
     }
 
-    public String getBirthDay() { return this.birthDay; }
+    public String getAge() { return this.age; }
 
     public String getSex() {
         return sex;
@@ -56,7 +56,7 @@ public class Patient implements Comparable {
         this.lastName = lastName;
     }
 
-    public void setBirthDay(String birthDay) { this.birthDay = birthDay; }
+    public void setAge(String age) { this.age = age; }
 
     @Override
     public int compareTo(Object o) {
