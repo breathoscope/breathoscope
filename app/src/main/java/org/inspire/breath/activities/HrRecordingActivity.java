@@ -93,7 +93,7 @@ public class HrRecordingActivity extends AppCompatActivity {
 
         mRestartBtn.setOnClickListener((v) -> {
             stopRecording();
-            Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HrRecordingActivity.this, "Session cancelled", Toast.LENGTH_SHORT).show();
         });
 
         mStopBtn.setOnClickListener((v) -> {

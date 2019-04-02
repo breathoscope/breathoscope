@@ -4,17 +4,16 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
-import android.text.Editable;
 import android.widget.EditText;
 
 import com.commonsware.cwac.saferoom.SafeHelperFactory;
 
-@Database(entities = {Patient.class, Recording.class}, version = 5, exportSchema = false)
+@Database(entities = {Patient.class, Session.class}, version = 7, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     // DAOs
     public abstract PatientDao patientDao();
-    public abstract RecordingDao recordingDao();
+    public abstract SessionDao sessionDao();
 
     private static final String DATABASE_NAME = "breathoscope_database";
 

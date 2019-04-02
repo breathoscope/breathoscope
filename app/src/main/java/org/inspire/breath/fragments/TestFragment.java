@@ -3,7 +3,7 @@ package org.inspire.breath.fragments;
 import android.support.v4.app.Fragment;
 
 import org.inspire.breath.activities.TestActivity;
-import org.inspire.breath.data.Recording;
+import org.inspire.breath.data.Session;
 
 public class TestFragment extends Fragment {
 
@@ -11,7 +11,7 @@ public class TestFragment extends Fragment {
         return (TestActivity) getActivity();
     }
 
-    Recording getSession() {
+    Session getSession() {
         return getTestActivity().getSession();
     }
 }

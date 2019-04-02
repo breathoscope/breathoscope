@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
-import org.inspire.breath.data.Recording;
+import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.BreathTestResult;
 import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
@@ -29,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
     private static final int TEST_COUNT = 5;
 
     private Patient mPatient;
-    private Recording mSession;
+    private Session mSession;
     private TextView mPatientName;
     private TextView mPatientAge;
     private TextView mPatientSex;
@@ -54,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         int patient_id = intent.getIntExtra(PATIENT_ID_KEY, -1);
         int session_id = intent.getIntExtra(SESSION_ID_KEY, -1);
         this.mPatient = AppRoomDatabase.getDatabase().patientDao().getPatientById(patient_id).get(0);
-        this.mSession = AppRoomDatabase.getDatabase().recordingDao().getRecordingById(session_id).get(0);
+        this.mSession = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(session_id).get(0);
 
         // Patient data
         this.mPatientName.setText(mPatient.getFirstName() + " " + mPatient.getLastName());
