@@ -3,6 +3,7 @@ package org.inspire.breath.fragments.patients;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -22,6 +23,7 @@ import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 
 public class Create extends PatientsFragment {
@@ -84,14 +86,20 @@ public class Create extends PatientsFragment {
             String sName = mSurName.getText().toString();
             String bDay = mBirthday.getText().toString();
             String sex = mSexSpinner.getSelectedItem().toString();
+            Bitmap bmp = ((BitmapDrawable) mProfilePicture.getDrawable()).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
             Patient patient = new Patient();
             patient.setSex(sex);
             patient.setBirthDay(bDay);
             patient.setLastName(sName);
             patient.setFirstName(fName);
+            patient.setThumb(stream.toByteArray());
+
             AppRoomDatabase.getDatabase()
                     .patientDao()
                     .insertPatient(patient);
+
             getActivity().onBackPressed();
         });
     }

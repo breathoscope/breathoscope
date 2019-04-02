@@ -14,6 +14,8 @@ public class Patient implements Comparable {
     @ColumnInfo(name = "id")
     private int patientId;
 
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "thumb")
+    private byte[] thumb;
     private String firstName, lastName;
     private String birthDay;
     private String sex;
@@ -64,5 +66,13 @@ public class Patient implements Comparable {
         else {
             return id < this.getPatientId() ? 1 : -1;
         }
+    }
+
+    public byte[] getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(byte[] thumb) {
+        this.thumb = thumb;
     }
 }
