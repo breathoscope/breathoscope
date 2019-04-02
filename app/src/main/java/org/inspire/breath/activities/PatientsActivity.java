@@ -102,26 +102,6 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        updatePatients();
-    }
-
-    private void updatePatients() {
-        List<Patient> dummies = getDummyPatientData();
-
-        PatientDao dao = AppRoomDatabase.getDatabase().patientDao();
-        List<Patient> allPatients = dao.getAllPatients();
-
-
-        for (Patient patient : dummies) {
-            if (!allPatients.contains(patient)) {
-                dao.insertPatient(patient);
-            }
-        }
-        ((Listings) mFragments.get(0)).updateRecycler();
-    }
 
     public void displayAddPatient() {
         mPager.setCurrentItem(mPager.getCurrentItem() + 1, true);
