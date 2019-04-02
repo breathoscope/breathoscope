@@ -21,8 +21,8 @@ import java.util.Date;
                                     childColumns = "patientId",
                                     parentColumns = "id",
                                     onDelete = ForeignKey.CASCADE),
-                                    tableName = "recordings")
-public class Recording {
+                                    tableName = "sessions")
+public class Session {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

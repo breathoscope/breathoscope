@@ -26,10 +26,6 @@ import android.widget.Toast;
 
 
 import org.inspire.breath.R;
-import org.inspire.breath.data.AppRoomDatabase;
-import org.inspire.breath.data.Recording;
-import org.inspire.breath.data.RecordingDao;
-import org.inspire.breath.data.blobs.FeverTestResult;
 
 public class ThermometerFragment extends Fragment implements View.OnClickListener {
 

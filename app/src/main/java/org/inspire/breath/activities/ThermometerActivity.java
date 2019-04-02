@@ -3,9 +3,7 @@ package org.inspire.breath.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import org.inspire.breath.data.AppRoomDatabase;
-import org.inspire.breath.data.Recording;
-import org.inspire.breath.data.RecordingDao;
+
 import org.inspire.breath.fragments.ThermometerFragment;
 import org.inspire.breath.R;
 public class ThermometerActivity extends AppCompatActivity {
