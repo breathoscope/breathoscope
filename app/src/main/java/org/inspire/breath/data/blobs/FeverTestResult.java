@@ -8,6 +8,7 @@ import java.nio.ByteOrder;
 public class FeverTestResult implements IBlobbable {
 
     float temperature;
+
     @Override
     public byte[] toBlob() {
         return ByteBuffer
@@ -26,6 +27,10 @@ public class FeverTestResult implements IBlobbable {
 
     public float getTemperature(){
         return temperature;
+    }
+
+    public boolean hasFever() {
+        return temperature > 37.5f;
     }
 
     public void setTemperature(float temp) {

@@ -2,7 +2,6 @@ package org.inspire.breath.data;
 
 
 import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
@@ -13,11 +12,15 @@ import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.HrRecording;
 import org.inspire.breath.data.blobs.MalariaTestResult;
+<<<<<<< HEAD
 import org.inspire.breath.interfaces.IBlobbable;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
+=======
+import org.inspire.breath.data.blobs.RecommendActionsResult;
+>>>>>>> Initial actions reporting
 // Encapsulates a session and the actions that can be performed on it
 @Entity(foreignKeys = @ForeignKey(entity = Patient.class,
                                     childColumns = "patientId",
@@ -48,8 +51,13 @@ public class Session {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Danger")
     private byte[] dangerTestResultBlob;
 
+<<<<<<< HEAD
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "HrRecording")
     private byte[] hrRecordingBlob;
+=======
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "RecommendedActions")
+    private byte[] recommendedActionsResultBlob;
+>>>>>>> Initial actions reporting
 
 
 
@@ -116,6 +124,7 @@ public class Session {
         return new DiarrhoeaTestResult().consumeBlob(this.diarrhoeaTestResultBlob);
     }
 
+<<<<<<< HEAD
     public HrRecording getHrRecording() {
         return new HrRecording().consumeBlob(this.hrRecordingBlob);
     }
@@ -134,12 +143,30 @@ public class Session {
 
 
 
+=======
+    public RecommendActionsResult getRecommendedActions() {
+        return new RecommendActionsResult().consumeBlob(this.recommendedActionsResultBlob);
+    }
+
+    public byte[] getRecommendedActionsResultBlob() {
+        return recommendedActionsResultBlob;
+    }
+
+    public void setRecommendedActionsResultBlob(byte[] blob) {
+        recommendedActionsResultBlob = blob;
+    }
+
+    public void setMalariaTestResultBlob(byte[] blob) {
+        malariaTestResultBlob = blob;
+    }
+
+>>>>>>> Initial actions reporting
     public int getPatientId() {
         return patientId;
     }
 
     public void setPatientId(int patientId) {
-      this.patientId = patientId;
+        this.patientId = patientId;
     }
 
     public byte[] getFeverTestResultBlob(){
@@ -154,10 +181,6 @@ public class Session {
         return malariaTestResultBlob;
     }
 
-    public void setMalariaTestResultBlob(byte[] blob) {
-        malariaTestResultBlob = blob;
-    }
-
     public long getTimestamp() {
         return timestamp;
     }
@@ -165,12 +188,5 @@ public class Session {
     public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
-
-
-
-
-
-
-
 
 }

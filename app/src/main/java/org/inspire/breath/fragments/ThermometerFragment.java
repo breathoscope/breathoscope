@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Context;
 import android.media.AudioManager;
@@ -26,6 +27,13 @@ import android.widget.Toast;
 
 
 import org.inspire.breath.R;
+import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Patient;
+import org.inspire.breath.data.PatientDao;
+import org.inspire.breath.data.Session;
+import org.inspire.breath.data.SessionDao;
+import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 public class ThermometerFragment extends Fragment implements View.OnClickListener {
 
@@ -80,7 +88,23 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        // TODO: Store data into session passed via Bundle
+        SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
+        PatientDao patientDao = AppRoomDatabase.getDatabase().patientDao();
+        ThermometerViewModel viewModel = ViewModelProviders.of(getActivity()).get(ThermometerViewModel.class);
+        Session s = AppRoomDatabase.getDatabase().sessionDao().getSessionById(viewModel.sessionID).get(0);
+        Patient currentPatient = patientDao.getPatientById(s.getPatientId()).get(0);
+        FeverTestResult result = new FeverTestResult();
+        result.setTemperature(fTemperatureCelsius);
+        s.setFeverTestResult(result);
+        RecommendActionsResult actionsResult = new RecommendActionsResult();
+        //if(currentPatient.getAge() < 1 || currentPatient.getAge() > 5) {
+            actionsResult.isUrgent = true;
+            actionsResult.addAction("Child < 2 months or > 5 years with fever", "Refer to Health Clinic Immediately");
+        //}
+        s.setRecommendedActionsResultBlob(actionsResult.toBlob());
+        dao.upsertSession(s);
+        getActivity().finish();
+
     }
 
     @Override

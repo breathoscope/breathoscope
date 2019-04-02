@@ -14,28 +14,35 @@ import java.util.List;
 public abstract class SessionDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    public abstract long insertRecording(Session session);
+    public abstract long insertSession(Session session);
 
     @Delete
-    public abstract void deleteRecording(Session session);
+    public abstract void deleteSession(Session session);
 
     @Update
-    public abstract void updateRecording(Session session);
+    public abstract void updateSession(Session session);
 
     @Transaction
-    public long upsertRecording(Session session) {
-        long id = insertRecording(session);
+    public long upsertSession(Session session) {
+        long id = insertSession(session);
         if(id == -1)
-            updateRecording(session);
+            updateSession(session);
         return id;
     }
 
     @Query("SELECT * FROM sessions ORDER BY id ASC")
-    public abstract List<Session> getAllRecordings();
+    public abstract List<Session> getAllSessions();
 
     @Query("SELECT * FROM sessions WHERE id = :id LIMIT 1")
+<<<<<<< HEAD
     public abstract Session getRecordingById(int id);
+=======
+    public abstract Session getSessionById(long id);
+
+    @Query("SELECT * FROM sessions WHERE id = :id")
+    public abstract List<Session> getSessionById(int id);
+>>>>>>> Initial actions reporting
 
     @Query("SELECT * FROM sessions WHERE patientId = :p_id ORDER BY timestamp DESC")
-    public abstract List<Session> getRecordings(int p_id);
+    public abstract List<Session> getSessions(int p_id);
 }

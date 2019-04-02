@@ -46,4 +46,6 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
+
+    <string name="title_activity_recommended_actions">RecommendedActionsActivity</string>
 </resources>

@@ -21,6 +21,7 @@ import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -53,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int patient_id = intent.getIntExtra(PATIENT_ID_KEY, -1);
         int session_id = intent.getIntExtra(SESSION_ID_KEY, -1);
+
         this.mPatient = AppRoomDatabase.getDatabase().patientDao().getPatientById(patient_id);
         this.mSession = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(session_id);
 
@@ -69,7 +71,16 @@ public class HomeActivity extends AppCompatActivity {
         BreathTestResult breathTestResult = this.mSession.getBreathTestResult();
         DiarrhoeaTestResult diarrhoeaTestResult = this.mSession.getDiarrhoeaTestResult();
         DangerTestResult dangerTestResult = this.mSession.getDangerTestResult();
+        RecommendActionsResult recommendActionsResult = this.mSession.getRecommendedActions();
 
+        if (recommendActionsResult != null) {
+            if (recommendActionsResult.isUrgent) {
+                Intent i = new Intent(this, RecommendedActionsActivity.class);
+                i.putExtra(SESSION_ID_KEY, mSession.getId());
+                startActivity(i);
+            }
+
+        }
         if (feverTestResult != null)
             mFeverTick.setChecked(true);
         if (malariaTestResult != null)
@@ -120,7 +131,9 @@ public class HomeActivity extends AppCompatActivity {
         this.mFeverCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, ThermometerActivity.class);
+                intent.putExtra(SESSION_ID_KEY, mSession.getId());
+                startActivity(intent);
             }
         });
         this.mBreathCard.setOnClickListener(new View.OnClickListener() {
@@ -159,5 +172,4 @@ public class HomeActivity extends AppCompatActivity {
         setupListeners();
         getData();
     }
-
 }
