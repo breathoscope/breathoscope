@@ -66,9 +66,7 @@ public class Listings extends PatientsFragment {
     public void updateRecycler() {
         List<Patient> patients = getAllPatients();
         if (mPatientList != null) {
-            System.out.println("in here");
-            System.out.println(patients.toString());
-            ((PatientListAdapter) mPatientList.getAdapter()).updatePatients(patients);
+            ((PatientListAdapter) mPatientList.getAdapter()).setPatients(patients);
         }
     }
 }

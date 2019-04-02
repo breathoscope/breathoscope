@@ -61,11 +61,13 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         return patients;
     }
 
-    private void initDB() {
-
-
+    private void initDummyDb() {
+        List<Patient> dummyData = getDummyPatientData();
+        PatientDao dao = AppRoomDatabase.getDatabase().patientDao();
+        for (Patient patient : dummyData) {
+            dao.insertPatient(patient);
+        }
     }
-
 
     private void clearDb() {
         AppRoomDatabase.getDatabase()
@@ -87,7 +89,9 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         setContentView(R.layout.activity_patients);
         findViews();
 
-        clearDb();
+        clearDb(); // for debugging always clear the db first
+        initDummyDb();
+
         initPager();
 
         mSession = new Session();
