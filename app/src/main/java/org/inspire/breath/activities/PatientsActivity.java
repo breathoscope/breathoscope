@@ -28,6 +28,9 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
 
     private List<Fragment> mFragments;
 
+    private Listings mListings;
+    private Create mCreate;
+
     private ViewPager mPager;
     public FloatingActionButton mAddPatientFAB;
 
@@ -44,14 +47,14 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         Patient patientMC = new Patient();
         patientMC.setFirstName("Max");
         patientMC.setLastName("Caulfield");
-        patientMC.setAge(18);
+        patientMC.setBirthDay("1/1/2001");
         patientMC.setSex(Patient.FEMALE);
         patients.add(patientMC);
 
         Patient patientCP = new Patient();
         patientCP.setFirstName("Chloe");
         patientCP.setLastName("Price");
-        patientCP.setAge(19);
+        patientCP.setBirthDay("1/1/2000");
         patientCP.setSex(Patient.FEMALE);
         patients.add(patientCP);
 
@@ -59,19 +62,16 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     }
 
     private void initDB() {
-        List<Patient> dummies = getDummyPatientData();
 
-        PatientDao dao = AppRoomDatabase.getDatabase().patientDao();
-        List<Patient> allPatients = dao.getAllPatients();
 
-        if (!allPatients.equals(dummies)) {
-            dao.deleteAllPatients();
-            for (Patient patient : dummies) {
-                dao.insertPatient(patient);
-            }
-        }
     }
 
+
+    private void clearDb() {
+        AppRoomDatabase.getDatabase()
+                .patientDao()
+                .deleteAllPatients();
+    }
 
     private void initPager() {
         mFragments = new LinkedList<>();
@@ -87,8 +87,7 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         setContentView(R.layout.activity_patients);
         findViews();
 
-        initDB(); // needed for some debugging
-
+        clearDb();
         initPager();
 
         mSession = new Session();
@@ -101,6 +100,27 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
                 displayAddPatient();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        updatePatients();
+    }
+
+    private void updatePatients() {
+        List<Patient> dummies = getDummyPatientData();
+
+        PatientDao dao = AppRoomDatabase.getDatabase().patientDao();
+        List<Patient> allPatients = dao.getAllPatients();
+
+
+        for (Patient patient : dummies) {
+            if (!allPatients.contains(patient)) {
+                dao.insertPatient(patient);
+            }
+        }
+        ((Listings) mFragments.get(0)).updateRecycler();
     }
 
     public void displayAddPatient() {

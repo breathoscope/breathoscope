@@ -7,7 +7,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/create_picture_holder"
         android:layout_width="160dp"
-        android:layout_height="200dp"
+        android:layout_height="160dp"
         android:background="@drawable/light_outline"
         android:layout_marginTop="64dp"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,10 +29,12 @@
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
         android:hint="first name"
         android:inputType="textPersonName"
-        app:layout_constraintTop_toBottomOf="@id/create_picture_holder"
-        app:layout_constraintLeft_toLeftOf="@id/create_picture_holder"/>
+        app:layout_constraintEnd_toEndOf="@+id/create_picture_holder"
+        app:layout_constraintLeft_toLeftOf="@id/create_picture_holder"
+        app:layout_constraintTop_toBottomOf="@id/create_picture_holder" />
 
     <EditText
         android:id="@+id/create_surname"
@@ -44,12 +46,33 @@
         app:layout_constraintTop_toBottomOf="@id/create_first_name"
         app:layout_constraintLeft_toLeftOf="@id/create_first_name"/>
 
+    <EditText
+        android:id="@+id/create_birthday"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:hint="DD/MM/YYYY"
+        android:focusable="false"
+        android:longClickable="false"
+        android:inputType="date"
+        app:layout_constraintTop_toBottomOf="@id/create_surname"
+        app:layout_constraintLeft_toLeftOf="@id/create_surname"/>
+
     <Spinner
         android:id="@+id/create_sex_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/create_surname"
-        app:layout_constraintTop_toTopOf="@id/create_surname"
-        app:layout_constraintBottom_toBottomOf="@id/create_surname"/>
+        android:layout_marginTop="20dp"
+        app:layout_constraintLeft_toLeftOf="@id/create_birthday"
+        app:layout_constraintTop_toBottomOf="@id/create_birthday"/>
+
+    <Button
+        android:id="@+id/create_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Save"
+        app:layout_constraintRight_toRightOf="@id/create_picture_holder"
+        app:layout_constraintTop_toBottomOf="@id/create_sex_spinner"/>
 
 </android.support.constraint.ConstraintLayout>

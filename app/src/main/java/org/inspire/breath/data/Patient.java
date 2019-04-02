@@ -15,7 +15,7 @@ public class Patient implements Comparable {
     private int patientId;
 
     private String firstName, lastName;
-    private int age;
+    private String birthDay;
     private String sex;
 
     // public getters and setters required for Room to work
@@ -32,7 +32,7 @@ public class Patient implements Comparable {
         return this.lastName;
     }
 
-    public int getAge() { return this.age; }
+    public String getBirthDay() { return this.birthDay; }
 
     public String getSex() {
         return sex;
@@ -54,7 +54,7 @@ public class Patient implements Comparable {
         this.lastName = lastName;
     }
 
-    public void setAge(int age) { this.age = age; }
+    public void setBirthDay(String birthDay) { this.birthDay = birthDay; }
 
     @Override
     public int compareTo(Object o) {

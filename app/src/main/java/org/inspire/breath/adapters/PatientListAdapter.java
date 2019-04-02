@@ -11,6 +11,7 @@ import android.widget.TextView;
 import org.inspire.breath.R;
 import org.inspire.breath.data.Patient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientListAdapter extends RecyclerView.Adapter {
@@ -53,6 +54,25 @@ public class PatientListAdapter extends RecyclerView.Adapter {
 
     private List<Patient> mPatients;
     private PatientCallback mCallback;
+
+    public void updatePatients(List<Patient> newPatients) {
+        for (Patient patient: newPatients) {
+            if (!mPatients.contains(patient)) {
+                mPatients.add(patient);
+            }
+        }
+        this.notifyDataSetChanged();
+    }
+
+    public void setPatients(List<Patient> newPatients) {
+        this.mPatients = newPatients;
+        this.notifyDataSetChanged();
+    }
+
+    public void clearPatients(List<Patient> newPatients) {
+        this.mPatients = new ArrayList<>();
+        this.notifyDataSetChanged();
+    }
 
     public PatientListAdapter(List<Patient> patients, PatientCallback callback) {
         this.mCallback = callback;

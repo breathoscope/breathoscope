@@ -60,5 +60,15 @@ public class Listings extends PatientsFragment {
     public void onFocus() {
         super.onFocus();
         getPatientsActivity().mAddPatientFAB.show();
+        updateRecycler();
+    }
+
+    public void updateRecycler() {
+        List<Patient> patients = getAllPatients();
+        if (mPatientList != null) {
+            System.out.println("in here");
+            System.out.println(patients.toString());
+            ((PatientListAdapter) mPatientList.getAdapter()).updatePatients(patients);
+        }
     }
 }

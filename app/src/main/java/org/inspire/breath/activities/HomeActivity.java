@@ -57,7 +57,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // Patient data
         this.mPatientName.setText(mPatient.getFirstName() + " " + mPatient.getLastName());
-        this.mPatientAge.setText(mPatient.getAge() + "");
+        this.mPatientAge.setText(mPatient.getBirthDay());
         this.mPatientSex.setText(mPatient.getSex());
 
         // Test data
