@@ -10,6 +10,12 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">false</item>
+        <item name="android:buttonStyle">@style/defaultButton</item>
+    </style>
+
+    <style name="defaultButton" parent="android:Widget.Material.Button.Colored">
+        <item name="android:background">@drawable/default_btn</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 
 </resources>

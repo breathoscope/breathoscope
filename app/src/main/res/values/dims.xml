@@ -31,4 +31,7 @@
     <!-- Checkbox -->
     <dimen name="checkbox_large_width">64dp</dimen>
     <dimen name="checkbox_large_height">64dp</dimen>
+
+    <!-- Buttons -->
+    <dimen name="button_corner">3dp</dimen>
 </resources>
