@@ -17,7 +17,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import org.inspire.breath.data.AppRoomDatabase;
-import org.inspire.breath.data.Recording;
+import org.inspire.breath.data.Session;
 import org.inspire.breath.utils.RawToWavConverter;
 import org.inspire.breath.R;
 
@@ -44,7 +44,7 @@ public class HrRecordingActivity extends TestActivity {
     MediaPlayer mp;
 
     private ByteArrayOutputStream baos;
-    Recording session;
+    Session session;
 
     private String rawOutputPath;
     private String wavOutputPath;
@@ -206,11 +206,11 @@ public class HrRecordingActivity extends TestActivity {
         Intent i = getIntent();
         int id = i.getIntExtra(SESSION_ID_KEY, -1);
 
-        session = AppRoomDatabase.getDatabase().recordingDao().getRecordingById(id).get(0);
+        session = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(id).get(0);
         session.setHrRecording(baos);
 
         Runnable r = () -> {
-            AppRoomDatabase.getDatabase().recordingDao().updateRecording(session);
+            AppRoomDatabase.getDatabase().sessionDao().updateRecording(session);
         };
         new Thread(r).start();
 
