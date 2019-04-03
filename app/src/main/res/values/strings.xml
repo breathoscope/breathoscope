@@ -35,10 +35,13 @@
     <string name="recording_stop">Stop playing</string>
     <string name="recording_confirm">Confirm</string>
 
+    <!--Diagnoses-->
+    <string name="diagnosis_title">Diagnosis</string>
+
     <!-- Test Titles -->
     <string name="malaria_title">Malaria</string>
     <string name="danger_title">Danger Signs</string>
-    <string name="fever_title">Fever</string>
+    <string name="fever_title">Temperature</string>
     <string name="breath_title">Breath</string>
     <string name="diarrhoea_title">Diarrhoea</string>
 

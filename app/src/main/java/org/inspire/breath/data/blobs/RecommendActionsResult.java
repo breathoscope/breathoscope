@@ -1,22 +1,16 @@
 package org.inspire.breath.data.blobs;
 
-import org.inspire.breath.activities.RecommendedActionsActivity;
 import org.inspire.breath.interfaces.IBlobbable;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class RecommendActionsResult implements IBlobbable {
 
-    Map<String, String> actions;
+    Map<Test, String> actions;
 
     public RecommendActionsResult() {
         actions = new HashMap<>();
@@ -24,36 +18,43 @@ public class RecommendActionsResult implements IBlobbable {
 
     public boolean isUrgent;
 
+    public enum Test {
+        FEVER,
+        BREATH,
+        MALARIA,
+        DIARRHOEA,
+        DANGER
+    }
+
     //Because Java doesn't support optional parameters :(
-    public void addAction(String cause, String remedy, boolean isUrgent) {
+    public void addAction(Test owner, String remedy, boolean isUrgent) {
         this.isUrgent = isUrgent;
-        actions.put(cause, remedy);
+        actions.put(owner, remedy);
     }
 
-    public void addAction(String cause, String remedy) {
-        actions.put(cause, remedy);
+    public void addAction(Test owner, String remedy) {
+        actions.put(owner, remedy);
     }
 
-    public Map<String, String> getActions() {
-        return actions;
+    public String getActions(Test t) {
+        return actions.get(t);
     }
 
     @Override
     public byte[] toBlob() {
         //bit rough and ready but DataOutputStream wanted me to catch IOExceptions
         int byteCount = 0;
-        List<String> keys = new ArrayList<>(actions.keySet());
+        List<Test> keys = new ArrayList<>(actions.keySet());
         List<String> values = new ArrayList<>(actions.values());
         for(int i = 0; i < actions.size(); i++)
-            byteCount += keys.get(i).getBytes().length + values.get(i).getBytes().length + 8;
+            byteCount += values.get(i).getBytes().length + 8;
         ByteBuffer output = ByteBuffer.allocate(byteCount + 1);
 
         output.put((byte)(isUrgent ? 1 : 0)); //because god forbid a boolean be stored as anything other than a single bit
 
         for(int i = 0; i < actions.size(); i++) {
-            output.putInt(keys.get(i).getBytes().length);
+            output.putInt(keys.get(i).ordinal());
             output.putInt(values.get(i).getBytes().length);
-            output.put(keys.get(i).getBytes());
             output.put(values.get(i).getBytes());
         }
         return output.array();
@@ -68,16 +69,13 @@ public class RecommendActionsResult implements IBlobbable {
         input.rewind();
         isUrgent = input.get() == 1 ? true : false;
         while(input.hasRemaining()) {
-            int keyLength = input.getInt();
+            int key = input.getInt();
             int valueLength = input.getInt();
-            String cause, remedy;
-            byte[] causeBytes = new byte[keyLength];
+            String remedy;
             byte[] remedyBytes = new byte[valueLength];
-            input.get(causeBytes, 0, keyLength);
             input.get(remedyBytes, 0, valueLength);
-            cause = new String(causeBytes);
             remedy = new String(remedyBytes);
-            actions.put(cause, remedy);
+            actions.put(Test.values()[key], remedy);
         }
         return this;
     }

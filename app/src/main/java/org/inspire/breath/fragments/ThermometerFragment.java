@@ -99,7 +99,7 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
         RecommendActionsResult actionsResult = new RecommendActionsResult();
         //if(currentPatient.getAge() < 1 || currentPatient.getAge() > 5) {
             actionsResult.isUrgent = true;
-            actionsResult.addAction("Child < 2 months or > 5 years with fever", "Refer to Health Clinic Immediately");
+            actionsResult.addAction(RecommendActionsResult.Test.FEVER, "Child has a fever - Refer to Health Clinic Immediately");
         //}
         s.setRecommendedActionsResultBlob(actionsResult.toBlob());
         dao.upsertSession(s);

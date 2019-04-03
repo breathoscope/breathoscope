@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -14,6 +15,10 @@ import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.SessionDao;
+import org.inspire.breath.data.blobs.BreathTestResult;
+import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.MalariaTestResult;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 import java.util.Arrays;
 
@@ -27,10 +32,41 @@ public class RecommendedActionsActivity extends TestActivity {
         int id = i.getIntExtra(SESSION_ID_KEY, 0);
         SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
         Session session = dao.getSessionById(id).get(0);
-        TextView view = findViewById(R.id.actions);
+        session.getRecommendedActions().addAction(RecommendActionsResult.Test.BREATH, "Breath a little slower");
+
+        //Get cards so we can hide ones that don't exist
+        CardView feverCard = findViewById(R.id.diagnose_fever_result);
+        CardView breathCard = findViewById(R.id.diagnose_breath_test);
+        CardView malariaCard = findViewById(R.id.diagnose_malaria_test);
+
+        //Get tests
+        FeverTestResult feverTestResult = session.getFeverTestResult();
+        BreathTestResult breathTestResult = session.getBreathTestResult();
+        MalariaTestResult malariaTestResult = session.getMalariaTestResult();
+
+        if(breathTestResult == null)
+            breathCard.setVisibility(View.GONE);
+        if(feverTestResult == null)
+            feverCard.setVisibility(View.GONE);
+        if(malariaTestResult == null)
+            malariaCard.setVisibility(View.GONE);
+
+        TextView feverActions = findViewById(R.id.feverActions);
+        TextView feverResult = findViewById(R.id.feverResult);
+
+        feverResult.setText(session.getFeverTestResult().getTemperature() + "°C");
+
         if(session.getRecommendedActions().isUrgent)
-            view.setTextColor(Color.RED);
-        view.setText(Arrays.toString(session.getRecommendedActions().getActions().entrySet().toArray()));
+            feverActions.setTextColor(Color.RED);
+        feverActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.FEVER));
+
+        TextView breathActions = findViewById(R.id.breathActions);
+        TextView breathResult = findViewById(R.id.breathResult);
+
+        breathResult.setText("20 bpm");
+        if(session.getRecommendedActions().isUrgent)
+            breathActions.setTextColor(Color.RED);
+        breathActions.setText("Breath a little slower!");
 
     }
 
