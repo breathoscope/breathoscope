@@ -55,7 +55,7 @@ public class HrRecordingActivity extends TestActivity {
     private boolean isRecording;
 
     private ImageButton mRecordBtn, mRestartBtn, mStopBtn;
-    private Button mPlayBtn;
+    private Button mPlayBtn, mConfirmBtn;
 
     boolean isPlaying;
 
@@ -94,43 +94,8 @@ public class HrRecordingActivity extends TestActivity {
 
         initViews();
 
-        mRecordBtn.setOnClickListener((v) -> {
+        setupListeners();
 
-            initRecorder();
-
-            toggleVisibleButtons();
-
-            mPlayBtn.setVisibility(View.INVISIBLE);
-
-            recorder.startRecording();
-            isRecording = true;
-            writeThread = new Thread(new AudioFileWriter());
-            writeThread.start();
-
-        });
-
-        mRestartBtn.setOnClickListener((v) -> {
-
-            mPlayBtn.setVisibility(View.INVISIBLE);
-
-            stopRecording();
-            Toast.makeText(HrRecordingActivity.this, "Session cancelled", Toast.LENGTH_SHORT).show();
-        });
-
-        mStopBtn.setOnClickListener((v) -> {
-            stopRecording();
-            rawToWav();
-            mPlayBtn.setVisibility(View.VISIBLE);
-
-        });
-
-        mPlayBtn.setOnClickListener((v) -> {
-            if (!isPlaying) {
-                playAudio();
-            } else {
-                stopPlayingAudio();
-            }
-        });
 
     }
 
@@ -139,10 +104,12 @@ public class HrRecordingActivity extends TestActivity {
         this.mRestartBtn = findViewById(R.id.hr_restart_btn);
         this.mStopBtn = findViewById(R.id.hr_stop_btn);
         this.mPlayBtn = findViewById(R.id.recording_play_button);
+        this.mConfirmBtn = findViewById(R.id.hr_confirm_btn);
 
         mRestartBtn.setVisibility(View.INVISIBLE);
         mStopBtn.setVisibility(View.INVISIBLE);
         mPlayBtn.setVisibility(View.INVISIBLE);
+        mConfirmBtn.setVisibility(View.INVISIBLE);
     }
 
     private void toggleVisibleButtons() {
@@ -246,6 +213,62 @@ public class HrRecordingActivity extends TestActivity {
             AppRoomDatabase.getDatabase().recordingDao().updateRecording(session);
         };
         new Thread(r).start();
+
+    }
+
+    private void setupListeners() {
+        mRecordBtn.setOnClickListener((v) -> {
+
+            initRecorder();
+
+            toggleVisibleButtons();
+
+            mPlayBtn.setVisibility(View.INVISIBLE);
+            mConfirmBtn.setVisibility(View.INVISIBLE);
+
+            recorder.startRecording();
+            isRecording = true;
+            writeThread = new Thread(new AudioFileWriter());
+            writeThread.start();
+
+        });
+
+        mRestartBtn.setOnClickListener((v) -> {
+
+            mPlayBtn.setVisibility(View.INVISIBLE);
+            mConfirmBtn.setVisibility(View.INVISIBLE);
+
+            stopRecording();
+            Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
+        });
+
+        mStopBtn.setOnClickListener((v) -> {
+            stopRecording();
+            rawToWav();
+            mPlayBtn.setVisibility(View.VISIBLE);
+            mConfirmBtn.setVisibility(View.VISIBLE);
+        });
+
+        mPlayBtn.setOnClickListener((v) -> {
+            if (!isPlaying) {
+                playAudio();
+            } else {
+                stopPlayingAudio();
+            }
+        });
+
+        mConfirmBtn.setOnClickListener((v) -> {
+
+            if (isPlaying) {
+                stopPlayingAudio();
+            }
+
+            // replace HrRecordingActivity with heart beat parsing activity
+            Intent intent = new Intent(getApplicationContext(), HrRecordingActivity.class);
+            intent.putExtra("HR_BYTE_ARR", baos.toByteArray());
+            startActivity(intent);
+
+        });
 
     }
 
