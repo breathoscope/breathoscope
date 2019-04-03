@@ -1,10 +1,8 @@
 package org.inspire.breath.fragments;
 
 import android.app.AlertDialog;
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
@@ -17,11 +15,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import org.inspire.breath.R;
-import org.inspire.breath.activities.BreathRateActivity;
-import org.inspire.breath.activities.HomeActivity;
 import org.inspire.breath.data.AppRoomDatabase;
-import org.inspire.breath.data.Recording;
-import org.inspire.breath.data.RecordingDao;
+import org.inspire.breath.data.Session;
+import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.BreathTestResult;
 
 public class BreathRateFragment extends Fragment {
@@ -65,13 +61,13 @@ public class BreathRateFragment extends Fragment {
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which) { // DOUBLE BONUS POINTS FOR RHYMING
                                         case DialogInterface.BUTTON_POSITIVE:
-                                            RecordingDao dao = AppRoomDatabase.getDatabase().recordingDao();
+                                            SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
                                             BreathRateViewModel viewModel = ViewModelProviders.of(getActivity()).get(BreathRateViewModel.class);
-                                            Recording r = dao.getRecordingById(viewModel.sessionID).get(0);
+                                            Session s = dao.getRecordingById(viewModel.sessionID).get(0);
                                             BreathTestResult result = new BreathTestResult();
                                             result.setBreathrate(count);
-                                            r.setBreathTestResultBlob(result.toBlob());
-                                            dao.upsertRecording(r);
+                                            s.setBreathTestResultBlob(result.toBlob());
+                                            dao.upsertRecording(s);
                                             getActivity().finish();
                                             break;
 
