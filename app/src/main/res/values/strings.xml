@@ -29,4 +29,9 @@
     <string name="fever_title">Fever</string>
     <string name="breath_title">Breath</string>
     <string name="diarrhoea_title">Diarrhoea</string>
+
+    <string-array name="sexes_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

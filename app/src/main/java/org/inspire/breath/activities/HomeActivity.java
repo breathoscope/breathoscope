@@ -1,6 +1,7 @@
 package org.inspire.breath.activities;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -57,8 +58,10 @@ public class HomeActivity extends AppCompatActivity {
 
         // Patient data
         this.mPatientName.setText(mPatient.getFirstName() + " " + mPatient.getLastName());
-        this.mPatientAge.setText(mPatient.getAge() + "");
+        this.mPatientAge.setText(mPatient.getAge());
         this.mPatientSex.setText(mPatient.getSex());
+        byte[] bmp = mPatient.getThumb();
+        this.mPatientPicture.setImageBitmap(BitmapFactory.decodeByteArray(bmp, 0, bmp.length));
 
         // Test data
         FeverTestResult feverTestResult = this.mSession.getFeverTestResult();

@@ -14,10 +14,10 @@ import org.inspire.breath.adapters.PatientListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.PatientDao;
-import org.inspire.breath.data.Session;
+
+import org.inspire.breath.data.Session;import org.inspire.breath.fragments.patients.Create;
 import org.inspire.breath.fragments.patients.Listings;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
-import org.inspire.breath.fragments.patients.Profile;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,10 +28,11 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
 
     private List<Fragment> mFragments;
 
-    private Profile mProfile;
+    private Listings mListings;
+    private Create mCreate;
 
     private ViewPager mPager;
-    private FloatingActionButton mAddPatientFAB;
+    public FloatingActionButton mAddPatientFAB;
 
     private Session mSession;
 
@@ -46,41 +47,38 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         Patient patientMC = new Patient();
         patientMC.setFirstName("Max");
         patientMC.setLastName("Caulfield");
-        patientMC.setAge(18);
+        patientMC.setAge("18");
         patientMC.setSex(Patient.FEMALE);
         patients.add(patientMC);
 
         Patient patientCP = new Patient();
         patientCP.setFirstName("Chloe");
         patientCP.setLastName("Price");
-        patientCP.setAge(19);
+        patientCP.setAge("19");
         patientCP.setSex(Patient.FEMALE);
         patients.add(patientCP);
 
         return patients;
     }
 
-    private void initDB() {
-        List<Patient> dummies = getDummyPatientData();
-
+    private void initDummyDb() {
+        List<Patient> dummyData = getDummyPatientData();
         PatientDao dao = AppRoomDatabase.getDatabase().patientDao();
-        List<Patient> allPatients = dao.getAllPatients();
-
-        if (!allPatients.equals(dummies)) {
-            dao.deleteAllPatients();
-            for (Patient patient : dummies) {
-                dao.insertPatient(patient);
-            }
+        for (Patient patient : dummyData) {
+            dao.insertPatient(patient);
         }
     }
 
+    private void clearDb() {
+        AppRoomDatabase.getDatabase()
+                .patientDao()
+                .deleteAllPatients();
+    }
 
     private void initPager() {
         mFragments = new LinkedList<>();
         mFragments.add(new Listings());
-        mProfile = new Profile();
-        mProfile.setArguments(new Bundle());
-        mFragments.add(mProfile);
+        mFragments.add(new Create());
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getSupportFragmentManager(), mFragments);
         mPager.setAdapter(adapter);
     }
@@ -91,7 +89,8 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         setContentView(R.layout.activity_patients);
         findViews();
 
-        initDB(); // needed for some debugging
+        clearDb(); // for debugging always clear the db first
+        initDummyDb();
 
         initPager();
 
@@ -107,15 +106,13 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         });
     }
 
+
     public void displayAddPatient() {
         mPager.setCurrentItem(mPager.getCurrentItem() + 1, true);
     }
 
     @Override
     public void onSelected(Patient patient) {
-        Bundle args = new Bundle();
-        args.putInt(Profile.PATIENT_ID_KEY,patient.getPatientId());
-        mProfile.setArguments(args);
         startRecordingFor(patient);
     }
 
