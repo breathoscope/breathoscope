@@ -126,7 +126,9 @@ public class HomeActivity extends AppCompatActivity {
         this.mBreathCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, BreathRateActivity.class);
+                intent.putExtra(SESSION_ID_KEY, mSession.getId());
+                startActivity(intent);
             }
         });
         this.mDiarrhoeaCard.setOnClickListener(new View.OnClickListener() {
@@ -140,6 +142,15 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home);
+        findViews();
+        setupListeners();
+        getData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setContentView(R.layout.activity_home);
         findViews();
         setupListeners();

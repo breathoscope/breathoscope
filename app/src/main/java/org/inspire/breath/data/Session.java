@@ -93,7 +93,10 @@ public class Session {
     }
 
     public BreathTestResult getBreathTestResult() {
-        return new BreathTestResult().consumeBlob(this.breathTestResultBlob);
+        if(this.breathTestResultBlob != null)
+            return new BreathTestResult().consumeBlob(this.breathTestResultBlob);
+        else
+            return null;
     }
 
     public byte[] getDiarrhoeaTestResultBlob() {

@@ -14,9 +14,16 @@
     <string name="patient_list_select">Select</string>
     <!-- shared preferences -->
     <string name="preference_pass_hash">password_hash</string>
-  
+
     <!--Thermometer Text-->
     <string name="temperature_store">Record</string>
+
+    <!--Breath Text-->
+    <string name="breath_rate_tap">Tap on Inhalation</string>
+    <string name="breath_rate_start">Start Recording</string>
+    <string name="confirmdialog">Breath Rate is %1$d, are you satisfied?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!-- Snackbar message(s) -->
     <string name="snackbar_mic_warning">Please make sure microphone is plugged in correctly</string>
