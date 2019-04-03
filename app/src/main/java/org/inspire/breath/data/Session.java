@@ -15,6 +15,7 @@ import org.inspire.breath.data.blobs.HrRecording;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.interfaces.IBlobbable;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 // Encapsulates a session and the actions that can be performed on it
@@ -121,6 +122,10 @@ public class Session {
 
     public byte[] getHrRecordingBlob() {
         return hrRecordingBlob;
+    }
+
+    public void setHrRecording(ByteArrayOutputStream baos) {
+        setHrRecordingBlob(baos.toByteArray());
     }
 
     public void setHrRecordingBlob(byte[] hrRecordingBlob) {

@@ -9,7 +9,6 @@ import android.media.MediaRecorder;
 import android.media.AudioRecord;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.view.View;
@@ -19,7 +18,6 @@ import android.widget.Toast;
 
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Recording;
-import org.inspire.breath.data.RecordingDao;
 import org.inspire.breath.utils.RawToWavConverter;
 import org.inspire.breath.R;
 
@@ -31,7 +29,7 @@ import java.io.IOException;
 
 
 // TODO restore main activity
-public class HrRecordingActivity extends AppCompatActivity {
+public class HrRecordingActivity extends TestActivity {
 
     private final int RECORDER_AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
     private final int RECORDER_SAMPLE_RATE = 44100;
@@ -46,9 +44,7 @@ public class HrRecordingActivity extends AppCompatActivity {
     MediaPlayer mp;
 
     private ByteArrayOutputStream baos;
-    String sessionId;
-    Recording r;
-    RecordingDao dao;
+    Recording session;
 
     private String rawOutputPath;
     private String wavOutputPath;
@@ -85,8 +81,6 @@ public class HrRecordingActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hr_recording);
-
-        initDb();
 
         rawOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.pcm";
         wavOutputPath = getApplicationContext().getExternalCacheDir().getAbsolutePath() + "/out.wav";
@@ -186,9 +180,7 @@ public class HrRecordingActivity extends AppCompatActivity {
         recorder.release();
         writeThread = null;
 
-        // TODO untested, take off main thread maybe
-        r.setHrRecordingBlob(baos.toByteArray());
-
+        storeRecording();
 
     }
 
@@ -242,14 +234,19 @@ public class HrRecordingActivity extends AppCompatActivity {
         mp.release();
     }
 
-    // untested
-    private void initDb() {
-        Intent i = getIntent();
-        // TODO confirm following string name
-        sessionId = i.getStringExtra("sessionId");
+    private void storeRecording() {
 
-        dao = AppRoomDatabase.getDatabase().recordingDao();
-        r = dao.getRecordingById(Integer.parseInt(sessionId)).get(0);
+        Intent i = getIntent();
+        int id = i.getIntExtra(SESSION_ID_KEY, -1);
+
+        session = AppRoomDatabase.getDatabase().recordingDao().getRecordingById(id).get(0);
+        session.setHrRecording(baos);
+
+        Runnable r = () -> {
+            AppRoomDatabase.getDatabase().recordingDao().updateRecording(session);
+        };
+        new Thread(r).start();
+
     }
 
     // thread to save raw data to app's cache directory
