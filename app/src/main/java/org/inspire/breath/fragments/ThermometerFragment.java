@@ -3,7 +3,10 @@ package org.inspire.breath.fragments;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -12,6 +15,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -59,6 +63,32 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
     public boolean recording;
 
     public MediaPlayer mp;
+    public Snackbar snackbar;
+
+    private BroadcastReceiver mNoisyReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if(mp != null) {
+                switch(intent.getAction()) {
+                    case AudioManager.ACTION_AUDIO_BECOMING_NOISY:
+                        mp.pause();
+                        snackbar.show();
+                        break;
+                    case AudioManager.ACTION_HEADSET_PLUG:
+                        if(intent.getIntExtra("state", 0) == 0) {
+                            snackbar.show();
+                            mp.pause();
+                        }
+                        else {
+                            mp.start();
+                            snackbar.dismiss();
+                        }
+                        break;
+                }
+            }
+        }
+    };
 
     public static ThermometerFragment newInstance() {
         return new ThermometerFragment();
@@ -83,6 +113,13 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        IntentFilter removed = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        getActivity().registerReceiver(mNoisyReceiver, removed);
+
+        IntentFilter inserted = new IntentFilter(AudioManager.ACTION_HEADSET_PLUG);
+        getActivity().registerReceiver(mNoisyReceiver, inserted);
+
         myTextFrequency = (TextView)getView().findViewById(R.id.textFrequency);
         myTextTemperature = (TextView)getView().findViewById(R.id.textTemperature);
         myTextUnits = (TextView)getView().findViewById(R.id.textUnits);
@@ -133,10 +170,15 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
         mp = MediaPlayer.create(this.getActivity(), R.raw.invert120s15khz);
         mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
         mp.setLooping(true);
-        mp.start();
 
         AudioManager am = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
         am.setStreamVolume(AudioManager.STREAM_MUSIC, am.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+
+        snackbar = Snackbar.make(getActivity().findViewById(R.id.container),
+                getString(R.string.snackbar_thermometer_warning),
+                Snackbar.LENGTH_INDEFINITE);
+            mp.start();
+            snackbar.dismiss();
 
 
         recorderThread = new RecorderThread();
@@ -151,12 +193,14 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onPause() {
+        mp.pause();
         super.onPause();
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        mp.stop();
     }
 
     private void requestReadMsgPermission() {
