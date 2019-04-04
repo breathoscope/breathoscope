@@ -1,7 +1,9 @@
 package org.inspire.breath.fragments;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
@@ -12,12 +14,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.content.Context;
 import android.media.AudioManager;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 
 
 import org.inspire.breath.R;
+import org.inspire.breath.activities.ThermometerActivity;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.PatientDao;
@@ -88,22 +92,37 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
-        PatientDao patientDao = AppRoomDatabase.getDatabase().patientDao();
-        ThermometerViewModel viewModel = ViewModelProviders.of(getActivity()).get(ThermometerViewModel.class);
-        Session s = AppRoomDatabase.getDatabase().sessionDao().getSessionById(viewModel.sessionID).get(0);
-        Patient currentPatient = patientDao.getPatientById(s.getPatientId()).get(0);
-        FeverTestResult result = new FeverTestResult();
-        result.setTemperature(fTemperatureCelsius);
-        s.setFeverTestResult(result);
-        RecommendActionsResult actionsResult = new RecommendActionsResult();
-        //if(currentPatient.getAge() < 1 || currentPatient.getAge() > 5) {
-            actionsResult.isUrgent = true;
-            actionsResult.addAction(RecommendActionsResult.Test.FEVER, "Child has a fever - Refer to Health Clinic Immediately");
-        //}
-        s.setRecommendedActionsResultBlob(actionsResult.toBlob());
-        dao.upsertSession(s);
-        getActivity().finish();
+        float temp = fTemperatureCelsius;
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                switch (which) { // DOUBLE BONUS POINTS FOR RHYMING
+                    case DialogInterface.BUTTON_POSITIVE:
+                        ThermometerViewModel viewModel = ViewModelProviders.of(getActivity()).get(ThermometerViewModel.class);
+                        viewModel.temperature = temp;
+                        FeverFragment fragment = FeverFragment.newInstance();
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.container, fragment);
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                        mp.stop();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage(getResources().getString(R.string.temperature_confirm_dialog, temp)).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+                .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
+
+
+
 
     }
 

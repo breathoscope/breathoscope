@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import org.inspire.breath.R;
@@ -30,6 +32,15 @@ public class RecommendedActionsActivity extends TestActivity {
         setContentView(R.layout.activity_recommended_actions);
         Intent i = getIntent();
         int id = i.getIntExtra(SESSION_ID_KEY, 0);
+
+        ImageButton done = findViewById(R.id.imageButton);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(RecommendedActionsActivity.this, PatientsActivity.class);
+                startActivity(intent);
+            }
+        });
         SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
         Session session = dao.getSessionById(id).get(0);
         session.getRecommendedActions().addAction(RecommendActionsResult.Test.BREATH, "Breath a little slower");
@@ -54,7 +65,7 @@ public class RecommendedActionsActivity extends TestActivity {
         TextView feverActions = findViewById(R.id.feverActions);
         TextView feverResult = findViewById(R.id.feverResult);
 
-        feverResult.setText(session.getFeverTestResult().getTemperature() + "°C");
+        feverResult.setText(getResources().getString(R.string.degrees, session.getFeverTestResult().getTemperature()));
 
         if(session.getRecommendedActions().isUrgent)
             feverActions.setTextColor(Color.RED);
@@ -63,10 +74,12 @@ public class RecommendedActionsActivity extends TestActivity {
         TextView breathActions = findViewById(R.id.breathActions);
         TextView breathResult = findViewById(R.id.breathResult);
 
-        breathResult.setText("20 bpm");
-        if(session.getRecommendedActions().isUrgent)
-            breathActions.setTextColor(Color.RED);
-        breathActions.setText("Breath a little slower!");
+        if(breathTestResult != null) {
+            breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
+            if (session.getRecommendedActions().isUrgent)
+                breathActions.setTextColor(Color.RED);
+            breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
+        }
 
     }
 

@@ -58,6 +58,10 @@ public class HomeActivity extends AppCompatActivity {
         this.mPatient = AppRoomDatabase.getDatabase().patientDao().getPatientById(patient_id);
         this.mSession = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(session_id);
 
+        if(mSession.getRecommendedActions() == null) {
+            mSession.setRecommendedActionsResultBlob(new RecommendActionsResult().toBlob());
+            AppRoomDatabase.getDatabase().sessionDao().upsertSession(mSession);
+        }
         // Patient data
         this.mPatientName.setText(mPatient.getFirstName() + " " + mPatient.getLastName());
         this.mPatientAge.setText(mPatient.getAge());
@@ -73,12 +77,23 @@ public class HomeActivity extends AppCompatActivity {
         DangerTestResult dangerTestResult = this.mSession.getDangerTestResult();
         RecommendActionsResult recommendActionsResult = this.mSession.getRecommendedActions();
 
+        if(feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
+            mMalariaCard.setVisibility(View.VISIBLE);
+
         if (recommendActionsResult != null) {
+<<<<<<< HEAD
             if (recommendActionsResult.isUrgent) {
                 Intent i = new Intent(this, RecommendedActionsActivity.class);
                 i.putExtra(SESSION_ID_KEY, mSession.getId());
                 startActivity(i);
             }
+=======
+            //if (recommendActionsResult.isUrgent) {
+            //    Intent i = new Intent(this, RecommendedActionsActivity.class);
+            //    i.putExtra(SESSION_ID_KEY, mSession.getId());
+            //    startActivity(i);
+            //}
+>>>>>>> Changes from 5 hour session
 
         }
         if (feverTestResult != null)
@@ -107,6 +122,7 @@ public class HomeActivity extends AppCompatActivity {
         this.mMalariaTick = findViewById(R.id.home_test_malaria_tick);
 
         this.mMalariaCard = findViewById(R.id.home_test_malaria_card);
+        mMalariaCard.setVisibility(View.GONE);
         this.mBreathCard = findViewById(R.id.home_test_breath_card);
         this.mDiarrhoeaCard = findViewById(R.id.home_test_diarrhoea_card);
         this.mFeverCard = findViewById(R.id.home_test_fever_card);

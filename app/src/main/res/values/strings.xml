@@ -17,6 +17,9 @@
 
     <!--Thermometer Text-->
     <string name="temperature_store">Record</string>
+    <string name="fever_prompt">Has the patient had a fever in the past 48 hours?</string>
+    <string name="temperature_confirm_dialog">Temperature is %1$.2f, are you satisfied?</string>
+    <string name="degrees">%1$.2f°C</string>
 
     <!--Breath Text-->
     <string name="breath_rate_tap">Tap on Inhalation</string>
@@ -41,9 +44,10 @@
     <!-- Test Titles -->
     <string name="malaria_title">Malaria</string>
     <string name="danger_title">Danger Signs</string>
-    <string name="fever_title">Temperature</string>
+    <string name="fever_title">Fever</string>
     <string name="breath_title">Breath</string>
     <string name="diarrhoea_title">Diarrhoea</string>
+    <string name="heart_title">Heart Rate</string>
 
     <string-array name="sexes_array">
         <item>Male</item>
@@ -51,4 +55,7 @@
     </string-array>
 
     <string name="title_activity_recommended_actions">RecommendedActionsActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

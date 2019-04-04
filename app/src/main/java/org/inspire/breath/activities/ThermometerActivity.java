@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 
+import org.inspire.breath.fragments.FeverFragment;
 import org.inspire.breath.fragments.ThermometerFragment;
 import org.inspire.breath.R;
 import org.inspire.breath.fragments.ThermometerViewModel;
