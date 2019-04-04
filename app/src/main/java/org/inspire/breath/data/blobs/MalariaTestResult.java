@@ -8,7 +8,7 @@ import org.inspire.breath.interfaces.IBlobbable;
 import java.util.Arrays;
 
 public class MalariaTestResult implements IBlobbable {
-
+    //make public
     private String answer;
     private byte[] img;
 
