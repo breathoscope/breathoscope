@@ -10,13 +10,9 @@ import org.inspire.breath.R;
 
 public class ChildAge extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_child_age);
-    }
 
 
+/*
     public void Age_Click(View view){
         String value = ( (EditText)findViewById(R.id.age)).getText().toString();
         int age = Integer.parseInt(value);
@@ -38,5 +34,7 @@ public class ChildAge extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_severe_and_pos);
         }
-    }
+    }*/
+
+
 }

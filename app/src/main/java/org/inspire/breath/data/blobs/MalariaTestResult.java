@@ -9,8 +9,8 @@ import java.util.Arrays;
 
 public class MalariaTestResult implements IBlobbable {
     //make public
-    private String answer;
-    private byte[] img;
+    public String answer;
+    public byte[] img;
 
     public MalariaTestResult() {
         this(null, null);
