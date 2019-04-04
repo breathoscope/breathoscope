@@ -27,8 +27,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
-// TODO restore main activity
 public class HrRecordingActivity extends TestActivity {
 
     private final int RECORDER_AUDIO_SOURCE = MediaRecorder.AudioSource.MIC;
@@ -95,8 +93,7 @@ public class HrRecordingActivity extends TestActivity {
         initViews();
 
         setupListeners();
-
-
+        
     }
 
     private void initViews() {
@@ -203,10 +200,7 @@ public class HrRecordingActivity extends TestActivity {
 
     private void storeRecording() {
 
-        Intent i = getIntent();
-        int id = i.getIntExtra(SESSION_ID_KEY, -1);
-
-        session = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(id).get(0);
+        session = getSession();
         session.setHrRecording(baos);
 
         Runnable r = () -> {
