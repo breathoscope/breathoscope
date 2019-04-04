@@ -89,8 +89,8 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
         setContentView(R.layout.activity_patients);
         findViews();
 
-        clearDb(); // for debugging always clear the db first
-        initDummyDb();
+//        clearDb(); // for debugging always clear the db first
+//        initDummyDb();
 
         initPager();
 
