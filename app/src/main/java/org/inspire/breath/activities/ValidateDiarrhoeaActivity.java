@@ -18,7 +18,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
     Button answerYes, answerNo;
     TextView question;
     private int questionNum = 0;
-
+    private Recording session;
 
 
     public String mQuestions [] = {
@@ -48,7 +48,6 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validate_diarrhoea);
-
 
         answerYes = (Button) findViewById(R.id.buttonYes);
         answerNo = (Button) findViewById(R.id.buttonNo);

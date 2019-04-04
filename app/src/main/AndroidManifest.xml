@@ -20,8 +20,8 @@
         <activity android:name=".activities.HrRecordingActivity">
         </activity>
 
-        <activity android:name=".activities.LoginActivity"/>
-        <activity android:name=".activities.ValidateDiarrhoeaActivity">
+        <activity android:name=".activities.ValidateDiarrhoeaActivity"/>
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
