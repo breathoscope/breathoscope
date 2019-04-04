@@ -20,7 +20,7 @@ public class Understanding_results extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_understanding_results);
         session = AppRoomDatabase.getDatabase().recordingDao().getRecordingById(HomeActivity.currentSession).get(0);//getting session instance --> getting info
-        age = AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).get(0).getAge();
+        age = AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).get(0).getAge(); //getting the child's age
     }
 
 
