@@ -72,7 +72,7 @@ public class BreathRateFragment extends TestFragment {
                                             RecommendActionsResult recommendActionsResult = s.getRecommendedActions();
                                             recommendActionsResult.addAction(RecommendActionsResult.Test.BREATH, "Treat with Amoxicillin");
                                             s.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
-                                            dao.upsertSession(s);
+                                            dao.upsertRecording(s);
                                             getActivity().finish();
                                             break;
 

@@ -39,10 +39,4 @@
         <activity android:name=".activities.ResetActivity" />
         <activity android:name=".activities.HomeActivity" />
     </application>
-<<<<<<< HEAD
 </manifest>
-
-=======
-
-</manifest>
->>>>>>> Initial actions reporting

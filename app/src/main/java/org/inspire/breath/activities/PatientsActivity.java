@@ -119,8 +119,8 @@ public class PatientsActivity extends AppCompatActivity implements PatientListAd
     public void startRecordingFor(Patient patient) {
         mSession.setPatientId(patient.getPatientId());
 
-        AppRoomDatabase.getDatabase().sessionDao().insertSession(mSession);
-        Session session = AppRoomDatabase.getDatabase().sessionDao().getSessions(patient.getPatientId()).get(0);
+        AppRoomDatabase.getDatabase().sessionDao().insertRecording(mSession);
+        Session session = AppRoomDatabase.getDatabase().sessionDao().getRecordings(patient.getPatientId()).get(0);
         Intent intent = new Intent(this, RECORDING_ACTIVITY);
         intent.putExtra(HomeActivity.PATIENT_ID_KEY, patient.getPatientId());
         intent.putExtra(HomeActivity.SESSION_ID_KEY, session.getId());

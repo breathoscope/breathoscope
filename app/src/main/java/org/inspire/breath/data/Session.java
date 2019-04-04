@@ -12,15 +12,10 @@ import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.HrRecording;
 import org.inspire.breath.data.blobs.MalariaTestResult;
-<<<<<<< HEAD
-import org.inspire.breath.interfaces.IBlobbable;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Date;
-
-=======
 import org.inspire.breath.data.blobs.RecommendActionsResult;
->>>>>>> Initial actions reporting
+
 // Encapsulates a session and the actions that can be performed on it
 @Entity(foreignKeys = @ForeignKey(entity = Patient.class,
                                     childColumns = "patientId",
@@ -51,13 +46,11 @@ public class Session {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Danger")
     private byte[] dangerTestResultBlob;
 
-<<<<<<< HEAD
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "HrRecording")
     private byte[] hrRecordingBlob;
-=======
+
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "RecommendedActions")
     private byte[] recommendedActionsResultBlob;
->>>>>>> Initial actions reporting
 
 
 
@@ -124,7 +117,6 @@ public class Session {
         return new DiarrhoeaTestResult().consumeBlob(this.diarrhoeaTestResultBlob);
     }
 
-<<<<<<< HEAD
     public HrRecording getHrRecording() {
         return new HrRecording().consumeBlob(this.hrRecordingBlob);
     }
@@ -141,9 +133,6 @@ public class Session {
         this.hrRecordingBlob = hrRecordingBlob;
     }
 
-
-
-=======
     public RecommendActionsResult getRecommendedActions() {
         return new RecommendActionsResult().consumeBlob(this.recommendedActionsResultBlob);
     }
@@ -160,7 +149,6 @@ public class Session {
         malariaTestResultBlob = blob;
     }
 
->>>>>>> Initial actions reporting
     public int getPatientId() {
         return patientId;
     }

@@ -42,7 +42,7 @@ public class RecommendedActionsActivity extends TestActivity {
             }
         });
         SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
-        Session session = dao.getSessionById(id).get(0);
+        Session session = dao.getRecordingById(id);
         session.getRecommendedActions().addAction(RecommendActionsResult.Test.BREATH, "Breath a little slower");
 
         //Get cards so we can hide ones that don't exist

@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
 
         if(mSession.getRecommendedActions() == null) {
             mSession.setRecommendedActionsResultBlob(new RecommendActionsResult().toBlob());
-            AppRoomDatabase.getDatabase().sessionDao().upsertSession(mSession);
+            AppRoomDatabase.getDatabase().sessionDao().upsertRecording(mSession);
         }
         // Patient data
         this.mPatientName.setText(mPatient.getFirstName() + " " + mPatient.getLastName());
@@ -81,20 +81,11 @@ public class HomeActivity extends AppCompatActivity {
             mMalariaCard.setVisibility(View.VISIBLE);
 
         if (recommendActionsResult != null) {
-<<<<<<< HEAD
-            if (recommendActionsResult.isUrgent) {
-                Intent i = new Intent(this, RecommendedActionsActivity.class);
-                i.putExtra(SESSION_ID_KEY, mSession.getId());
-                startActivity(i);
-            }
-=======
             //if (recommendActionsResult.isUrgent) {
             //    Intent i = new Intent(this, RecommendedActionsActivity.class);
             //    i.putExtra(SESSION_ID_KEY, mSession.getId());
             //    startActivity(i);
             //}
->>>>>>> Changes from 5 hour session
-
         }
         if (feverTestResult != null)
             mFeverTick.setChecked(true);
