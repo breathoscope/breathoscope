@@ -19,16 +19,20 @@
         <activity android:name=".activities.BreathRateActivity" />
         <activity android:name=".activities.HrRecordingActivity">
         </activity>
+
+        <activity android:name=".activities.ValidateDiarrhoeaActivity"/>
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
         <activity android:name=".activities.ResetActivity"/>
         <activity android:name=".activities.HomeActivity"/>
     </application>
 </manifest>
+
