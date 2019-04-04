@@ -53,7 +53,7 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int patient_id = intent.getIntExtra(PATIENT_ID_KEY, -1);
         int session_id = intent.getIntExtra(SESSION_ID_KEY, -1);
-        this.mPatient = AppRoomDatabase.getDatabase().patientDao().getPatientById(patient_id).get(0);
+        this.mPatient = AppRoomDatabase.getDatabase().patientDao().getPatientById(patient_id);
         this.mSession = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(session_id);
 
         // Patient data
