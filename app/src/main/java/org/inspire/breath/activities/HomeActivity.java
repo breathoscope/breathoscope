@@ -135,6 +135,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(HomeActivity.this, ValidateDiarrhoeaActivity.class);
+                intent.putExtra(SESSION_ID_KEY, mSession.getId());
+                startActivity(intent);
             }
         });
     }

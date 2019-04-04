@@ -13,7 +13,7 @@ import org.inspire.breath.data.RecordingDao;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 
 
-public class ValidateDiarrhoeaActivity extends AppCompatActivity {
+public class ValidateDiarrhoeaActivity extends TestActivity {
 
     Button answerYes, answerNo;
     TextView question;
@@ -56,6 +56,7 @@ public class ValidateDiarrhoeaActivity extends AppCompatActivity {
 
 
         question.setText(getQuestion(questionNum));
+
         answerYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,9 +69,11 @@ public class ValidateDiarrhoeaActivity extends AppCompatActivity {
 
                     DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                     writer.setResult(1);
-
-
-
+                    Recording a = getSession();
+                    a.setDiarrhoeaTestResultBlob(writer.toBlob());
+                    AppRoomDatabase.getDatabase()
+                                    .recordingDao()
+                                    .insertRecording(a);
 
                     answerYes.setVisibility(View.GONE);
                     answerNo.setVisibility(View.GONE);
@@ -85,6 +88,15 @@ public class ValidateDiarrhoeaActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 question.setText(getAnswer(questionNum));
+
+                DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
+                writer.setResult(questionNum);
+                Recording a = getSession();
+                a.setDiarrhoeaTestResultBlob(writer.toBlob());
+                AppRoomDatabase.getDatabase()
+                        .recordingDao()
+                        .insertRecording(a);
+
                 answerYes.setVisibility(View.GONE);
                 answerNo.setVisibility(View.GONE);
 

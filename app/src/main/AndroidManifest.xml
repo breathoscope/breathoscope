@@ -35,3 +35,4 @@
         <activity android:name=".activities.HomeActivity"/>
     </application>
 </manifest>
+
