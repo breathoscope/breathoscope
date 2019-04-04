@@ -47,10 +47,13 @@
         <!--<activity android:name=".activities.ChildAge$Severe_AND_Pos" />-->
         <activity android:name=".activities.NonSevereMalariaTreatment" />
         <activity android:name=".activities.Refer_HC" />
+<<<<<<< HEAD
 
 
         <activity android:name=".activities.ChildAge" />
 
+=======
+>>>>>>> removed child age class
         <activity android:name=".activities.FeverMainQ" />
 
         <activity android:name=".activities.LoginActivity">

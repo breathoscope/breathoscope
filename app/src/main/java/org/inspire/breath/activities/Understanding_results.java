@@ -22,8 +22,20 @@ public class Understanding_results extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_understanding_results);
+
         session = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(HomeActivity.currentSession);//getting session instance --> getting info
+<<<<<<< HEAD
         age = Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).getAge());
+=======
+
+        age =Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId().getAge()));
+
+
+
+
+
+    }
+>>>>>>> removed child age class
 
 
     }

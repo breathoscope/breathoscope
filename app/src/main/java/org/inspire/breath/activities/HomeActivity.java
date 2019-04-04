@@ -137,7 +137,18 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+<<<<<<< HEAD
                 Intent intent = new Intent(HomeActivity.this, MalariaActivity.class);
+=======
+
+                Intent intent = new Intent(HomeActivity.this, HrRecordingActivity.class);
+
+                Intent intent = new Intent(HomeActivity.this, Understanding_results.class);
+
+
+                Intent intent = new Intent(HomeActivity.this, MalariaActivity.class);
+
+>>>>>>> removed child age class
                 intent.putExtra(SESSION_ID_KEY, mSession.getId());
                 currentSession = mSession.getId();
                 startActivity(intent);
