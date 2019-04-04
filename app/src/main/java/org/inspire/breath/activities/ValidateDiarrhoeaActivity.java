@@ -8,8 +8,7 @@ import android.widget.Button;
 
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
-import org.inspire.breath.data.Recording;
-import org.inspire.breath.data.RecordingDao;
+import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 
 
@@ -18,7 +17,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
     Button answerYes, answerNo;
     TextView question;
     private int questionNum = 0;
-    private Recording session;
+    private Session session;
 
 
     public String mQuestions [] = {
@@ -68,10 +67,10 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
 
                     DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                     writer.setResult(1);
-                    Recording a = getSession();
+                    Session a = getSession();
                     a.setDiarrhoeaTestResultBlob(writer.toBlob());
                     AppRoomDatabase.getDatabase()
-                                    .recordingDao()
+                                    .sessionDao()
                                     .insertRecording(a);
 
                     answerYes.setVisibility(View.GONE);
@@ -90,10 +89,10 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
 
                 DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                 writer.setResult(questionNum);
-                Recording a = getSession();
+                Session a = getSession();
                 a.setDiarrhoeaTestResultBlob(writer.toBlob());
                 AppRoomDatabase.getDatabase()
-                        .recordingDao()
+                        .sessionDao()
                         .insertRecording(a);
 
                 answerYes.setVisibility(View.GONE);
