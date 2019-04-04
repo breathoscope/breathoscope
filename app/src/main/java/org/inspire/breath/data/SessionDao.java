@@ -34,10 +34,7 @@ public abstract class SessionDao {
     public abstract List<Session> getAllRecordings();
 
     @Query("SELECT * FROM sessions WHERE id = :id LIMIT 1")
-    public abstract Session getRecordingById(long id);
-
-    @Query("SELECT * FROM sessions WHERE id = :id")
-    public abstract List<Session> getRecordingById(int id);
+    public abstract Session getRecordingById(int id);
 
     @Query("SELECT * FROM sessions WHERE patientId = :p_id ORDER BY timestamp DESC")
     public abstract List<Session> getRecordings(int p_id);

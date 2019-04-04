@@ -14,7 +14,7 @@ public class TestActivity extends AppCompatActivity {
         if (mSession == null) {
             mSession = AppRoomDatabase.getDatabase()
                         .sessionDao()
-                        .getRecordingById(getIntent().getLongExtra(SESSION_ID_KEY, -1));
+                        .getRecordingById(getIntent().getIntExtra(SESSION_ID_KEY, -1));
         }
         return mSession;
     }

@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
@@ -20,7 +21,7 @@ import org.inspire.breath.data.Session;
 import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.BreathTestResult;
 
-public class BreathRateFragment extends Fragment {
+public class BreathRateFragment extends TestFragment {
 
     private BreathRateViewModel mViewModel;
 
@@ -63,7 +64,7 @@ public class BreathRateFragment extends Fragment {
                                         case DialogInterface.BUTTON_POSITIVE:
                                             SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
                                             BreathRateViewModel viewModel = ViewModelProviders.of(getActivity()).get(BreathRateViewModel.class);
-                                            Session s = dao.getRecordingById(viewModel.sessionID).get(0);
+                                            Session s = getSession();
                                             BreathTestResult result = new BreathTestResult();
                                             result.setBreathrate(count);
                                             s.setBreathTestResultBlob(result.toBlob());
