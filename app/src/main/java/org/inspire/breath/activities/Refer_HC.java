@@ -10,10 +10,8 @@ public class Refer_HC extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_refer_hc);
 
-        setContentView(R.layout.activity_refer__hc);
-
+        setContentView(R.layout.activity_refer_hc);
     }
 }
