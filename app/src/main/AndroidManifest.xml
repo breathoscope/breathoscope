@@ -20,13 +20,12 @@
         <activity android:name=".activities.SeverePneumoniaTreatment"></activity>
         <activity android:name=".activities.PneumoniaSeveritySigns" />
         <activity android:name=".activities.NonSeverePneumoniaTreatment" />
-        <activity android:name=".activities.Understanding_results" />
         <activity android:name=".activities.Severe_malaria" />
         <activity
             android:name=".activities.Severe_And_Pos"
             android:label="@string/title_activity_severe__and__pos"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activities.ChildAge$Severe_AND_Pos" />
+        <!--<activity android:name=".activities.ChildAge$Severe_AND_Pos" />-->
         <activity android:name=".activities.NonSevereMalariaTreatment" />
         <activity android:name=".activities.Refer_HC" />
         <activity android:name=".activities.ChildAge" />
@@ -41,14 +40,8 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".activities.ResetActivity"/>
         <activity android:name=".activities.HomeActivity"/>
-=======
-        <activity android:name=".activities.PatientsActivity" />
-        <activity android:name=".activities.ResetActivity" />
-        <activity android:name=".activities.MalariaActivity" />
-        <activity android:name=".activities.HomeActivity" />
->>>>>>> Malaria guide
+
     </application>
 </manifest>

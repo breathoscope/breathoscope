@@ -24,6 +24,8 @@ import org.inspire.breath.data.blobs.MalariaTestResult;
 
 public class HomeActivity extends AppCompatActivity {
 
+    public static int currentSession = -1;
+
     public static final String PATIENT_ID_KEY = "PATIENT_ID_KEY";
     public static final String SESSION_ID_KEY = "SESSION_ID_KEY";
     private static final int TEST_COUNT = 5;
@@ -104,8 +106,9 @@ public class HomeActivity extends AppCompatActivity {
         this.mMalariaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, MalariaActivity.class);
+                Intent intent = new Intent(HomeActivity.this, Understanding_results.class);
                 intent.putExtra(SESSION_ID_KEY, mSession.getId());
+                currentSession = mSession.getId();
                 startActivity(intent);
             }
         });
