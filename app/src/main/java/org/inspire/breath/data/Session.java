@@ -11,9 +11,11 @@ import org.inspire.breath.data.blobs.BreathTestResult;
 import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.HrRecording;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.interfaces.IBlobbable;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 // Encapsulates a session and the actions that can be performed on it
@@ -45,6 +47,9 @@ public class Session {
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Danger")
     private byte[] dangerTestResultBlob;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "HrRecording")
+    private byte[] hrRecordingBlob;
 
 
 
@@ -110,6 +115,24 @@ public class Session {
     public DiarrhoeaTestResult getDiarrhoeaTestResult() {
         return new DiarrhoeaTestResult().consumeBlob(this.diarrhoeaTestResultBlob);
     }
+
+    public HrRecording getHrRecording() {
+        return new HrRecording().consumeBlob(this.hrRecordingBlob);
+    }
+
+    public byte[] getHrRecordingBlob() {
+        return hrRecordingBlob;
+    }
+
+    public void setHrRecording(ByteArrayOutputStream baos) {
+        setHrRecordingBlob(baos.toByteArray());
+    }
+
+    public void setHrRecordingBlob(byte[] hrRecordingBlob) {
+        this.hrRecordingBlob = hrRecordingBlob;
+    }
+
+
 
     public int getPatientId() {
         return patientId;

@@ -30,6 +30,11 @@
     <!-- Patient Profile -->
     <string name="load_failed">Failed to load</string>
 
+    <!-- Recording activity strings -->
+    <string name="recording_play">Play Recording</string>
+    <string name="recording_stop">Stop playing</string>
+    <string name="recording_confirm">Confirm</string>
+
     <!-- Test Titles -->
     <string name="malaria_title">Malaria</string>
     <string name="danger_title">Danger Signs</string>
