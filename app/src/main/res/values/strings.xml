@@ -1,6 +1,6 @@
 <resources>
     <!--Core Details-->
-    <string name="app_name">My Application</string>
+    <string name="app_name">Breathoscope</string>
 
     <!--Login text-->
     <string name="login_login_btn">Login</string>
@@ -8,4 +8,37 @@
     <string name="login_uname_hint">Name</string>
     <string name="login_password_hint">Password</string>
     <string name="login_incorrect_msg">Invalid Login</string>
+    <!-- Fallback values-->
+    <string name="default_name">None/ Could not load</string>
+    <!-- Patient List -->
+    <string name="patient_list_select">Select</string>
+    <!-- shared preferences -->
+    <string name="preference_pass_hash">password_hash</string>
+
+    <!--Thermometer Text-->
+    <string name="temperature_store">Record</string>
+
+    <!--Breath Text-->
+    <string name="breath_rate_tap">Tap on Inhalation</string>
+    <string name="breath_rate_start">Start Recording</string>
+    <string name="confirmdialog">Breath Rate is %1$d, are you satisfied?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Snackbar message(s) -->
+    <string name="snackbar_mic_warning">Please make sure microphone is plugged in correctly</string>
+    <!-- Patient Profile -->
+    <string name="load_failed">Failed to load</string>
+
+    <!-- Test Titles -->
+    <string name="malaria_title">Malaria</string>
+    <string name="danger_title">Danger Signs</string>
+    <string name="fever_title">Fever</string>
+    <string name="breath_title">Breath</string>
+    <string name="diarrhoea_title">Diarrhoea</string>
+
+    <string-array name="sexes_array">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>

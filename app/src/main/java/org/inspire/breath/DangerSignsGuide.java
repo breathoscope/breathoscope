@@ -13,7 +13,7 @@ public class DangerSignsGuide extends AppCompatActivity {
 
     boolean anyDangerSigns = false;
     boolean answered = false;
-    int results[] = new int[4];
+    byte results[] = new byte[4];
     TextView questionView;
     TextView questionTitleView;
     TextView answerView;
