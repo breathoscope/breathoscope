@@ -138,10 +138,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(HomeActivity.this, MalariaActivity.class);
-
-
-
-
                 intent.putExtra(SESSION_ID_KEY, mSession.getId());
                 currentSession = mSession.getId();
                 startActivity(intent);
