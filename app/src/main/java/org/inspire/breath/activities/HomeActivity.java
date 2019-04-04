@@ -137,7 +137,8 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(HomeActivity.this, HrRecordingActivity.class);
+                Intent intent = new Intent(HomeActivity.this, MalariaActivity.class);
+
 
 
 
