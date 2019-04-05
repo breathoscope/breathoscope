@@ -88,7 +88,7 @@ public class RecommendedActionsActivity extends TestActivity {
                 breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
             }
         }
-
+      
         if(diarrhoeaTestResult != null) {
             TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
             TextView diarrhoeaResult = findViewById(R.id.diarrhoeaResult);

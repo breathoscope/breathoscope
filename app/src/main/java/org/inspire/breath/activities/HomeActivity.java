@@ -134,7 +134,7 @@ public class HomeActivity extends AppCompatActivity {
         this.mMalariaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, MalariaActivity.class);
+                Intent intent = new Intent(HomeActivity.this, HrRecordingActivity.class);
                 intent.putExtra(SESSION_ID_KEY, mSession.getId());
                 startActivity(intent);
             }
