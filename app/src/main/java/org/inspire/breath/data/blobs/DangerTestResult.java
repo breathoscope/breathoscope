@@ -2,6 +2,8 @@ package org.inspire.breath.data.blobs;
 
 import org.inspire.breath.interfaces.IBlobbable;
 
+import java.nio.ByteBuffer;
+
 public class DangerTestResult implements IBlobbable {
 
     private String reviewAnswers[][] = {

@@ -7,14 +7,19 @@ import android.widget.Button;
 import android.os.Bundle;
 import android.view.View;
 
+import org.inspire.breath.activities.HomeActivity;
 import org.inspire.breath.activities.TestActivity;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
+import org.inspire.breath.data.PatientDao;
 import org.inspire.breath.data.Session;
+import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.DangerTestResult;
 
 public class DangerSignsGuide extends TestActivity {
     DangerSignsQuestions questions = new DangerSignsQuestions();
+
+
     boolean anyDangerSigns = false;
     boolean answered = false;
     byte results[] = new byte[4];
@@ -66,11 +71,18 @@ public class DangerSignsGuide extends TestActivity {
                 }
                 else if(questionNumber > 3){
                     //Store data.
-                    DangerTestResult storage = new DangerTestResult();
-                    storage.setResults(results);
-                    Session tmp = getSession();
-                    tmp.setDangerTestResultBlob(storage.toBlob());
-                    AppRoomDatabase.getDatabase().sessionDao().insertRecording(tmp);
+
+
+
+
+
+                    DangerTestResult dtr = new DangerTestResult();
+                    dtr.setResults(results);
+                    Session s = getSession();
+                    s.setDangerTestResultBlob(dtr.toBlob());
+                    AppRoomDatabase.getDatabase().sessionDao().upsertRecording(s);
+                    finish();
+
                 }
             }
         });
