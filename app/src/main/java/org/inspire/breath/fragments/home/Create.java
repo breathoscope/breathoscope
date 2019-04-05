@@ -1,4 +1,4 @@
-package org.inspire.breath.fragments.patients;
+package org.inspire.breath.fragments.home;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,10 +23,12 @@ import android.widget.Spinner;
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
+import android.support.v4.app.Fragment;
+import org.inspire.breath.views.StaticPager;
 
 import java.io.ByteArrayOutputStream;
 
-public class Create extends PatientsFragment {
+public class Create extends Fragment implements StaticPager.Focusable {
 
     private static final int IMAGE_REQUEST_CODE = 1;
 
@@ -112,7 +114,6 @@ public class Create extends PatientsFragment {
 
     @Override
     public void onFocus() {
-        super.onFocus();
         clearFields();
     }
 

@@ -1,17 +1,12 @@
 package org.inspire.breath.activities;
 
-import android.support.v4.app.Fragment;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import org.inspire.breath.R;
-import org.inspire.breath.adapters.PatientListAdapter;
 import org.inspire.breath.data.Patient;
-import org.inspire.breath.fragments.Admin;
-import org.inspire.breath.fragments.Home;
-import org.inspire.breath.fragments.Patients;
+import org.inspire.breath.fragments.home.Admin;
+import org.inspire.breath.fragments.home.Home;
 import org.inspire.breath.utils.FragmentedActivity;
 
 public class HomeActivity extends FragmentedActivity {

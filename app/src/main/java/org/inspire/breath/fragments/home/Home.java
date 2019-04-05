@@ -1,4 +1,4 @@
-package org.inspire.breath.fragments;
+package org.inspire.breath.fragments.home;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;

@@ -11,9 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.inspire.breath.R;
-import org.inspire.breath.activities.ResetActivity;
 import org.inspire.breath.data.AppRoomDatabase;
-import org.inspire.breath.fragments.Home;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

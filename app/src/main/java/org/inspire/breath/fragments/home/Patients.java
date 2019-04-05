@@ -1,4 +1,4 @@
-package org.inspire.breath.fragments;
+package org.inspire.breath.fragments.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,9 +12,6 @@ import android.view.ViewGroup;
 import org.inspire.breath.R;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
 import org.inspire.breath.adapters.PatientListAdapter;
-import org.inspire.breath.data.Patient;
-import org.inspire.breath.fragments.patients.Create;
-import org.inspire.breath.fragments.patients.Listings;
 import org.inspire.breath.utils.FragmentedFragment;
 import org.inspire.breath.views.StaticPager;
 

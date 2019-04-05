@@ -15,8 +15,8 @@ import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.PatientDao;
 
-import org.inspire.breath.data.Session;import org.inspire.breath.fragments.patients.Create;
-import org.inspire.breath.fragments.patients.Listings;
+import org.inspire.breath.data.Session;import org.inspire.breath.fragments.home.Create;
+import org.inspire.breath.fragments.home.Listings;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
 
 import java.util.LinkedList;
