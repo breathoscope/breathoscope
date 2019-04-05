@@ -18,7 +18,7 @@ import org.inspire.breath.views.StaticPager;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Patients extends FragmentedFragment {
+public class Patients extends FragmentedFragment implements StaticPager.Focusable {
 
     private List<Fragment> mFragments;
     private StaticPager mPager;
@@ -74,5 +74,10 @@ public class Patients extends FragmentedFragment {
     public Patients setCallback(PatientListAdapter.PatientCallback callback) {
         this.callback = callback;
         return this;
+    }
+
+    @Override
+    public void onFocus() {
+
     }
 }

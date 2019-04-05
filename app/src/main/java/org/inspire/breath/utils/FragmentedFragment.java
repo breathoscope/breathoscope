@@ -21,6 +21,9 @@ public class FragmentedFragment extends Fragment {
     }
 
     public boolean onBackPressed() {
-        return currentFragment.onBackPressed();
+        if (currentFragment != null)
+            return currentFragment.onBackPressed();
+        else
+            return false;
     }
 }

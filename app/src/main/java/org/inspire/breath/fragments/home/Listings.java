@@ -16,11 +16,12 @@ import org.inspire.breath.data.Patient;
 import org.inspire.breath.views.StaticPager;
 
 import android.support.v4.app.Fragment;
+import android.view.animation.Animation;
 
 
 import java.util.List;
 
-public class Listings extends Fragment implements PatientListAdapter.PatientCallback, StaticPager.Focusable{
+public class Listings extends Fragment implements PatientListAdapter.PatientCallback, StaticPager.Focusable {
 
     private RecyclerView mPatientList;
 
@@ -81,5 +82,13 @@ public class Listings extends Fragment implements PatientListAdapter.PatientCall
     public Listings setCallback(PatientListAdapter.PatientCallback callback) {
         this.callback = callback;
         return this;
+    }
+    @Override
+    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
+        System.out.println("animated");
+//        System.out.println(R.animator.)
+        System.out.println(transit + " " + enter + " " + nextAnim);
+
+        return super.onCreateAnimation(transit, enter, nextAnim);
     }
 }

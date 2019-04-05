@@ -31,8 +31,9 @@ import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 import org.inspire.breath.utils.FragmentedFragment;
+import org.inspire.breath.views.StaticPager;
 
-public class Home extends FragmentedFragment {
+public class Home extends FragmentedFragment implements StaticPager.Focusable {
 
     private Patient mPatient;
     private Session mSession;
@@ -184,5 +185,10 @@ public class Home extends FragmentedFragment {
     public void setPatient(Patient patient) {
         this.mPatient = patient;
         // TODO
+    }
+
+    @Override
+    public void onFocus() {
+
     }
 }
