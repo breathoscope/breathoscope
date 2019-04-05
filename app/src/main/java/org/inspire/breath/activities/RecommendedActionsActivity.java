@@ -18,8 +18,10 @@ import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.BreathTestResult;
+import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 
@@ -49,13 +51,17 @@ public class RecommendedActionsActivity extends TestActivity {
         CardView feverCard = findViewById(R.id.diagnose_fever_result);
         CardView breathCard = findViewById(R.id.diagnose_breath_test);
         CardView malariaCard = findViewById(R.id.diagnose_malaria_test);
-        //CardView diarrhoeaCard = findViewById(R.id.diagnose_diarrhoea_test);
+        CardView diarrhoeaCard = findViewById(R.id.diagnose_diarrhoea_test);
+        CardView heartCard = findViewById(R.id.diagnose_heartrate_test);
+        CardView dangerCard = findViewById(R.id.diagnose_danger_test);
 
         //Get tests
         FeverTestResult feverTestResult = session.getFeverTestResult();
         BreathTestResult breathTestResult = session.getBreathTestResult();
         MalariaTestResult malariaTestResult = session.getMalariaTestResult();
         DiarrhoeaTestResult diarrhoeaTestResult = session.getDiarrhoeaTestResult();
+        HrCountTest heartRateTestResult = session.getHrCount();
+        DangerTestResult dangerTestResult = session.getDangerTestResult();
 
         if(breathTestResult == null)
             breathCard.setVisibility(View.GONE);
@@ -63,8 +69,12 @@ public class RecommendedActionsActivity extends TestActivity {
             feverCard.setVisibility(View.GONE);
         if(malariaTestResult == null)
             malariaCard.setVisibility(View.GONE);
-        //if(diarrhoeaTestResult == null)
-        //    diarrhoeaCard.setVisibility(View.GONE);
+        if(diarrhoeaTestResult == null)
+            diarrhoeaCard.setVisibility(View.GONE);
+        if(heartRateTestResult == null)
+            heartCard.setVisibility(View.GONE);
+        if(dangerTestResult == null)
+            dangerCard.setVisibility(View.GONE);
 
         if(feverTestResult != null) {
             TextView feverActions = findViewById(R.id.feverActions);
@@ -80,24 +90,40 @@ public class RecommendedActionsActivity extends TestActivity {
         if(breathTestResult != null) {
             TextView breathActions = findViewById(R.id.breathActions);
             TextView breathResult = findViewById(R.id.breathResult);
+            breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
+            if (session.getRecommendedActions().isUrgent)
+                breathActions.setTextColor(Color.RED);
+            breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
 
-            if (breathTestResult != null) {
-                breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
-                if (session.getRecommendedActions().isUrgent)
-                    breathActions.setTextColor(Color.RED);
-                breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
-            }
         }
 
-        /**if(diarrhoeaTestResult != null) {
+        if(diarrhoeaTestResult != null) {
             TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
+            if (session.getRecommendedActions().isUrgent)
+                diarrhoeaActions.setTextColor(Color.RED);
+            diarrhoeaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DIARRHOEA));
+        }
 
-            if (diarrhoeaTestResult != null) {
-                if (session.getRecommendedActions().isUrgent)
-                    diarrhoeaActions.setTextColor(Color.RED);
-                diarrhoeaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DIARRHOEA));
-            }
-        }**/
+        if(dangerTestResult != null) {
+            TextView dangerActions = findViewById(R.id.dangerActions);
+            if(session.getRecommendedActions().isUrgent)
+                dangerActions.setTextColor(Color.RED);
+            dangerActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DANGER));
+        }
+
+        if(malariaTestResult != null) {
+            TextView malariaActions = findViewById(R.id.malariaActions);
+            if (session.getRecommendedActions().isUrgent)
+                malariaActions.setTextColor(Color.RED);
+            malariaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.MALARIA));
+        }
+
+        if(heartRateTestResult != null) {
+            TextView heartrateActions = findViewById(R.id.heartrateActions);
+            if(session.getRecommendedActions().isUrgent)
+                heartrateActions.setTextColor(Color.RED);
+            heartrateActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.HEART));
+        }
 
 
     }
