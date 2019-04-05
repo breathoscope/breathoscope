@@ -180,4 +180,9 @@ public class Home extends FragmentedFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+    public void setPatient(Patient patient) {
+        this.mPatient = patient;
+        // TODO
+    }
 }

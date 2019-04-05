@@ -46,7 +46,7 @@ public class Patients extends FragmentedFragment {
         Listings listings = new Listings().setCallback(this.callback);
         mFragments.add(listings);
         mFragments.add(new Create());
-        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getFragmentManager(), mFragments);
+        PagerFragmentAdapter adapter = new PagerFragmentAdapter(getChildFragmentManager(), mFragments);
         mPager.setAdapter(adapter);
     }
 
