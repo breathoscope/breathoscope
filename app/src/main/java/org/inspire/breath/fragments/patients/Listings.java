@@ -53,7 +53,7 @@ public class Listings extends PatientsFragment {
     private void initList() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mPatientList.setLayoutManager(layoutManager);
-        mPatientList.setAdapter(new PatientListAdapter(getAllPatients(), (PatientsActivity) getActivity()));
+        mPatientList.setAdapter(new PatientListAdapter(getAllPatients(), (PatientListAdapter.PatientCallback) getActivity()));
     }
 
     @Override

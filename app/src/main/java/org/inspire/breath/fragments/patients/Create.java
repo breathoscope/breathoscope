@@ -113,7 +113,6 @@ public class Create extends PatientsFragment {
     @Override
     public void onFocus() {
         super.onFocus();
-        getPatientsActivity().mAddPatientFAB.hide();
         clearFields();
     }
 
