@@ -12,6 +12,7 @@ import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.HrRecording;
+import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.interfaces.IBlobbable;
 
@@ -51,6 +52,8 @@ public class Session {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "HrRecording")
     private byte[] hrRecordingBlob;
 
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "HrCount")
+    private byte[] hrCountBlob;
 
 
     public int getId() {
@@ -132,6 +135,21 @@ public class Session {
         this.hrRecordingBlob = hrRecordingBlob;
     }
 
+    public HrCountTest getHrCount() {
+        return new HrCountTest().consumeBlob(this.hrCountBlob);
+    }
+
+    public byte[] getHrCountBlob() {
+        return hrCountBlob;
+    }
+
+    public void setHrCount(ByteArrayOutputStream baos) {
+        setHrCountBlob(baos.toByteArray());
+    }
+
+    public void setHrCountBlob(byte[] hrCountBlob) {
+        this.hrCountBlob = hrCountBlob;
+    }
 
 
     public int getPatientId() {

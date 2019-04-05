@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.inspire.breath">
+
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-feature android:name="android.hardware.camera"
-    android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,14 +17,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.PatientsActivity"/>
-        <activity android:name=".activities.MalariaActivity"/>
+        <activity android:name=".activities.HrCountActivity"></activity>
+        <activity android:name=".activities.PatientsActivity" />
+        <activity android:name=".activities.MalariaActivity" />
         <activity android:name=".activities.ThermometerActivity" />
         <activity android:name=".activities.BreathRateActivity" />
-        <activity android:name=".activities.HrRecordingActivity">
-        </activity>
-
-        <activity android:name=".activities.ValidateDiarrhoeaActivity"/>
+        <activity android:name=".activities.HrRecordingActivity" />
+        <activity android:name=".activities.ValidateDiarrhoeaActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,8 +34,8 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ResetActivity"/>
-        <activity android:name=".activities.HomeActivity"/>
+        <activity android:name=".activities.ResetActivity" />
+        <activity android:name=".activities.HomeActivity" />
     </application>
-</manifest>
 
+</manifest>
