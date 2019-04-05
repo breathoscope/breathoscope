@@ -55,6 +55,7 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
     @Override
     public void onSelected(Patient patient) {
         mPager.setCurrentItem(0,true);
+        home.setPatient(patient);
     }
 
     @Override
