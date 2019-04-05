@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,9 @@ public class HomeActivity extends AppCompatActivity {
     public static final String PATIENT_ID_KEY = "PATIENT_ID_KEY";
     public static final String SESSION_ID_KEY = "SESSION_ID_KEY";
     private static final int TEST_COUNT = 5;
+
+
+    private Button diagnosis;
 
     private Patient mPatient;
     private Session mSession;
@@ -80,13 +84,6 @@ public class HomeActivity extends AppCompatActivity {
         if(feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
             mMalariaCard.setVisibility(View.VISIBLE);
 
-        if (recommendActionsResult != null) {
-            if (recommendActionsResult.isUrgent) {
-                Intent i = new Intent(this, RecommendedActionsActivity.class);
-                i.putExtra(SESSION_ID_KEY, mSession.getId());
-                startActivity(i);
-            }
-        }
         if (feverTestResult != null)
             mFeverTick.setChecked(true);
         if (malariaTestResult != null)
@@ -101,6 +98,9 @@ public class HomeActivity extends AppCompatActivity {
 
 
     private void findViews() {
+
+        this.diagnosis = findViewById(R.id.viewDiagnosis);
+
         this.mPatientName = findViewById(R.id.home_patient_name);
         this.mPatientAge = findViewById(R.id.home_patient_age);
         this.mPatientSex = findViewById(R.id.home_patient_sex);
@@ -121,6 +121,16 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
+
+        this.diagnosis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(HomeActivity.this, RecommendedActionsActivity.class);
+                i.putExtra(SESSION_ID_KEY, mSession.getId());
+                startActivity(i);
+            }
+        });
+
         this.mMalariaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,7 +164,6 @@ public class HomeActivity extends AppCompatActivity {
         this.mDiarrhoeaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeActivity.this, "NYI", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(HomeActivity.this, ValidateDiarrhoeaActivity.class);
                 intent.putExtra(SESSION_ID_KEY, mSession.getId());
                 startActivity(intent);
