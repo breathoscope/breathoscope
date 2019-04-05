@@ -13,24 +13,16 @@ import org.inspire.breath.fragments.Home;
 import org.inspire.breath.fragments.Patients;
 import org.inspire.breath.utils.FragmentedActivity;
 
-public class HomeActivity extends FragmentedActivity implements PatientListAdapter.PatientCallback {
+public class HomeActivity extends FragmentedActivity {
 
     public static final String PATIENT_ID_KEY = "PATIENT_ID_KEY";
     public static final String SESSION_ID_KEY = "SESSION_ID_KEY";
-
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         replaceFrag(R.id.home_container, new Patients());
-    }
-
-    @Override
-    public void onSelected(Patient patient) {
-
     }
 
     public void startRecording(Patient patient) {

@@ -30,8 +30,9 @@ import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
+import org.inspire.breath.utils.FragmentedFragment;
 
-public class Home extends Fragment {
+public class Home extends FragmentedFragment {
 
     private Patient mPatient;
     private Session mSession;

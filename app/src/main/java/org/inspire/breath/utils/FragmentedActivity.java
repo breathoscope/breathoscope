@@ -5,12 +5,19 @@ import android.support.v4.app.Fragment;
 
 public class FragmentedActivity extends AppCompatActivity {
 
-    private Fragment currentFragment;
+    private FragmentedFragment currentFragment;
 
-    public void replaceFrag(int id, Fragment fragment) {
+    public void replaceFrag(int id, FragmentedFragment fragment) {
         currentFragment = fragment;
         getSupportFragmentManager().beginTransaction()
                 .replace(id, currentFragment)
                 .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (!this.currentFragment.onBackPressed()) {
+            super.onBackPressed();
+        }
     }
 }

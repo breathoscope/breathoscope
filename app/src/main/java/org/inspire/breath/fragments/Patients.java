@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import org.inspire.breath.R;
 import org.inspire.breath.adapters.PagerFragmentAdapter;
+import org.inspire.breath.adapters.PatientListAdapter;
+import org.inspire.breath.data.Patient;
 import org.inspire.breath.fragments.patients.Create;
 import org.inspire.breath.fragments.patients.Listings;
 import org.inspire.breath.utils.FragmentedFragment;
@@ -26,6 +28,7 @@ public class Patients extends FragmentedFragment {
 
     public FloatingActionButton mAddPatientFAB;
 
+    PatientListAdapter.PatientCallback callback;
 
     @Nullable
     @Override
@@ -39,12 +42,12 @@ public class Patients extends FragmentedFragment {
         findViews(view);
         setupData();
         setupListeners();
-//        replaceFrag(R.id.fragment_patients_container, new Listings());
     }
 
     private void setupData() {
         mFragments = new LinkedList<>();
-        mFragments.add(new Listings());
+        Listings listings = new Listings().setCallback(this.callback);
+        mFragments.add(listings);
         mFragments.add(new Create());
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getFragmentManager(), mFragments);
         mPager.setAdapter(adapter);
@@ -63,11 +66,16 @@ public class Patients extends FragmentedFragment {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public boolean onBackPressed() {
         if (mPager.getCurrentItem() > 0) {
             mPager.setCurrentItem(mPager.getCurrentItem() - 1, true);
             mAddPatientFAB.show();
         }
+        return true;
+    }
+
+    public Patients setCallback(PatientListAdapter.PatientCallback callback) {
+        this.callback = callback;
+        return this;
     }
 }

@@ -13,13 +13,14 @@ import android.widget.Toast;
 import org.inspire.breath.R;
 import org.inspire.breath.activities.ResetActivity;
 import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.fragments.Home;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final Class<?> NEXT_ACTIVITY = PatientsActivity.class;
+    private static final Class<?> NEXT_ACTIVITY = HomeActivity.class;
     ImageView mLogo;
 
     Button mLoginButton;
