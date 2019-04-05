@@ -128,10 +128,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Intent intent = new Intent(HomeActivity.this, HrRecordingActivity.class);
-
-                Intent intent = new Intent(HomeActivity.this, Understanding_results.class);
-
 
                 Intent intent = new Intent(HomeActivity.this, MalariaActivity.class);
 
