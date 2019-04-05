@@ -91,10 +91,8 @@ public class RecommendedActionsActivity extends TestActivity {
 
         if(diarrhoeaTestResult != null) {
             TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
-            TextView diarrhoeaResult = findViewById(R.id.diarrhoeaResult);
 
             if (diarrhoeaTestResult != null) {
-              //  diarrhoeaResult.setText(diarrhoeaTestResult.getAnswer());
                 if (session.getRecommendedActions().isUrgent)
                     diarrhoeaActions.setTextColor(Color.RED);
                 diarrhoeaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DIARRHOEA));

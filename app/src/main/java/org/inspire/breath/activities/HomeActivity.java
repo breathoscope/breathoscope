@@ -21,6 +21,7 @@ import org.inspire.breath.data.blobs.BreathTestResult;
 import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.HeartRateTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 
@@ -46,6 +47,7 @@ public class HomeActivity extends AppCompatActivity {
     private AppCompatCheckBox mDiarrhoeaTick;
     private AppCompatCheckBox mMalariaTick;
     private AppCompatCheckBox mBreathTick;
+    private AppCompatCheckBox mHeartTick;
 
     // Cards
     private CardView mMalariaCard;
@@ -53,6 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     private CardView mDangerCard;
     private CardView mDiarrhoeaCard;
     private CardView mBreathCard;
+    private CardView mHeartCard;
 
     public void getData() {
         Intent intent = getIntent();
@@ -79,10 +82,12 @@ public class HomeActivity extends AppCompatActivity {
         BreathTestResult breathTestResult = this.mSession.getBreathTestResult();
         DiarrhoeaTestResult diarrhoeaTestResult = this.mSession.getDiarrhoeaTestResult();
         DangerTestResult dangerTestResult = this.mSession.getDangerTestResult();
-        RecommendActionsResult recommendActionsResult = this.mSession.getRecommendedActions();
+        HeartRateTestResult heartRateTestResult = this.mSession.getHrRecording();
 
         if(feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
             mMalariaCard.setVisibility(View.VISIBLE);
+        else
+            mMalariaCard.setVisibility(View.GONE);
 
         if (feverTestResult != null)
             mFeverTick.setChecked(true);
@@ -94,6 +99,8 @@ public class HomeActivity extends AppCompatActivity {
             mDangerTick.setChecked(true);
         if (breathTestResult != null)
             mBreathTick.setChecked(true);
+        if (heartRateTestResult != null)
+            mHeartTick.setChecked(true);
     }
 
 
@@ -111,13 +118,14 @@ public class HomeActivity extends AppCompatActivity {
         this.mDiarrhoeaTick = findViewById(R.id.home_test_diarrhoea_tick);
         this.mFeverTick = findViewById(R.id.home_test_fever_tick);
         this.mMalariaTick = findViewById(R.id.home_test_malaria_tick);
+        this.mHeartTick = findViewById(R.id.home_test_heart_tick);
 
         this.mMalariaCard = findViewById(R.id.home_test_malaria_card);
-        mMalariaCard.setVisibility(View.GONE);
         this.mBreathCard = findViewById(R.id.home_test_breath_card);
         this.mDiarrhoeaCard = findViewById(R.id.home_test_diarrhoea_card);
         this.mFeverCard = findViewById(R.id.home_test_fever_card);
         this.mDangerCard = findViewById(R.id.home_test_danger_card);
+        this.mHeartCard = findViewById(R.id.home_test_heart_card);
     }
 
     private void setupListeners() {
@@ -165,6 +173,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, ValidateDiarrhoeaActivity.class);
+                intent.putExtra(SESSION_ID_KEY, mSession.getId());
+                startActivity(intent);
+            }
+        });
+        this.mHeartCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, HrRecordingActivity.class);
                 intent.putExtra(SESSION_ID_KEY, mSession.getId());
                 startActivity(intent);
             }
