@@ -18,6 +18,7 @@ import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.BreathTestResult;
+import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
@@ -49,11 +50,13 @@ public class RecommendedActionsActivity extends TestActivity {
         CardView feverCard = findViewById(R.id.diagnose_fever_result);
         CardView breathCard = findViewById(R.id.diagnose_breath_test);
         CardView malariaCard = findViewById(R.id.diagnose_malaria_test);
+        CardView diarrhoeaCard = findViewById(R.id.diagnose_diarrhoea_test);
 
         //Get tests
         FeverTestResult feverTestResult = session.getFeverTestResult();
         BreathTestResult breathTestResult = session.getBreathTestResult();
         MalariaTestResult malariaTestResult = session.getMalariaTestResult();
+        DiarrhoeaTestResult diarrhoeaTestResult = session.getDiarrhoeaTestResult();
 
         if(breathTestResult == null)
             breathCard.setVisibility(View.GONE);
@@ -61,6 +64,8 @@ public class RecommendedActionsActivity extends TestActivity {
             feverCard.setVisibility(View.GONE);
         if(malariaTestResult == null)
             malariaCard.setVisibility(View.GONE);
+        if(diarrhoeaTestResult == null)
+            diarrhoeaCard.setVisibility(View.GONE);
 
         TextView feverActions = findViewById(R.id.feverActions);
         TextView feverResult = findViewById(R.id.feverResult);
@@ -80,6 +85,17 @@ public class RecommendedActionsActivity extends TestActivity {
                 breathActions.setTextColor(Color.RED);
             breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
         }
+
+        TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
+        TextView diarrhoeaResult = findViewById(R.id.diarrhoeaResult);
+
+        if(diarrhoeaTestResult != null) {
+            diarrhoeaResult.setText(diarrhoeaTestResult.getAnswer());
+            if (session.getRecommendedActions().isUrgent)
+                diarrhoeaActions.setTextColor(Color.RED);
+            diarrhoeaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DIARRHOEA));
+        }
+
 
     }
 
