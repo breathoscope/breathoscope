@@ -2,6 +2,7 @@ package org.inspire.breath.fragments;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Bitmap;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -19,7 +20,9 @@ import com.camerakit.CameraKitView;
 
 import org.inspire.breath.R;
 import org.inspire.breath.activities.HomeActivity;
+import org.inspire.breath.activities.Refer_HC;
 import org.inspire.breath.activities.TestActivity;
+import org.inspire.breath.activities.Understanding_results;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 
@@ -52,6 +55,8 @@ public class MalariaReviewFragment extends TestFragment {
             @Override
             public void onClick(View v)
             {
+
+                startActivity(new Intent(getActivity(), Understanding_results.class));
                 //TODO save image
             }
         });

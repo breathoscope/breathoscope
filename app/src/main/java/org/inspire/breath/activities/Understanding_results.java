@@ -13,6 +13,7 @@ public class Understanding_results extends AppCompatActivity {
 
     private Session session ;//session object
     private int age;
+    private String parseAge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +22,8 @@ public class Understanding_results extends AppCompatActivity {
 
         session = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(HomeActivity.currentSession);//getting session instance --> getting info
 
-        age =Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId().getAge()));
 
-
-
-
+        age = Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).getAge());
 
     }
 
