@@ -81,11 +81,11 @@ public class HomeActivity extends AppCompatActivity {
             mMalariaCard.setVisibility(View.VISIBLE);
 
         if (recommendActionsResult != null) {
-            //if (recommendActionsResult.isUrgent) {
-            //    Intent i = new Intent(this, RecommendedActionsActivity.class);
-            //    i.putExtra(SESSION_ID_KEY, mSession.getId());
-            //    startActivity(i);
-            //}
+            if (recommendActionsResult.isUrgent) {
+                Intent i = new Intent(this, RecommendedActionsActivity.class);
+                i.putExtra(SESSION_ID_KEY, mSession.getId());
+                startActivity(i);
+            }
         }
         if (feverTestResult != null)
             mFeverTick.setChecked(true);

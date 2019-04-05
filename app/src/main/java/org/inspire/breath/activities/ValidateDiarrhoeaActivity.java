@@ -10,6 +10,7 @@ import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 
 public class ValidateDiarrhoeaActivity extends TestActivity {
@@ -67,11 +68,14 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
 
                     DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                     writer.setResult(1);
-                    Session a = getSession();
-                    a.setDiarrhoeaTestResultBlob(writer.toBlob());
+                    Session s = getSession();
+                    RecommendActionsResult outcome = s.getRecommendedActions();
+                    outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, getAnswer(questionNum));
+                    s.setRecommendedActionsResultBlob(outcome.toBlob());
+                    s.setDiarrhoeaTestResultBlob(writer.toBlob());
                     AppRoomDatabase.getDatabase()
                                     .sessionDao()
-                                    .insertRecording(a);
+                                    .upsertRecording(s);
 
                     answerYes.setVisibility(View.GONE);
                     answerNo.setVisibility(View.GONE);
@@ -90,10 +94,13 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                 DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                 writer.setResult(questionNum);
                 Session a = getSession();
+                RecommendActionsResult outcome = a.getRecommendedActions();
+                outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, getAnswer(questionNum));
+                a.setRecommendedActionsResultBlob(outcome.toBlob());
                 a.setDiarrhoeaTestResultBlob(writer.toBlob());
                 AppRoomDatabase.getDatabase()
                         .sessionDao()
-                        .insertRecording(a);
+                        .upsertRecording(a);
 
                 answerYes.setVisibility(View.GONE);
                 answerNo.setVisibility(View.GONE);
