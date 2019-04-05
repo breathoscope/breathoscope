@@ -22,6 +22,7 @@ import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.HeartRateTestResult;
+import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 
@@ -82,7 +83,7 @@ public class HomeActivity extends AppCompatActivity {
         BreathTestResult breathTestResult = this.mSession.getBreathTestResult();
         DiarrhoeaTestResult diarrhoeaTestResult = this.mSession.getDiarrhoeaTestResult();
         DangerTestResult dangerTestResult = this.mSession.getDangerTestResult();
-        HeartRateTestResult heartRateTestResult = this.mSession.getHrRecording();
+        HrCountTest heartRateTestResult = this.mSession.getHrCount();
 
         if(feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
             mMalariaCard.setVisibility(View.VISIBLE);

@@ -23,7 +23,8 @@ public class RecommendActionsResult implements IBlobbable {
         BREATH,
         MALARIA,
         DIARRHOEA,
-        DANGER
+        DANGER,
+        HEART
     }
 
     //Because Java doesn't support optional parameters :(
