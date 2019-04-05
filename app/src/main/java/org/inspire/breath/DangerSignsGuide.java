@@ -1,16 +1,20 @@
 package org.inspire.breath;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 import android.widget.Button;
 import android.os.Bundle;
 import android.view.View;
 
+import org.inspire.breath.activities.TestActivity;
+import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Patient;
+import org.inspire.breath.data.Session;
+import org.inspire.breath.data.blobs.DangerTestResult;
 
-
-public class DangerSignsGuide extends AppCompatActivity {
+public class DangerSignsGuide extends TestActivity {
     DangerSignsQuestions questions = new DangerSignsQuestions();
-
     boolean anyDangerSigns = false;
     boolean answered = false;
     byte results[] = new byte[4];
@@ -56,12 +60,17 @@ public class DangerSignsGuide extends AppCompatActivity {
                     String tmpStr = questions.retA(questionNumber) + "\n" + questions.anyDangerSigns();
                     answerView.setText(tmpStr);
                     answerView.setVisibility(View.VISIBLE);
-
+                    nextButton.setVisibility(View.VISIBLE);
                     answered = true;
                     results[questionNumber] = 1;
                 }
                 else if(questionNumber > 3){
                     //Store data.
+                    DangerTestResult storage = new DangerTestResult();
+                    storage.setResults(results);
+                    Session tmp = getSession();
+                    tmp.setDangerTestResultBlob(storage.toBlob());
+                    AppRoomDatabase.getDatabase().sessionDao().insertRecording(tmp);
                 }
             }
         });
