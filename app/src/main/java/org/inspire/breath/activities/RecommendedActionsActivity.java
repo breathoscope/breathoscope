@@ -34,12 +34,11 @@ public class RecommendedActionsActivity extends TestActivity {
         Intent i = getIntent();
         int id = i.getIntExtra(SESSION_ID_KEY, 0);
 
-        ImageButton done = findViewById(R.id.imageButton);
+        Button done = findViewById(R.id.done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecommendedActionsActivity.this, PatientsActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
         SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
@@ -67,33 +66,39 @@ public class RecommendedActionsActivity extends TestActivity {
         if(diarrhoeaTestResult == null)
             diarrhoeaCard.setVisibility(View.GONE);
 
-        TextView feverActions = findViewById(R.id.feverActions);
-        TextView feverResult = findViewById(R.id.feverResult);
+        if(feverTestResult != null) {
+            TextView feverActions = findViewById(R.id.feverActions);
+            TextView feverResult = findViewById(R.id.feverResult);
 
-        feverResult.setText(getResources().getString(R.string.degrees, session.getFeverTestResult().getTemperature()));
+            feverResult.setText(getResources().getString(R.string.degrees, session.getFeverTestResult().getTemperature()));
 
-        if(session.getRecommendedActions().isUrgent)
-            feverActions.setTextColor(Color.RED);
-        feverActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.FEVER));
-
-        TextView breathActions = findViewById(R.id.breathActions);
-        TextView breathResult = findViewById(R.id.breathResult);
-
-        if(breathTestResult != null) {
-            breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
             if (session.getRecommendedActions().isUrgent)
-                breathActions.setTextColor(Color.RED);
-            breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
+                feverActions.setTextColor(Color.RED);
+            feverActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.FEVER));
         }
 
-        TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
-        TextView diarrhoeaResult = findViewById(R.id.diarrhoeaResult);
+        if(breathTestResult != null) {
+            TextView breathActions = findViewById(R.id.breathActions);
+            TextView breathResult = findViewById(R.id.breathResult);
 
+            if (breathTestResult != null) {
+                breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
+                if (session.getRecommendedActions().isUrgent)
+                    breathActions.setTextColor(Color.RED);
+                breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
+            }
+        }
+      
         if(diarrhoeaTestResult != null) {
-            diarrhoeaResult.setText(diarrhoeaTestResult.getAnswer());
-            if (session.getRecommendedActions().isUrgent)
-                diarrhoeaActions.setTextColor(Color.RED);
-            diarrhoeaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DIARRHOEA));
+            TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
+            TextView diarrhoeaResult = findViewById(R.id.diarrhoeaResult);
+
+            if (diarrhoeaTestResult != null) {
+              //  diarrhoeaResult.setText(diarrhoeaTestResult.getAnswer());
+                if (session.getRecommendedActions().isUrgent)
+                    diarrhoeaActions.setTextColor(Color.RED);
+                diarrhoeaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DIARRHOEA));
+            }
         }
 
 
