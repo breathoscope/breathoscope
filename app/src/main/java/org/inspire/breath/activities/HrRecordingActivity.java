@@ -7,6 +7,7 @@ import android.media.AudioFormat;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.AudioRecord;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -14,10 +15,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
+import org.inspire.breath.data.blobs.HrRecording;
 import org.inspire.breath.utils.RawToWavConverter;
 import org.inspire.breath.R;
 
@@ -39,6 +42,8 @@ public class HrRecordingActivity extends TestActivity {
             RECORDER_AUDIO_FORMAT
     );
 
+    private final int SECONDS = 60;
+
     MediaPlayer mp;
 
     private ByteArrayOutputStream baos;
@@ -54,6 +59,7 @@ public class HrRecordingActivity extends TestActivity {
 
     private ImageButton mRecordBtn, mRestartBtn, mStopBtn;
     private Button mPlayBtn, mConfirmBtn;
+    private TextView mCountdown;
 
     boolean isPlaying;
 
@@ -102,11 +108,13 @@ public class HrRecordingActivity extends TestActivity {
         this.mStopBtn = findViewById(R.id.hr_stop_btn);
         this.mPlayBtn = findViewById(R.id.recording_play_button);
         this.mConfirmBtn = findViewById(R.id.hr_confirm_btn);
+        this.mCountdown = findViewById(R.id.hr_countdown);
 
         mRestartBtn.setVisibility(View.INVISIBLE);
         mStopBtn.setVisibility(View.INVISIBLE);
         mPlayBtn.setVisibility(View.INVISIBLE);
         mConfirmBtn.setVisibility(View.INVISIBLE);
+        mCountdown.setVisibility(View.INVISIBLE);
     }
 
     private void toggleVisibleButtons() {
@@ -171,6 +179,7 @@ public class HrRecordingActivity extends TestActivity {
 
     private void playAudio() {
 
+
         mPlayBtn.setText(R.string.recording_stop);
 
         isPlaying = true;
@@ -224,6 +233,27 @@ public class HrRecordingActivity extends TestActivity {
             isRecording = true;
             writeThread = new Thread(new AudioFileWriter());
             writeThread.start();
+
+
+            mCountdown.setVisibility(View.VISIBLE);
+            mCountdown.setText(Integer.toString(SECONDS));
+            int seconds = SECONDS;
+            new CountDownTimer(SECONDS * 1000, 1000) {
+
+                int seconds = SECONDS;
+
+                public void onTick(long millis) {
+                    mCountdown.setText(Integer.toString(seconds--));
+                }
+                public void onFinish(){
+                    stopRecording();
+                    rawToWav();
+                    mPlayBtn.setVisibility(View.VISIBLE);
+                    mConfirmBtn.setVisibility(View.VISIBLE);
+                    mCountdown.setVisibility(View.GONE);
+
+                }
+            }.start();
 
         });
 
