@@ -49,7 +49,7 @@ public class RecommendedActionsActivity extends TestActivity {
         CardView feverCard = findViewById(R.id.diagnose_fever_result);
         CardView breathCard = findViewById(R.id.diagnose_breath_test);
         CardView malariaCard = findViewById(R.id.diagnose_malaria_test);
-        CardView diarrhoeaCard = findViewById(R.id.diagnose_diarrhoea_test);
+        //CardView diarrhoeaCard = findViewById(R.id.diagnose_diarrhoea_test);
 
         //Get tests
         FeverTestResult feverTestResult = session.getFeverTestResult();
@@ -63,8 +63,8 @@ public class RecommendedActionsActivity extends TestActivity {
             feverCard.setVisibility(View.GONE);
         if(malariaTestResult == null)
             malariaCard.setVisibility(View.GONE);
-        if(diarrhoeaTestResult == null)
-            diarrhoeaCard.setVisibility(View.GONE);
+        //if(diarrhoeaTestResult == null)
+        //    diarrhoeaCard.setVisibility(View.GONE);
 
         if(feverTestResult != null) {
             TextView feverActions = findViewById(R.id.feverActions);
@@ -89,7 +89,7 @@ public class RecommendedActionsActivity extends TestActivity {
             }
         }
 
-        if(diarrhoeaTestResult != null) {
+        /**if(diarrhoeaTestResult != null) {
             TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
 
             if (diarrhoeaTestResult != null) {
@@ -97,7 +97,7 @@ public class RecommendedActionsActivity extends TestActivity {
                     diarrhoeaActions.setTextColor(Color.RED);
                 diarrhoeaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DIARRHOEA));
             }
-        }
+        }**/
 
 
     }
