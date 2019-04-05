@@ -17,6 +17,7 @@ public class Understanding_results extends AppCompatActivity {
 
     private Session session ;//session object
     private int age;
+    private String parseAge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,8 @@ public class Understanding_results extends AppCompatActivity {
         age = Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).getAge());
 =======
 
-        age =Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId().getAge()));
 
-
-
-
+        age = Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).getAge());
 
     }
 >>>>>>> removed child age class
