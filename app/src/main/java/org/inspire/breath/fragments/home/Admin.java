@@ -3,6 +3,7 @@ package org.inspire.breath.fragments.home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,13 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
 
     @Override
     public void onSelected(Patient patient) {
-        System.out.println("WOWOWOWOWOWW");
-        System.out.println(patient.getFirstName());
+        Home home = new Home();
+        home.setPatient(patient);
+        getChildFragmentManager().beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                .setCustomAnimations(R.animator.slide_in_right, R.animator.slide_out_left,0, 0)
+                .replace(R.id.admin_container, new Home())
+                .addToBackStack(null)
+                .commit();
     }
 }
