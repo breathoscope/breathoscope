@@ -1,5 +1,7 @@
 package org.inspire.breath.activities;
 
+import android.support.v4.app.Fragment;
+
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -49,6 +51,8 @@ public class HomeActivity extends AppCompatActivity {
     private CardView mDangerCard;
     private CardView mDiarrhoeaCard;
     private CardView mBreathCard;
+
+    private Fragment currentFragment;
 
     public void getData() {
         Intent intent = getIntent();
@@ -169,6 +173,11 @@ public class HomeActivity extends AppCompatActivity {
         findViews();
         setupListeners();
         getData();
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_container, currentFragment)
+                .commit();
     }
 
     @Override
