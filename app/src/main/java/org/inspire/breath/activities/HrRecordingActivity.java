@@ -148,8 +148,10 @@ public class HrRecordingActivity extends TestActivity {
     private void stopRecording() {
         toggleVisibleButtons();
         isRecording = false;
-        recorder.stop();
-        recorder.release();
+        if(recorder != null) {
+            recorder.stop();
+            recorder.release();
+        }
         writeThread = null;
 
         storeRecording();
