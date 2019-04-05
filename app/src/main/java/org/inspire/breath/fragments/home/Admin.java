@@ -24,6 +24,9 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
     private StaticPager mPager;
     private List<Fragment> mFragments;
 
+    private Patients patients;
+    private Home home;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,8 +37,12 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mFragments = new LinkedList<>();
-        mFragments.add(new Home());
-        mFragments.add(new Patients().setCallback(this));
+
+        patients = new Patients();
+        home = new Home();
+
+        mFragments.add(home);
+        mFragments.add(patients.setCallback(this));
         mPager = view.findViewById(R.id.admin_pager);
         mPager.setSliding(false);
         PagerFragmentAdapter adapter = new PagerFragmentAdapter(getChildFragmentManager(), mFragments);
@@ -52,7 +59,12 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
 
     @Override
     public boolean onBackPressed() {
-        mPager.setCurrentItem(1, true);
+        if (mPager.getCurrentItem() == 1) {
+            return patients.onBackPressed();
+        }
+        else {
+            mPager.setCurrentItem(1, true);
+        }
         return true;
     }
 }

@@ -67,8 +67,9 @@ public class Patients extends FragmentedFragment implements StaticPager.Focusabl
         if (mPager.getCurrentItem() > 0) {
             mPager.setCurrentItem(mPager.getCurrentItem() - 1, true);
             mAddPatientFAB.show();
+            return true;
         }
-        return true;
+        return false;
     }
 
     public Patients setCallback(PatientListAdapter.PatientCallback callback) {
