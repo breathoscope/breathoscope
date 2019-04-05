@@ -27,6 +27,7 @@
     <string name="confirmdialog">Breath Rate is %1$d, are you satisfied?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="done">✓</string>
 
     <!-- Snackbar message(s) -->
     <string name="snackbar_mic_warning">Please make sure microphone is plugged in correctly</string>

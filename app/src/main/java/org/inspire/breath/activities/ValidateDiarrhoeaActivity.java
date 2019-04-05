@@ -64,7 +64,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                     question.setText(getQuestion(questionNum));
                 }
                 else if (questionNum>=(mQuestions.length-1)){
-                    question.setText(getAnswer(1));
+                    //question.setText(getAnswer(1));
 
                     DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                     writer.setResult(1);
@@ -76,9 +76,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                     AppRoomDatabase.getDatabase()
                                     .sessionDao()
                                     .upsertRecording(s);
-
-                    answerYes.setVisibility(View.GONE);
-                    answerNo.setVisibility(View.GONE);
+                    finish();
                 }
 
 
@@ -89,7 +87,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
             @Override
             public void onClick(View v) {
 
-                question.setText(getAnswer(questionNum));
+                //question.setText(getAnswer(questionNum));
 
                 DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                 writer.setResult(questionNum);
@@ -102,8 +100,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                         .sessionDao()
                         .upsertRecording(a);
 
-                answerYes.setVisibility(View.GONE);
-                answerNo.setVisibility(View.GONE);
+                finish();
 
             }
         });
