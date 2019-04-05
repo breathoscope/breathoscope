@@ -23,6 +23,7 @@
             android:label="@string/title_activity_recommended_actions">
 
         </activity>
+
         <activity android:name=".activities.PatientsActivity" />
         <activity android:name=".activities.MalariaActivity" />
         <activity android:name=".activities.ThermometerActivity" />
@@ -30,6 +31,7 @@
 
         <activity android:name=".activities.HrRecordingActivity" />
         <activity android:name=".activities.ValidateDiarrhoeaActivity" />
+
 
 
 
@@ -47,6 +49,7 @@
         <activity android:name=".activities.Refer_HC" />
         <activity android:name=".activities.FeverMainQ" />
 
+
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,6 +62,7 @@
         </activity>
 
 
+
         <activity android:name=".activities.ResetActivity" />
         <activity android:name=".activities.HomeActivity" />
 
@@ -69,4 +73,5 @@
     </application>
 
 </manifest>
+
 

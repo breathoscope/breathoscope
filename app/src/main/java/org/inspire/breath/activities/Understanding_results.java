@@ -1,31 +1,42 @@
 package org.inspire.breath.activities;
 
 import android.content.Intent;
+//import android.se.omapi.Session;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
+
 import org.inspire.breath.data.Session;
+
+
 import org.inspire.breath.data.blobs.MalariaTestResult;
 
 public class Understanding_results extends AppCompatActivity {
 
+
     private Session session ;//session object
     private int age;
     private String parseAge;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_understanding_results);
 
+
         session = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(HomeActivity.currentSession);//getting session instance --> getting info
 
 
-        age = Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).getAge());
+        age = Integer.parseInt(AppRoomDatabase.getDatabase().patientDao().getPatientById(session.getPatientId()).getAge()); //getting the child's age
 
-    }
+
+
+}
 
 
 
@@ -58,6 +69,10 @@ public class Understanding_results extends AppCompatActivity {
         session.setMalariaTestResult(mtr);//sets the blob, i.e using the function
 
         //store in database
+
         AppRoomDatabase.getDatabase().sessionDao().upsertRecording(session);
+
+
+
     }
 }
