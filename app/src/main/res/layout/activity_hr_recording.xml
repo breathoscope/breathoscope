@@ -64,6 +64,17 @@
             app:layout_constraintStart_toStartOf="@+id/recording_play_button"
             app:layout_constraintTop_toBottomOf="@+id/recording_play_button" />
 
+        <TextView
+            android:id="@+id/hr_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="400dp"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/hr_record_btn"
+            app:layout_constraintHorizontal_bias="0.47"
+            app:layout_constraintStart_toStartOf="@+id/hr_record_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.design.widget.CoordinatorLayout>
