@@ -54,7 +54,7 @@ public class Listings extends PatientsFragment implements PatientListAdapter.Pat
     private void initList() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mPatientList.setLayoutManager(layoutManager);
-        mPatientList.setAdapter(new PatientListAdapter(getAllPatients(), this));
+        mPatientList.setAdapter(new PatientListAdapter(getAllPatients(), this.callback));
     }
 
     @Override

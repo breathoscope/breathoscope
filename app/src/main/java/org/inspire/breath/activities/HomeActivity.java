@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import org.inspire.breath.R;
 import org.inspire.breath.adapters.PatientListAdapter;
 import org.inspire.breath.data.Patient;
+import org.inspire.breath.fragments.Admin;
 import org.inspire.breath.fragments.Home;
 import org.inspire.breath.fragments.Patients;
 import org.inspire.breath.utils.FragmentedActivity;
@@ -22,7 +23,7 @@ public class HomeActivity extends FragmentedActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        replaceFrag(R.id.home_container, new Patients());
+        replaceFrag(R.id.home_container, new Admin());
     }
 
     public void startRecording(Patient patient) {
