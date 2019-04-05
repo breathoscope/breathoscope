@@ -83,12 +83,4 @@ public class Listings extends Fragment implements PatientListAdapter.PatientCall
         this.callback = callback;
         return this;
     }
-    @Override
-    public Animation onCreateAnimation(int transit, boolean enter, int nextAnim) {
-        System.out.println("animated");
-//        System.out.println(R.animator.)
-        System.out.println(transit + " " + enter + " " + nextAnim);
-
-        return super.onCreateAnimation(transit, enter, nextAnim);
-    }
 }

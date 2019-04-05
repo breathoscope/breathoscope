@@ -12,6 +12,8 @@ import org.inspire.breath.utils.FragmentedFragment;
 
 public class History extends FragmentedFragment {
 
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

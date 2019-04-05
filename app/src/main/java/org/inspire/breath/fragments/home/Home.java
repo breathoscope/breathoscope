@@ -44,12 +44,14 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
-        replaceFrag(R.id.home_main_container, new History());
+        replaceFrag(R.id.home_main_container, new Testing());
+    }
+
+    public void setSession(Session session) {
+        this.mSession = session;
     }
 
     public void setPatient(Patient patient) {
-        System.out.println("setting patient");
-        System.out.println(patient.getFirstName());
         this.mPatient = patient;
         this.mPatientName.setText(mPatient.getFirstName() + " " + mPatient.getLastName());
         this.mPatientAge.setText(mPatient.getAge());
