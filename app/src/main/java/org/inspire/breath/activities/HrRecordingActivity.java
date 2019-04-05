@@ -258,8 +258,8 @@ public class HrRecordingActivity extends TestActivity {
             }
 
             // replace HrRecordingActivity with heart beat parsing activity
-            Intent intent = new Intent(getApplicationContext(), HrRecordingActivity.class);
-            intent.putExtra("HR_BYTE_ARR", baos.toByteArray());
+            Intent intent = new Intent(getApplicationContext(), HrCountActivity.class);
+            intent.putExtra("HR_FILE", new File(wavOutputPath));
             startActivity(intent);
 
         });
