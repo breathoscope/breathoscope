@@ -67,11 +67,11 @@ public class FeverFragment extends Fragment {
             int age = Integer.parseInt(currentPatient.getAge());
             if (age < 1 || age > 5) {
                 result.setShouldPerformMalaria(false);
-                actionsResult.addAction(RecommendActionsResult.Test.FEVER, "Refer to HC immediately");
+                actionsResult.addAction(RecommendActionsResult.Test.FEVER, new RecommendActionsResult.Action("Refer to HC immediately", RecommendActionsResult.Action.SEVERE));
             }
             else {
                 result.setShouldPerformMalaria(true);
-                actionsResult.addAction(RecommendActionsResult.Test.FEVER, "Perform Malaria RDT");
+                actionsResult.addAction(RecommendActionsResult.Test.FEVER, new RecommendActionsResult.Action("Perform Malaria RDT", RecommendActionsResult.Action.MED));
             }
         }
 

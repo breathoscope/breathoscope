@@ -47,6 +47,13 @@ public class Listings extends Fragment implements PatientListAdapter.PatientCall
         super.onViewCreated(view, savedInstanceState);
         findViews();
         initList();
+        clearDb();
+    }
+
+    private void clearDb() {
+        AppRoomDatabase.getDatabase()
+                .patientDao()
+                .deleteAllPatients();
     }
 
     private List<Patient> getAllPatients() {

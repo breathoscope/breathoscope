@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/default_margin"
+    app:cardCornerRadius="@dimen/card_default_corner"
+    app:cardElevation="@dimen/card_default_elevation"
+    app:cardBackgroundColor="@color/cardview_light_background">
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/breath_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_stethoscope_ok"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/fever_status"/>
+        <ImageView
+            android:id="@+id/fever_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_thermometer_ok_alert"
+            app:layout_constraintLeft_toRightOf="@id/breath_status"
+            app:layout_constraintRight_toLeftOf="@id/danger_status"
+            app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/danger_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_round_warning_ok_24px"
+            app:layout_constraintLeft_toRightOf="@id/fever_status"
+            app:layout_constraintRight_toLeftOf="@id/diarrhoea_status"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/diarrhoea_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_intestine_ok"
+            app:layout_constraintRight_toLeftOf="@id/malaria_status"
+            app:layout_constraintLeft_toRightOf="@id/danger_status"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/malaria_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_baseline_photo_camera_ok_24px"
+            app:layout_constraintRight_toLeftOf="@id/heart_status"
+            app:layout_constraintLeft_toRightOf="@id/diarrhoea_status"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/heart_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_clipboard_pulse_outline_ok"
+            app:layout_constraintLeft_toRightOf="@id/malaria_status"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

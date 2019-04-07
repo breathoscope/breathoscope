@@ -43,7 +43,7 @@ public class RecommendedActionsActivity extends TestActivity {
         });
         SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
         Session session = dao.getRecordingById(id);
-        session.getRecommendedActions().addAction(RecommendActionsResult.Test.BREATH, "Breath a little slower");
+        session.getRecommendedActions().addAction(RecommendActionsResult.Test.BREATH, new RecommendActionsResult.Action("Breath a little slower", 1));
 
         //Get cards so we can hide ones that don't exist
         CardView feverCard = findViewById(R.id.diagnose_fever_result);
@@ -69,7 +69,7 @@ public class RecommendedActionsActivity extends TestActivity {
 
         if(session.getRecommendedActions().isUrgent)
             feverActions.setTextColor(Color.RED);
-        feverActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.FEVER));
+        feverActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.FEVER).getAction());
 
         TextView breathActions = findViewById(R.id.breathActions);
         TextView breathResult = findViewById(R.id.breathResult);
@@ -78,7 +78,7 @@ public class RecommendedActionsActivity extends TestActivity {
             breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
             if (session.getRecommendedActions().isUrgent)
                 breathActions.setTextColor(Color.RED);
-            breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
+            breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH).getAction());
         }
 
     }
