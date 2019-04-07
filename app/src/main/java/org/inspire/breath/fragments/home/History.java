@@ -14,12 +14,18 @@ import org.inspire.breath.adapters.SessionListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.Session;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 import org.inspire.breath.utils.FragmentedFragment;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Logger;
+
+import static org.inspire.breath.data.AppRoomDatabase.getDatabase;
 
 public class History extends FragmentedFragment {
+
+    private static Logger logger = Logger.getLogger(History.class.toString());
 
     private RecyclerView mRecycler;
     public Patient currentPatient;
@@ -40,10 +46,21 @@ public class History extends FragmentedFragment {
         mRecycler = root.findViewById(R.id.fragment_history_recycler);
     }
 
+    public void setupDummyData(Patient patient) {
+        Session session = new Session();
+        session.setPatientId(patient.getPatientId());
+        RecommendActionsResult recommendActionsResult = new RecommendActionsResult();
+        RecommendActionsResult.Action action = new RecommendActionsResult.Action("don't die lol", RecommendActionsResult.Action.SEVERE);
+        recommendActionsResult.addAction(RecommendActionsResult.Test.BREATH, action);
+        session.setRecommendedActionsResult(recommendActionsResult);
+        AppRoomDatabase.getDatabase().sessionDao().insertRecording(session);
+    }
+
     public void setPatient(Patient mPatient) {
+        setupDummyData(mPatient);
         this.currentPatient = mPatient;
         mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<Session> sessions = AppRoomDatabase.getDatabase()
+        List<Session> sessions = getDatabase()
                 .sessionDao()
                 .getRecordings(currentPatient.getPatientId());
         mRecycler.setAdapter(new SessionListAdapter(sessions));

@@ -3,13 +3,8 @@ package org.inspire.breath.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -21,8 +16,6 @@ import org.inspire.breath.data.blobs.BreathTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
-
-import java.util.Arrays;
 
 public class RecommendedActionsActivity extends TestActivity {
 
@@ -69,7 +62,7 @@ public class RecommendedActionsActivity extends TestActivity {
 
         if(session.getRecommendedActions().isUrgent)
             feverActions.setTextColor(Color.RED);
-        feverActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.FEVER).getAction());
+        feverActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.FEVER).getAction());
 
         TextView breathActions = findViewById(R.id.breathActions);
         TextView breathResult = findViewById(R.id.breathResult);
@@ -78,7 +71,7 @@ public class RecommendedActionsActivity extends TestActivity {
             breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
             if (session.getRecommendedActions().isUrgent)
                 breathActions.setTextColor(Color.RED);
-            breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH).getAction());
+            breathActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.BREATH).getAction());
         }
 
     }

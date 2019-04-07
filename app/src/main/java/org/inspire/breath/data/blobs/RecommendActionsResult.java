@@ -53,6 +53,11 @@ public class RecommendActionsResult implements IBlobbable {
             this.mSeverity = severity;
             return this;
         }
+
+        @Override
+        public String toString() {
+            return getAction() + " " + getSeverity();
+        }
     }
 
     Map<Test, Action> actions;
@@ -68,7 +73,8 @@ public class RecommendActionsResult implements IBlobbable {
         BREATH,
         MALARIA,
         DIARRHOEA,
-        DANGER
+        DANGER,
+        HEART
     }
 
     //Because Java doesn't support optional parameters :(
@@ -81,7 +87,7 @@ public class RecommendActionsResult implements IBlobbable {
         actions.put(owner, remedy);
     }
 
-    public Action getActions(Test t) {
+    public Action getAction(Test t) {
         return actions.get(t);
     }
 
@@ -123,5 +129,10 @@ public class RecommendActionsResult implements IBlobbable {
             actions.put(Test.values()[key], remedy);
         }
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return isUrgent + " " + actions.toString();
     }
 }

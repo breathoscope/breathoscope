@@ -1,7 +1,5 @@
 package org.inspire.breath.adapters;
 
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.VectorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,7 +42,22 @@ public class SessionListAdapter extends RecyclerView.Adapter {
         public void bind(Session session) {
             RecommendActionsResult actions = session.getRecommendedActions();
             for (RecommendActionsResult.Test test : RecommendActionsResult.Test.values()) {
-                actions.getActions(test);
+                RecommendActionsResult.Action action = actions.getAction(test);
+                if (action != null) {
+                    if (test.equals(RecommendActionsResult.Test.BREATH)) {
+                        breathStatus.setImageResource(StatusSelector.breathDrawables[action.getSeverity()]);
+                    } else if (test.equals(RecommendActionsResult.Test.FEVER)) {
+                        feverStatus.setImageResource(StatusSelector.feverDrawables[action.getSeverity()]);
+                    } else if (test.equals(RecommendActionsResult.Test.DANGER)) {
+                        dangerStatus.setImageResource(StatusSelector.dangerDrawables[action.getSeverity()]);
+                    } else if (test.equals(RecommendActionsResult.Test.DIARRHOEA)) {
+                        diarrhoeaStatus.setImageResource(StatusSelector.diarrhoeaDrawables[action.getSeverity()]);
+                    } else if (test.equals(RecommendActionsResult.Test.MALARIA)) {
+                        malariaStatus.setImageResource(StatusSelector.malariaDrawables[action.getSeverity()]);
+                    } else if (test.equals(RecommendActionsResult.Test.HEART)) {
+                        heartStatus.setImageResource(StatusSelector.heartDrawables[action.getSeverity()]);
+                    }
+                }
             }
         }
     }
@@ -66,13 +79,12 @@ public class SessionListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-//        ((SessionViewHolder) viewHolder).bind(mSessions.get(i));
+        ((SessionViewHolder) viewHolder).bind(mSessions.get(i));
     }
 
     @Override
     public int getItemCount() {
-//        return mSessions.size();
-        return 5;
+        return mSessions.size();
     }
 
     static class StatusSelector {

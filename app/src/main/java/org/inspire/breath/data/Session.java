@@ -5,6 +5,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
 import org.inspire.breath.data.blobs.BreathTestResult;
 import org.inspire.breath.data.blobs.DangerTestResult;
@@ -14,6 +15,8 @@ import org.inspire.breath.data.blobs.HrRecording;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
+
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 // Encapsulates a session and the actions that can be performed on it
@@ -52,6 +55,9 @@ public class Session {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "RecommendedActions")
     private byte[] recommendedActionsResultBlob;
 
+    public Session() {
+        this.timestamp = new Date().getTime();
+    }
 
 
     public int getId() {
@@ -177,4 +183,7 @@ public class Session {
         this.timestamp = timestamp;
     }
 
+    public void setRecommendedActionsResult(RecommendActionsResult result) {
+        this.recommendedActionsResultBlob = result.toBlob();
+    }
 }

@@ -19,6 +19,7 @@ import android.support.v4.app.Fragment;
 import android.view.animation.Animation;
 
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Listings extends Fragment implements PatientListAdapter.PatientCallback, StaticPager.Focusable {
@@ -47,7 +48,6 @@ public class Listings extends Fragment implements PatientListAdapter.PatientCall
         super.onViewCreated(view, savedInstanceState);
         findViews();
         initList();
-        clearDb();
     }
 
     private void clearDb() {
