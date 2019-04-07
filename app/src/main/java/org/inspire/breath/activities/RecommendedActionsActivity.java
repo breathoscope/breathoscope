@@ -37,7 +37,7 @@ public class RecommendedActionsActivity extends TestActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecommendedActionsActivity.this, PatientsActivity.class);
+                Intent intent = new Intent(RecommendedActionsActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         });
