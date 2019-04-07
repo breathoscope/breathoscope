@@ -3,7 +3,7 @@ package org.inspire.breath.fragments.home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +23,7 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
 
     private StaticPager mPager;
     private List<Fragment> mFragments;
-
+    private FloatingActionButton mFab;
     private Patients patients;
     private Home home;
 
@@ -36,10 +36,21 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mFab = view.findViewById(R.id.admin_fab);
+        mFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPager.getCurrentItem() == 1)
+                    patients.moveToCreate();
+                else
+                    home.onAdd();
+            }
+        });
         mFragments = new LinkedList<>();
-
         patients = new Patients();
+        patients.setFab(mFab);
         home = new Home();
+        home.setFab(mFab);
 
         mFragments.add(home);
         mFragments.add(patients.setCallback(this));

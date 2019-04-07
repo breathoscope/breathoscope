@@ -76,12 +76,6 @@ public class Testing extends FragmentedFragment {
     }
 
     public void getData() {
-        Intent intent = getActivity().getIntent();
-        int patient_id = intent.getIntExtra(HomeActivity.PATIENT_ID_KEY, -1);
-        int session_id = intent.getIntExtra(HomeActivity.SESSION_ID_KEY, -1);
-
-        this.mPatient = AppRoomDatabase.getDatabase().patientDao().getPatientById(patient_id);
-        this.mSession = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(session_id);
 
         if(mSession.getRecommendedActions() == null) {
             mSession.setRecommendedActionsResultBlob(new RecommendActionsResult().toBlob());
@@ -161,5 +155,10 @@ public class Testing extends FragmentedFragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public void setData(Session session, Patient patient) {
+        this.mSession = session;
+        this.mPatient = patient;
     }
 }

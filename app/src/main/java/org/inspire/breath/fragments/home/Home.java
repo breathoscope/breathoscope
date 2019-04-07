@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,9 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
     private ImageView mPatientPicture;
 
     public History history;
+    public Testing testing;
+
+    public FloatingActionButton fab;
 
     private void findViews(View root) {
         this.mPatientName = root.findViewById(R.id.home_patient_name);
@@ -45,7 +49,12 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
         history = new History();
+        testing = new Testing();
         replaceFrag(R.id.home_main_container, history);
+    }
+
+    public void setFab(FloatingActionButton fab) {
+        this.fab = fab;
     }
 
     public void setSession(Session session) {
@@ -62,8 +71,16 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
         history.setPatient(mPatient);
     }
 
+    public void onAdd() {
+        Session session = new Session();
+        session.setPatientId(mPatient.getPatientId());
+        testing.setData(session, mPatient);
+        replaceFrag(R.id.home_main_container, testing);
+    }
+
     @Override
     public void onFocus() {
 
     }
+
 }

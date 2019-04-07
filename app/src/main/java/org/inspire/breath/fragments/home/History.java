@@ -52,6 +52,8 @@ public class History extends FragmentedFragment {
         RecommendActionsResult recommendActionsResult = new RecommendActionsResult();
         RecommendActionsResult.Action action = new RecommendActionsResult.Action("don't die lol", RecommendActionsResult.Action.SEVERE);
         recommendActionsResult.addAction(RecommendActionsResult.Test.BREATH, action);
+        action = new RecommendActionsResult.Action("don't die lol", RecommendActionsResult.Action.MED);
+        recommendActionsResult.addAction(RecommendActionsResult.Test.DIARRHOEA, action);
         session.setRecommendedActionsResult(recommendActionsResult);
         AppRoomDatabase.getDatabase().sessionDao().insertRecording(session);
     }

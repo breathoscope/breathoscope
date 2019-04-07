@@ -50,16 +50,25 @@ public class Patients extends FragmentedFragment implements StaticPager.Focusabl
         mPager.setAdapter(adapter);
     }
 
+    public void setFab(FloatingActionButton fab) {
+        this.mAddPatientFAB = fab;
+    }
+
     private void setupListeners() {
-        mAddPatientFAB.setOnClickListener(v -> {
-            mPager.setCurrentItem(mPager.getCurrentItem() + 1, true);
-            mAddPatientFAB.hide();
-        });
+//        mAddPatientFAB.setOnClickListener(v -> {
+//            mPager.setCurrentItem(mPager.getCurrentItem() + 1, true);
+//            mAddPatientFAB.hide();
+//        });
+    }
+
+    public void moveToCreate() {
+        mPager.setCurrentItem(mPager.getCurrentItem() + 1, true);
+        mAddPatientFAB.hide();
     }
 
     private void findViews(View view) {
         mPager = view.findViewById(R.id.patient_pager);
-        mAddPatientFAB = view.findViewById(R.id.patient_list_add_patient);
+//        mAddPatientFAB = view.findViewById(R.id.patient_list_add_patient);
     }
 
     @Override
