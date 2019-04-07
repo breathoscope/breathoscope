@@ -11,7 +11,5 @@ public class Refer_HC extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_refer_hc);
-
-        setContentView(R.layout.activity_refer_hc);
     }
 }

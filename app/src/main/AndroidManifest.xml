@@ -30,12 +30,8 @@
         <activity android:name=".activities.BreathRateActivity" />
 
         <activity android:name=".activities.HrRecordingActivity" />
-        <activity android:name=".activities.ValidateDiarrhoeaActivity" />
-
-
-
+        <activity android:name=".activities.ValidateDiarrhoeaActivity" />sx
         <activity android:name=".activities.Understanding_results"></activity>
-
         <activity android:name=".activities.SeverePneumoniaTreatment"></activity>
         <activity android:name=".activities.PneumoniaSeveritySigns" />
         <activity android:name=".activities.NonSeverePneumoniaTreatment" />
@@ -48,7 +44,6 @@
         <activity android:name=".activities.NonSevereMalariaTreatment" />
         <activity android:name=".activities.Refer_HC" />
         <activity android:name=".activities.FeverMainQ" />
-
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,7 +56,6 @@
         </activity>
         <activity android:name=".activities.ResetActivity" />
         <activity android:name=".activities.HomeActivity" />
-
     </application>
 
 </manifest>

@@ -71,13 +71,6 @@
                 android:background="@drawable/invalid_result"
                 android:onClick="Invalid_Click"/>
 
-
-
-
-
         </LinearLayout>
     </ScrollView>
-
-
-
 </android.support.constraint.ConstraintLayout>

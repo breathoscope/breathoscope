@@ -12,8 +12,6 @@
         <item name="android:windowFullscreen">false</item>
         <item name="android:buttonStyle">@style/defaultButton</item>
     </style>
-
-
     <style name="defaultButton" parent="android:Widget.Material.Button.Colored">
         <item name="android:background">@drawable/default_btn_selector</item>
         <item name="android:textColor">@color/default_btn_text_selector</item>
