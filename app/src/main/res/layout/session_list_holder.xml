@@ -15,24 +15,24 @@
 
         <ImageView
             android:id="@+id/breath_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/medium_icon"
+            android:layout_height="@dimen/medium_icon"
             android:src="@drawable/ic_stethoscope_ok"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toLeftOf="@id/fever_status"/>
         <ImageView
             android:id="@+id/fever_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/medium_icon"
+            android:layout_height="@dimen/medium_icon"
             android:src="@drawable/ic_thermometer_ok_alert"
             app:layout_constraintLeft_toRightOf="@id/breath_status"
             app:layout_constraintRight_toLeftOf="@id/danger_status"
             app:layout_constraintTop_toTopOf="parent" />
         <ImageView
             android:id="@+id/danger_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/medium_icon"
+            android:layout_height="@dimen/medium_icon"
             android:src="@drawable/ic_round_warning_ok_24px"
             app:layout_constraintLeft_toRightOf="@id/fever_status"
             app:layout_constraintRight_toLeftOf="@id/diarrhoea_status"
@@ -40,8 +40,8 @@
 
         <ImageView
             android:id="@+id/diarrhoea_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/medium_icon"
+            android:layout_height="@dimen/medium_icon"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_intestine_ok"
             app:layout_constraintRight_toLeftOf="@id/malaria_status"
@@ -50,8 +50,8 @@
 
         <ImageView
             android:id="@+id/malaria_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/medium_icon"
+            android:layout_height="@dimen/medium_icon"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_baseline_photo_camera_ok_24px"
             app:layout_constraintRight_toLeftOf="@id/heart_status"
@@ -60,8 +60,8 @@
 
         <ImageView
             android:id="@+id/heart_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/medium_icon"
+            android:layout_height="@dimen/medium_icon"
             android:layout_marginEnd="8dp"
             android:src="@drawable/ic_clipboard_pulse_outline_ok"
             app:layout_constraintLeft_toRightOf="@id/malaria_status"
