@@ -74,8 +74,7 @@ public class BreathRateFragment extends TestFragment {
                                             recommendActionsResult.addAction(RecommendActionsResult.Test.BREATH, "Treat with Amoxicillin");
                                             s.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
 
-
-                                            //malaria result
+                                            
 
                                             dao.upsertRecording(s);
                                             getActivity().finish();

@@ -12,6 +12,7 @@ import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.MalariaTestResult;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 public class Understanding_results extends AppCompatActivity {
 
@@ -30,16 +31,13 @@ public class Understanding_results extends AppCompatActivity {
 
     public void Positive_Click(View view) {
         setAnswer("yes");
-
         Intent intent = new Intent(this, Severe_malaria.class);
         startActivity(intent);
     }
 
     public void Negative_Click(View view) {
         setAnswer("no");
-
-
-        Intent intent = new Intent(this, Refer_HC.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
@@ -54,9 +52,19 @@ public class Understanding_results extends AppCompatActivity {
         //setting the value but not in the database
         MalariaTestResult mtr = session.getMalariaTestResult();
         mtr.answer = string;
+
+
+        if(string=="no")
+        {
+            RecommendActionsResult recommendActionsResult = session.getRecommendedActions();
+            recommendActionsResult.addAction(RecommendActionsResult.Test.MALARIA, "Refer To Health Center");
+            session.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
+        }
+
         session.setMalariaTestResult(mtr);//sets the blob, i.e using the function
 
         //store in database
+        //upsert --> inserts and updates
         AppRoomDatabase.getDatabase().sessionDao().upsertRecording(session);
     }
 }
