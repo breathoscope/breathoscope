@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
-import org.inspire.breath.data.blobs.HrRecording;
 import org.inspire.breath.utils.RawToWavConverter;
 import org.inspire.breath.R;
 
@@ -44,24 +43,24 @@ public class HrRecordingActivity extends TestActivity {
 
     private final int SECONDS = 60;
 
-    MediaPlayer mp;
+    private MediaPlayer mp;
+    private CountDownTimer cdt;
+    private AudioRecord recorder;
 
+    private boolean isRecording;
+    private boolean isPlaying;
+
+    private Session session;
     private ByteArrayOutputStream baos;
-    Session session;
 
     private String rawOutputPath;
     private String wavOutputPath;
 
     private Thread writeThread;
 
-    private AudioRecord recorder;
-    private boolean isRecording;
-
     private ImageButton mRecordBtn, mRestartBtn;
     private Button mPlayBtn, mConfirmBtn;
     private TextView mCountdown;
-
-    boolean isPlaying;
 
     // Requesting permission to RECORD_AUDIO
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -97,7 +96,7 @@ public class HrRecordingActivity extends TestActivity {
         displaySnackbar();
 
         initViews();
-
+        initCountdown();
         setupListeners();
         
     }
@@ -233,23 +232,7 @@ public class HrRecordingActivity extends TestActivity {
 
             mCountdown.setVisibility(View.VISIBLE);
             mCountdown.setText(Integer.toString(SECONDS));
-            int seconds = SECONDS;
-            new CountDownTimer(SECONDS * 1000, 1000) {
-
-                int seconds = SECONDS;
-
-                public void onTick(long millis) {
-                    mCountdown.setText(Integer.toString(seconds--));
-                }
-                public void onFinish(){
-                    stopRecording();
-                    rawToWav();
-                    mPlayBtn.setVisibility(View.VISIBLE);
-                    mConfirmBtn.setVisibility(View.VISIBLE);
-                    mCountdown.setVisibility(View.GONE);
-
-                }
-            }.start();
+            cdt.start();
 
         });
 
@@ -258,6 +241,9 @@ public class HrRecordingActivity extends TestActivity {
             mPlayBtn.setVisibility(View.INVISIBLE);
             mConfirmBtn.setVisibility(View.INVISIBLE);
 
+            cdt.cancel();
+            mCountdown.setVisibility(View.INVISIBLE);
+            initCountdown();
             stopRecording();
             Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
         });
@@ -283,6 +269,26 @@ public class HrRecordingActivity extends TestActivity {
 
         });
 
+    }
+
+    void initCountdown() {
+        cdt = new CountDownTimer(SECONDS * 1000, 1000) {
+
+            int seconds = SECONDS;
+
+            public void onTick(long millis) {
+                mCountdown.setText(Integer.toString(seconds--));
+            }
+            public void onFinish(){
+                stopRecording();
+                rawToWav();
+                mPlayBtn.setVisibility(View.VISIBLE);
+                mConfirmBtn.setVisibility(View.VISIBLE);
+                initCountdown();
+                mCountdown.setVisibility(View.GONE);
+
+            }
+        };
     }
 
     // thread to save raw data to app's cache directory
