@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import org.inspire.breath.R;
+import android.support.v4.app.SupportActivity;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.MalariaTestResult;
@@ -14,11 +15,14 @@ import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 
-public class Understanding_results extends AppCompatActivity {
+public class Understanding_results extends AppCompatActivity  {
 
     private Session session ;//session object
     private int age;
     private String parseAge;
+
+    //asks about malaria severity signs
+    private boolean hasSevereMalaria= Severe_malaria.severeMalariaCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +64,22 @@ public class Understanding_results extends AppCompatActivity {
             recommendActionsResult.addAction(RecommendActionsResult.Test.MALARIA, "Refer To Health Center");
             session.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
         }
+        else if(string=="yes"&& hasSevereMalaria==false)
+        {
+            RecommendActionsResult recommendActionsResult = session.getRecommendedActions();
+            recommendActionsResult.addAction(RecommendActionsResult.Test.MALARIA, "Treat With Oral AntiMalaria ");
+            session.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
+        }
+        else if(string=="yes" && hasSevereMalaria==true)
+        {
+            RecommendActionsResult recommendActionsResult = session.getRecommendedActions();
+            recommendActionsResult.addAction(RecommendActionsResult.Test.MALARIA, "Give pre- referral Artesunate && Refer to Hospital URGENTLY ");
+            session.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
 
-        session.setMalariaTestResult(mtr);//sets the blob, i.e using the function
+        }
+
+        //sets the blob, i.e using the function
+        session.setMalariaTestResult(mtr);
 
         //store in database
         //upsert --> inserts and updates

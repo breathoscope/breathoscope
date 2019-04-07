@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import org.inspire.breath.R;
 
-public class Severe_malaria extends AppCompatActivity {
+public class Severe_malaria extends AppCompatActivity  {
+    public static boolean severeMalariaCheck;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,15 +16,14 @@ public class Severe_malaria extends AppCompatActivity {
         setContentView(R.layout.activity_severe_malaria);
     }
 
-
     public void YesSev_Click(View view) {
-
-        Intent intent = new Intent(this, Severe_And_Pos.class);
+        severeMalariaCheck =true;
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
     public void NoSev_Click(View view) {
-
-        Intent intent = new Intent(this, NonSevereMalariaTreatment.class);
+        severeMalariaCheck = false;
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 }
