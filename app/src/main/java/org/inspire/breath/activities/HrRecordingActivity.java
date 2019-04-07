@@ -1,6 +1,7 @@
 package org.inspire.breath.activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.DialogInterface;
 
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
@@ -238,14 +240,37 @@ public class HrRecordingActivity extends TestActivity {
 
         mRestartBtn.setOnClickListener((v) -> {
 
-            mPlayBtn.setVisibility(View.INVISIBLE);
-            mConfirmBtn.setVisibility(View.INVISIBLE);
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
 
-            cdt.cancel();
-            mCountdown.setVisibility(View.INVISIBLE);
-            initCountdown();
-            stopRecording();
-            Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
+                            mPlayBtn.setVisibility(View.INVISIBLE);
+                            mConfirmBtn.setVisibility(View.INVISIBLE);
+
+                            cdt.cancel();
+                            mCountdown.setVisibility(View.INVISIBLE);
+                            initCountdown();
+                            stopRecording();
+                            Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(HrRecordingActivity.this);
+            builder.setMessage(getString(R.string.recording_cancel_warning))
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener)
+                    .show();
+
         });
 
         mPlayBtn.setOnClickListener((v) -> {
