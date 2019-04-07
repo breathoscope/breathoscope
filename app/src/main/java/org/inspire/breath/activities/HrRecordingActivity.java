@@ -57,7 +57,7 @@ public class HrRecordingActivity extends TestActivity {
     private AudioRecord recorder;
     private boolean isRecording;
 
-    private ImageButton mRecordBtn, mRestartBtn, mStopBtn;
+    private ImageButton mRecordBtn, mRestartBtn;
     private Button mPlayBtn, mConfirmBtn;
     private TextView mCountdown;
 
@@ -105,13 +105,11 @@ public class HrRecordingActivity extends TestActivity {
     private void initViews() {
         this.mRecordBtn = findViewById(R.id.hr_record_btn);
         this.mRestartBtn = findViewById(R.id.hr_restart_btn);
-        this.mStopBtn = findViewById(R.id.hr_stop_btn);
         this.mPlayBtn = findViewById(R.id.recording_play_button);
         this.mConfirmBtn = findViewById(R.id.hr_confirm_btn);
         this.mCountdown = findViewById(R.id.hr_countdown);
 
         mRestartBtn.setVisibility(View.INVISIBLE);
-        mStopBtn.setVisibility(View.INVISIBLE);
         mPlayBtn.setVisibility(View.INVISIBLE);
         mConfirmBtn.setVisibility(View.INVISIBLE);
         mCountdown.setVisibility(View.INVISIBLE);
@@ -122,11 +120,9 @@ public class HrRecordingActivity extends TestActivity {
         if (mRecordBtn.getVisibility() == View.VISIBLE) {
             mRecordBtn.setVisibility(View.INVISIBLE);
             mRestartBtn.setVisibility(View.VISIBLE);
-            mStopBtn.setVisibility(View.VISIBLE);
         } else {
             mRecordBtn.setVisibility(View.VISIBLE);
             mRestartBtn.setVisibility(View.INVISIBLE);
-            mStopBtn.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -264,13 +260,6 @@ public class HrRecordingActivity extends TestActivity {
 
             stopRecording();
             Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
-        });
-
-        mStopBtn.setOnClickListener((v) -> {
-            stopRecording();
-            rawToWav();
-            mPlayBtn.setVisibility(View.VISIBLE);
-            mConfirmBtn.setVisibility(View.VISIBLE);
         });
 
         mPlayBtn.setOnClickListener((v) -> {
