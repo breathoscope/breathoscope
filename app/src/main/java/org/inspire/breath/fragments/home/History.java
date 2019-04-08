@@ -19,6 +19,7 @@ import org.inspire.breath.utils.FragmentedFragment;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Logger;
 
 import static org.inspire.breath.data.AppRoomDatabase.getDatabase;
@@ -61,10 +62,11 @@ public class History extends FragmentedFragment {
         Session session = new Session();
         session.setPatientId(patient.getPatientId());
         RecommendActionsResult recommendActionsResult = new RecommendActionsResult();
-        RecommendActionsResult.Action action = new RecommendActionsResult.Action("don't die lol", RecommendActionsResult.Action.SEVERE);
-        recommendActionsResult.addAction(RecommendActionsResult.Test.BREATH, action);
-        action = new RecommendActionsResult.Action("don't die lol", RecommendActionsResult.Action.MED);
-        recommendActionsResult.addAction(RecommendActionsResult.Test.DIARRHOEA, action);
+        Random random = new Random();
+        for (RecommendActionsResult.Test test : RecommendActionsResult.Test.values()) {
+            RecommendActionsResult.Action action = new RecommendActionsResult.Action("Refer to HC for " + test.name() + " treatment", random.nextInt(3));
+            recommendActionsResult.addAction(test, action, random.nextBoolean());
+        }
         session.setRecommendedActionsResult(recommendActionsResult);
         AppRoomDatabase.getDatabase().sessionDao().insertRecording(session);
     }
