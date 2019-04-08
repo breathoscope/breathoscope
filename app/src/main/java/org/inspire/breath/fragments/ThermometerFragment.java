@@ -64,6 +64,8 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
 
     public MediaPlayer mp;
     public Snackbar snackbar;
+    public IntentFilter inserted;
+    public IntentFilter removed;
 
     private BroadcastReceiver mNoisyReceiver = new BroadcastReceiver() {
         @Override
@@ -106,6 +108,11 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
         }
         View v = inflater.inflate(R.layout.thermometer_fragment, container, false);
         Button cv = v.findViewById(R.id.thermometerRecord);
+        IntentFilter removed = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        getActivity().registerReceiver(mNoisyReceiver, removed);
+
+        IntentFilter inserted = new IntentFilter(AudioManager.ACTION_HEADSET_PLUG);
+        getActivity().registerReceiver(mNoisyReceiver, inserted);
         cv.setOnClickListener(this);
         return v;
     }
@@ -113,12 +120,6 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        IntentFilter removed = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
-        getActivity().registerReceiver(mNoisyReceiver, removed);
-
-        IntentFilter inserted = new IntentFilter(AudioManager.ACTION_HEADSET_PLUG);
-        getActivity().registerReceiver(mNoisyReceiver, inserted);
 
         myTextFrequency = (TextView)getView().findViewById(R.id.textFrequency);
         myTextTemperature = (TextView)getView().findViewById(R.id.textTemperature);
@@ -155,7 +156,7 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
         };
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage(getResources().getString(R.string.temperature_confirm_dialog, temp)).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+        builder.setMessage(getResources().getString(R.string.temperature_confirm_dialog, temp)).setCancelable(false).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
                 .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
 
 
@@ -189,12 +190,20 @@ public class ThermometerFragment extends Fragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
+        removed = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        getActivity().registerReceiver(mNoisyReceiver, removed);
+
+        inserted = new IntentFilter(AudioManager.ACTION_HEADSET_PLUG);
+        getActivity().registerReceiver(mNoisyReceiver, inserted);
     }
 
     @Override
     public void onPause() {
         mp.pause();
         super.onPause();
+        if(mNoisyReceiver != null)
+            getActivity().unregisterReceiver(mNoisyReceiver);
+
     }
 
     @Override

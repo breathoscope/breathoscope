@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Patient;
+import org.inspire.breath.data.PatientDao;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.BreathTestResult;
@@ -64,13 +66,27 @@ public class BreathRateFragment extends TestFragment {
                                     switch (which) { // DOUBLE BONUS POINTS FOR RHYMING
                                         case DialogInterface.BUTTON_POSITIVE:
                                             SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
+                                            PatientDao pdao = AppRoomDatabase.getDatabase().patientDao();
                                             BreathRateViewModel viewModel = ViewModelProviders.of(getActivity()).get(BreathRateViewModel.class);
                                             Session s = getSession();
+                                            Patient p = pdao.getPatientById(s.getPatientId());
+                                            String remedy = "";
+                                            if(Integer.parseInt(p.getAge()) < 1)
+                                                if(count < 50)
+                                                    remedy = "Common Cold or Rhinitis - treat accordingly";
+                                                else
+                                                    remedy = "Pneumonia - treat with Amoxicillin";
+                                            else
+                                                if(count >= 40)
+                                                    remedy = "Pneumonia - treat with Amoxicillin, refer if severe";
+                                                else
+                                                    remedy = "Common Cold or Rhinitis - treat accordingly";
+
                                             BreathTestResult result = new BreathTestResult();
                                             result.setBreathrate(count);
                                             s.setBreathTestResultBlob(result.toBlob());
                                             RecommendActionsResult recommendActionsResult = s.getRecommendedActions();
-                                            recommendActionsResult.addAction(RecommendActionsResult.Test.BREATH, "Treat with Amoxicillin");
+                                            recommendActionsResult.addAction(RecommendActionsResult.Test.BREATH, remedy);
                                             s.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
                                             dao.upsertRecording(s);
                                             getActivity().finish();
@@ -84,7 +100,7 @@ public class BreathRateFragment extends TestFragment {
                             };
 
                             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                            builder.setMessage(getResources().getString(R.string.confirmdialog, count)).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
+                            builder.setMessage(getResources().getString(R.string.confirmdialog, count)).setCancelable(false).setPositiveButton(getResources().getString(R.string.yes), dialogClickListener)
                                     .setNegativeButton(getResources().getString(R.string.no), dialogClickListener).show();
                         }
                     }
