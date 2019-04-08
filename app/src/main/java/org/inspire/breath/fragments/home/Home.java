@@ -26,6 +26,8 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
     private TextView mPatientSex;
     private ImageView mPatientPicture;
 
+    public FragmentedFragment current;
+
     public History history;
     public Testing testing;
 
@@ -50,6 +52,7 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
         findViews(view);
         history = new History();
         testing = new Testing();
+        this.current = history;
         replaceFrag(R.id.home_main_container, history);
     }
 
@@ -75,7 +78,23 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
         Session session = new Session();
         session.setPatientId(mPatient.getPatientId());
         testing.setData(session, mPatient);
+        fab.hide();
+        this.current = testing;
         replaceFrag(R.id.home_main_container, testing);
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (this.current.equals(testing)) {
+            fab.show();
+            history.setPatient(mPatient);
+            current = history;
+            replaceFrag(R.id.home_main_container, history);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

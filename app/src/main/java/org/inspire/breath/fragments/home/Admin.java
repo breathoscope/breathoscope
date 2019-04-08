@@ -74,7 +74,7 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
         if (mPager.getCurrentItem() == 1) {
             return patients.onBackPressed();
         }
-        else {
+        else if (!home.onBackPressed()) {
             mPager.setCurrentItem(1, true);
         }
         return true;

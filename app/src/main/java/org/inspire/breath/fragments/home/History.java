@@ -30,6 +30,9 @@ public class History extends FragmentedFragment {
     private RecyclerView mRecycler;
     public Patient currentPatient;
 
+    private List<Session> sessions;
+    SessionListAdapter adapter;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +43,14 @@ public class History extends FragmentedFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
+        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (this.currentPatient != null) {
+            setPatient(currentPatient);
+            sessions = AppRoomDatabase.getDatabase()
+                    .sessionDao()
+                    .getRecordings(currentPatient.getPatientId());
+            mRecycler.setAdapter(new SessionListAdapter(sessions));
+        }
     }
 
     private void findViews(View root) {
@@ -59,12 +70,21 @@ public class History extends FragmentedFragment {
     }
 
     public void setPatient(Patient mPatient) {
-        setupDummyData(mPatient);
+//        setupDummyData(mPatient);
+//        System.out.println("set patient");
         this.currentPatient = mPatient;
-        mRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        List<Session> sessions = getDatabase()
+        sessions = getDatabase()
                 .sessionDao()
                 .getRecordings(currentPatient.getPatientId());
-        mRecycler.setAdapter(new SessionListAdapter(sessions));
+        if (adapter == null)
+            adapter = new SessionListAdapter(sessions);
+        adapter.setSessions(sessions);
+        mRecycler.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        return false;
     }
 }

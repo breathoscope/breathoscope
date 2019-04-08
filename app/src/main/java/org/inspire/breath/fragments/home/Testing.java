@@ -113,12 +113,9 @@ public class Testing extends FragmentedFragment {
     }
 
     private void setupListeners() {
-        System.out.println("setting up listeners");
-        System.out.println(this.mMalariaCard);
         this.mMalariaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("clicked malaria");
                 Intent intent = new Intent(getActivity(), MalariaActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
                 startActivity(intent);

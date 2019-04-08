@@ -62,7 +62,7 @@ public class SessionListAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private List<Session> mSessions;
+    public List<Session> mSessions;
 
     public SessionListAdapter(List<Session> sessions) {
         super();
@@ -80,6 +80,11 @@ public class SessionListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
         ((SessionViewHolder) viewHolder).bind(mSessions.get(i));
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.mSessions = sessions;
+        this.notifyDataSetChanged();
     }
 
     @Override
