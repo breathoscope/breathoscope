@@ -1,5 +1,6 @@
 package org.inspire.breath.fragments.home;
 
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +9,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.inspire.breath.R;
+import org.inspire.breath.activities.RecommendedActionsActivity;
+import org.inspire.breath.activities.TestActivity;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.utils.FragmentedFragment;
@@ -32,12 +36,15 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
     public Testing testing;
 
     public FloatingActionButton fab;
+    public Button diagnoseBtn;
+
 
     private void findViews(View root) {
         this.mPatientName = root.findViewById(R.id.home_patient_name);
         this.mPatientAge = root.findViewById(R.id.home_patient_age);
         this.mPatientSex = root.findViewById(R.id.home_patient_sex);
         this.mPatientPicture = root.findViewById(R.id.home_patient_picture);
+        this.diagnoseBtn = root.findViewById(R.id.viewDiagnosis);
     }
 
     @Nullable
@@ -50,10 +57,18 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
+        diagnoseBtn.setVisibility(View.INVISIBLE);
+        diagnoseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                diagnose();
+            }
+        });
         history = new History();
         testing = new Testing();
         this.current = history;
         replaceFrag(R.id.home_main_container, history);
+
     }
 
     public void setFab(FloatingActionButton fab) {
@@ -81,6 +96,15 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
         fab.hide();
         this.current = testing;
         replaceFrag(R.id.home_main_container, testing);
+        diagnoseBtn.setVisibility(View.VISIBLE);
+    }
+
+    public void diagnose() {
+        if (this.current.equals(testing)) {
+            Intent intent = new Intent(getActivity(), RecommendedActionsActivity.class);
+            intent.putExtra(TestActivity.SESSION_ID_KEY, mSession.getId());
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -90,6 +114,7 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
             history.setPatient(mPatient);
             current = history;
             replaceFrag(R.id.home_main_container, history);
+            diagnoseBtn.setVisibility(View.INVISIBLE);
             return true;
         }
         else {

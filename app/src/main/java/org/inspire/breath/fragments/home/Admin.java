@@ -86,4 +86,5 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
         if (mPager.getCurrentItem() == 1)
             patients.onActivityResult(requestCode, resultCode, data);
     }
+
 }
