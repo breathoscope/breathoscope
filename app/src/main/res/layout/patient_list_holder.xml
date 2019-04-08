@@ -16,7 +16,7 @@
             android:id="@+id/patient_list_holder_thumb"
             android:layout_width="@dimen/profile_thumb_width"
             android:layout_height="@dimen/profile_thumb_height"
-            android:src="@mipmap/app_icon_round"
+            android:src="@mipmap/ic_launcher_round"
             android:layout_margin="@dimen/default_margin"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
