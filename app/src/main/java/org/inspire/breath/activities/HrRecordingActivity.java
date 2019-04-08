@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimationDrawable;
 import android.media.AudioFormat;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -14,8 +15,10 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.DialogInterface;
@@ -64,6 +67,8 @@ public class HrRecordingActivity extends TestActivity {
     private ImageButton mRecordBtn, mRestartBtn;
     private Button mPlayBtn, mConfirmBtn;
     private TextView mCountdown;
+    private ImageView heartView;
+    private AnimationDrawable heartAnimation;
 
     // Requesting permission to RECORD_AUDIO
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -111,6 +116,10 @@ public class HrRecordingActivity extends TestActivity {
         this.mConfirmBtn = findViewById(R.id.hr_confirm_btn);
         this.mCountdown = findViewById(R.id.hr_countdown);
 
+        this.heartView = findViewById(R.id.imageView4);
+        heartView.setBackgroundResource(R.drawable.animation_heart);
+        heartAnimation = (AnimationDrawable) heartView.getBackground();
+
         mRestartBtn.setVisibility(View.INVISIBLE);
         mPlayBtn.setVisibility(View.INVISIBLE);
         mConfirmBtn.setVisibility(View.INVISIBLE);
@@ -145,6 +154,7 @@ public class HrRecordingActivity extends TestActivity {
 
     private void stopRecording() {
         toggleVisibleButtons();
+        heartAnimation.stop();
         isRecording = false;
         if(recorder != null) {
             recorder.stop();
@@ -223,6 +233,8 @@ public class HrRecordingActivity extends TestActivity {
         mRecordBtn.setOnClickListener((v) -> {
 
             initRecorder();
+
+            heartAnimation.start();
 
             toggleVisibleButtons();
 
