@@ -1,5 +1,6 @@
 package org.inspire.breath.fragments.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -78,5 +79,11 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
             mPager.setCurrentItem(1, true);
         }
         return true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (mPager.getCurrentItem() == 1)
+            patients.onActivityResult(requestCode, resultCode, data);
     }
 }

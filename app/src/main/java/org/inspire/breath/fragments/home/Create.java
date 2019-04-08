@@ -70,8 +70,12 @@ public class Create extends Fragment implements StaticPager.Focusable {
     }
 
     private void setupListeners() {
-        this.mPictureHolder.setOnClickListener(v -> {
-            startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), IMAGE_REQUEST_CODE);
+        this.mPictureHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("this working");
+                getActivity().startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), IMAGE_REQUEST_CODE);
+            }
         });
 
         this.mSave.setOnClickListener(new View.OnClickListener() {

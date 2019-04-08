@@ -1,5 +1,6 @@
 package org.inspire.breath.utils;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 public class FragmentedFragment extends Fragment {
@@ -25,5 +26,12 @@ public class FragmentedFragment extends Fragment {
             return currentFragment.onBackPressed();
         else
             return false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (this.currentFragment != null) {
+            this.currentFragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
