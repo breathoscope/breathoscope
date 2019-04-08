@@ -1,5 +1,6 @@
 package org.inspire.breath.fragments.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.inspire.breath.R;
+import org.inspire.breath.activities.RecommendedActionsActivity;
+import org.inspire.breath.activities.TestActivity;
 import org.inspire.breath.adapters.SessionListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
@@ -24,7 +27,7 @@ import java.util.logging.Logger;
 
 import static org.inspire.breath.data.AppRoomDatabase.getDatabase;
 
-public class History extends FragmentedFragment {
+public class History extends FragmentedFragment implements SessionListAdapter.SessionCallback {
 
     private static Logger logger = Logger.getLogger(History.class.toString());
 
@@ -50,7 +53,7 @@ public class History extends FragmentedFragment {
             sessions = AppRoomDatabase.getDatabase()
                     .sessionDao()
                     .getRecordings(currentPatient.getPatientId());
-            mRecycler.setAdapter(new SessionListAdapter(sessions));
+            mRecycler.setAdapter(new SessionListAdapter(sessions, this));
         }
     }
 
@@ -78,7 +81,7 @@ public class History extends FragmentedFragment {
                 .sessionDao()
                 .getRecordings(currentPatient.getPatientId());
         if (adapter == null)
-            adapter = new SessionListAdapter(sessions);
+            adapter = new SessionListAdapter(sessions, this);
         adapter.setSessions(sessions);
         mRecycler.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -87,5 +90,12 @@ public class History extends FragmentedFragment {
     @Override
     public boolean onBackPressed() {
         return false;
+    }
+
+    @Override
+    public void onSession(Session session) {
+        Intent intent = new Intent(getActivity(), RecommendedActionsActivity.class);
+        intent.putExtra(TestActivity.SESSION_ID_KEY, session.getId());
+        startActivity(intent);
     }
 }

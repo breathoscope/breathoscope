@@ -21,6 +21,9 @@ import java.util.Locale;
 public class SessionListAdapter extends RecyclerView.Adapter {
     public class SessionViewHolder extends RecyclerView.ViewHolder {
 
+        Session mSession;
+        SessionCallback mSessionCallback;
+
         View root;
         TextView date;
         ImageView breathStatus;
@@ -30,9 +33,16 @@ public class SessionListAdapter extends RecyclerView.Adapter {
         ImageView malariaStatus;
         ImageView dangerStatus;
 
-        public SessionViewHolder(@NonNull View itemView) {
+        public SessionViewHolder(@NonNull View itemView, SessionCallback sessionCallback) {
             super(itemView);
             root = itemView;
+            mSessionCallback = sessionCallback;
+            root.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback(mSession);
+                }
+            });
             findViews();
         }
 
@@ -47,6 +57,7 @@ public class SessionListAdapter extends RecyclerView.Adapter {
         }
 
         public void bind(Session session) {
+            this.mSession = session;
             RecommendActionsResult actions = session.getRecommendedActions();
             for (RecommendActionsResult.Test test : RecommendActionsResult.Test.values()) {
                 RecommendActionsResult.Action action = actions.getAction(test);
@@ -70,20 +81,25 @@ public class SessionListAdapter extends RecyclerView.Adapter {
 //             = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date(session.getTimestamp()));
             date.setText(dateText);
         }
+
+        public void callback(Session session) {
+            this.mSessionCallback.onSession(session);
+        }
     }
 
     public List<Session> mSessions;
-
-    public SessionListAdapter(List<Session> sessions) {
+    private SessionCallback mSessionCallback;
+    public SessionListAdapter(List<Session> sessions, SessionCallback sessionCallback) {
         super();
         this.mSessions = sessions;
+        this.mSessionCallback = sessionCallback;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         SessionViewHolder viewHolder = new SessionViewHolder(LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.session_list_holder, viewGroup, false));
+                .inflate(R.layout.session_list_holder, viewGroup, false), mSessionCallback);
         return viewHolder;
     }
 
@@ -100,6 +116,10 @@ public class SessionListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         return mSessions.size();
+    }
+
+    public interface SessionCallback {
+        void onSession(Session session);
     }
 
     static class StatusSelector {
