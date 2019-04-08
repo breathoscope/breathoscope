@@ -1,5 +1,6 @@
 package org.inspire.breath.fragments.home;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -11,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,13 +69,15 @@ public class Create extends Fragment implements StaticPager.Focusable {
         findViews(view);
         setupListeners();
         setupData();
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA},0);
+        }
     }
 
     private void setupListeners() {
         this.mPictureHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("this working");
                 getActivity().startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), IMAGE_REQUEST_CODE);
             }
         });
@@ -155,5 +159,10 @@ public class Create extends Fragment implements StaticPager.Focusable {
             layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
             mProfilePicture.setLayoutParams(layoutParams);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
