@@ -1,12 +1,14 @@
 package org.inspire.breath.activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioFormat;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.AudioRecord;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -14,10 +16,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.content.DialogInterface;
 
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
+import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.utils.RawToWavConverter;
 import org.inspire.breath.R;
 
@@ -39,23 +44,26 @@ public class HrRecordingActivity extends TestActivity {
             RECORDER_AUDIO_FORMAT
     );
 
-    MediaPlayer mp;
+    private final int SECONDS = 60;
 
+    private MediaPlayer mp;
+    private CountDownTimer cdt;
+    private AudioRecord recorder;
+
+    private boolean isRecording;
+    private boolean isPlaying;
+
+    private Session session;
     private ByteArrayOutputStream baos;
-    Session session;
 
     private String rawOutputPath;
     private String wavOutputPath;
 
     private Thread writeThread;
 
-    private AudioRecord recorder;
-    private boolean isRecording;
-
-    private ImageButton mRecordBtn, mRestartBtn, mStopBtn;
+    private ImageButton mRecordBtn, mRestartBtn;
     private Button mPlayBtn, mConfirmBtn;
-
-    boolean isPlaying;
+    private TextView mCountdown;
 
     // Requesting permission to RECORD_AUDIO
     private static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
@@ -91,7 +99,7 @@ public class HrRecordingActivity extends TestActivity {
         displaySnackbar();
 
         initViews();
-
+        initCountdown();
         setupListeners();
         
     }
@@ -99,14 +107,14 @@ public class HrRecordingActivity extends TestActivity {
     private void initViews() {
         this.mRecordBtn = findViewById(R.id.hr_record_btn);
         this.mRestartBtn = findViewById(R.id.hr_restart_btn);
-        this.mStopBtn = findViewById(R.id.hr_stop_btn);
         this.mPlayBtn = findViewById(R.id.recording_play_button);
         this.mConfirmBtn = findViewById(R.id.hr_confirm_btn);
+        this.mCountdown = findViewById(R.id.hr_countdown);
 
         mRestartBtn.setVisibility(View.INVISIBLE);
-        mStopBtn.setVisibility(View.INVISIBLE);
         mPlayBtn.setVisibility(View.INVISIBLE);
         mConfirmBtn.setVisibility(View.INVISIBLE);
+        mCountdown.setVisibility(View.INVISIBLE);
     }
 
     private void toggleVisibleButtons() {
@@ -114,11 +122,9 @@ public class HrRecordingActivity extends TestActivity {
         if (mRecordBtn.getVisibility() == View.VISIBLE) {
             mRecordBtn.setVisibility(View.INVISIBLE);
             mRestartBtn.setVisibility(View.VISIBLE);
-            mStopBtn.setVisibility(View.VISIBLE);
         } else {
             mRecordBtn.setVisibility(View.VISIBLE);
             mRestartBtn.setVisibility(View.INVISIBLE);
-            mStopBtn.setVisibility(View.INVISIBLE);
         }
 
     }
@@ -140,8 +146,10 @@ public class HrRecordingActivity extends TestActivity {
     private void stopRecording() {
         toggleVisibleButtons();
         isRecording = false;
-        recorder.stop();
-        recorder.release();
+        if(recorder != null) {
+            recorder.stop();
+            recorder.release();
+        }
         writeThread = null;
 
         storeRecording();
@@ -170,6 +178,7 @@ public class HrRecordingActivity extends TestActivity {
     }
 
     private void playAudio() {
+
 
         mPlayBtn.setText(R.string.recording_stop);
 
@@ -225,22 +234,46 @@ public class HrRecordingActivity extends TestActivity {
             writeThread = new Thread(new AudioFileWriter());
             writeThread.start();
 
+
+            mCountdown.setVisibility(View.VISIBLE);
+            mCountdown.setText(Integer.toString(SECONDS));
+            cdt.start();
+
         });
 
         mRestartBtn.setOnClickListener((v) -> {
 
-            mPlayBtn.setVisibility(View.INVISIBLE);
-            mConfirmBtn.setVisibility(View.INVISIBLE);
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
 
-            stopRecording();
-            Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
-        });
+                            mPlayBtn.setVisibility(View.INVISIBLE);
+                            mConfirmBtn.setVisibility(View.INVISIBLE);
 
-        mStopBtn.setOnClickListener((v) -> {
-            stopRecording();
-            rawToWav();
-            mPlayBtn.setVisibility(View.VISIBLE);
-            mConfirmBtn.setVisibility(View.VISIBLE);
+                            cdt.cancel();
+                            mCountdown.setVisibility(View.INVISIBLE);
+                            initCountdown();
+                            stopRecording();
+                            Toast.makeText(HrRecordingActivity.this, "Recording cancelled", Toast.LENGTH_SHORT).show();
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+            };
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(HrRecordingActivity.this);
+            builder.setMessage(getString(R.string.recording_cancel_warning))
+                    .setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener)
+                    .show();
+
         });
 
         mPlayBtn.setOnClickListener((v) -> {
@@ -258,12 +291,33 @@ public class HrRecordingActivity extends TestActivity {
             }
 
             // replace HrRecordingActivity with heart beat parsing activity
-            Intent intent = new Intent(getApplicationContext(), HrRecordingActivity.class);
-            intent.putExtra("HR_BYTE_ARR", baos.toByteArray());
+            Intent intent = new Intent(getApplicationContext(), HrCountActivity.class);
+            intent.putExtra("HR_FILE", new File(wavOutputPath));
+            intent.putExtra(SESSION_ID_KEY, getSession().getId());
             startActivity(intent);
 
         });
 
+    }
+
+    void initCountdown() {
+        cdt = new CountDownTimer(SECONDS * 1000, 1000) {
+
+            int seconds = SECONDS;
+
+            public void onTick(long millis) {
+                mCountdown.setText(Integer.toString(seconds--));
+            }
+            public void onFinish(){
+                stopRecording();
+                rawToWav();
+                mPlayBtn.setVisibility(View.VISIBLE);
+                mConfirmBtn.setVisibility(View.VISIBLE);
+                initCountdown();
+                mCountdown.setVisibility(View.GONE);
+
+            }
+        };
     }
 
     // thread to save raw data to app's cache directory

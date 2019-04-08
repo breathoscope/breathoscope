@@ -5,26 +5,27 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-feature android:name="android.hardware.camera"
-    android:required="true" />
 
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/app_icon_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".activities.HrCountActivity"></activity>
         <activity
             android:name=".activities.RecommendedActionsActivity"
             android:label="@string/title_activity_recommended_actions"></activity>
         <activity android:name=".activities.MalariaActivity" />
         <activity android:name=".activities.ThermometerActivity" />
         <activity android:name=".activities.BreathRateActivity" />
-        <activity android:name=".activities.HrRecordingActivity">
-        </activity>
-
-        <activity android:name=".activities.ValidateDiarrhoeaActivity"/>
+        <activity android:name=".activities.HrRecordingActivity" />
+        <activity android:name=".activities.ValidateDiarrhoeaActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,4 +39,5 @@
         <activity android:name=".activities.ResetActivity" />
         <activity android:name=".activities.HomeActivity" />
     </application>
+
 </manifest>

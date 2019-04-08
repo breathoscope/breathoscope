@@ -11,7 +11,8 @@ import org.inspire.breath.data.blobs.BreathTestResult;
 import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
-import org.inspire.breath.data.blobs.HrRecording;
+import org.inspire.breath.data.blobs.HrCountTest;
+import org.inspire.breath.data.blobs.HeartRateTestResult;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 
 import java.io.ByteArrayOutputStream;
@@ -49,8 +50,11 @@ public class Session {
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Danger")
     private byte[] dangerTestResultBlob;
 
-    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "HrRecording")
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "HeartRateTestResult")
     private byte[] hrRecordingBlob;
+
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "HrCount")
+    private byte[] hrCountBlob;
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "RecommendedActions")
     private byte[] recommendedActionsResultBlob;
@@ -123,8 +127,11 @@ public class Session {
         return new DiarrhoeaTestResult().consumeBlob(this.diarrhoeaTestResultBlob);
     }
 
-    public HrRecording getHrRecording() {
-        return new HrRecording().consumeBlob(this.hrRecordingBlob);
+    public HeartRateTestResult getHrRecording() {
+        if(this.hrRecordingBlob != null)
+            return new HeartRateTestResult().consumeBlob(this.hrRecordingBlob);
+        else
+            return null;
     }
 
     public byte[] getHrRecordingBlob() {
@@ -139,6 +146,21 @@ public class Session {
         this.hrRecordingBlob = hrRecordingBlob;
     }
 
+    public HrCountTest getHrCount() {
+        return new HrCountTest().consumeBlob(this.hrCountBlob);
+    }
+
+    public byte[] getHrCountBlob() {
+        return hrCountBlob;
+    }
+
+    public void setHrCount(ByteArrayOutputStream baos) {
+        setHrCountBlob(baos.toByteArray());
+    }
+
+    public void setHrCountBlob(byte[] hrCountBlob) {
+        this.hrCountBlob = hrCountBlob;
+    }
     public RecommendActionsResult getRecommendedActions() {
         return new RecommendActionsResult().consumeBlob(this.recommendedActionsResultBlob);
     }

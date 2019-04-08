@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import com.commonsware.cwac.saferoom.SafeHelperFactory;
 
-@Database(entities = {Patient.class, Session.class}, version = 8, exportSchema = false)
+@Database(entities = {Patient.class, Session.class}, version = 9, exportSchema = false)
 public abstract class AppRoomDatabase extends RoomDatabase {
 
     // DAOs

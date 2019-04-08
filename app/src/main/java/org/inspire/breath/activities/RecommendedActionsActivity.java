@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,7 +14,10 @@ import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.BreathTestResult;
+import org.inspire.breath.data.blobs.DangerTestResult;
+import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 
@@ -26,12 +30,11 @@ public class RecommendedActionsActivity extends TestActivity {
         Intent i = getIntent();
         int id = i.getIntExtra(SESSION_ID_KEY, 0);
 
-        ImageButton done = findViewById(R.id.imageButton);
+        Button done = findViewById(R.id.done);
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(RecommendedActionsActivity.this, HomeActivity.class);
-                startActivity(intent);
+                finish();
             }
         });
         SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
@@ -42,11 +45,17 @@ public class RecommendedActionsActivity extends TestActivity {
         CardView feverCard = findViewById(R.id.diagnose_fever_result);
         CardView breathCard = findViewById(R.id.diagnose_breath_test);
         CardView malariaCard = findViewById(R.id.diagnose_malaria_test);
+        CardView diarrhoeaCard = findViewById(R.id.diagnose_diarrhoea_test);
+        CardView heartCard = findViewById(R.id.diagnose_heartrate_test);
+        CardView dangerCard = findViewById(R.id.diagnose_danger_test);
 
         //Get tests
         FeverTestResult feverTestResult = session.getFeverTestResult();
         BreathTestResult breathTestResult = session.getBreathTestResult();
         MalariaTestResult malariaTestResult = session.getMalariaTestResult();
+        DiarrhoeaTestResult diarrhoeaTestResult = session.getDiarrhoeaTestResult();
+        HrCountTest heartRateTestResult = session.getHrCount();
+        DangerTestResult dangerTestResult = session.getDangerTestResult();
 
         if(breathTestResult == null)
             breathCard.setVisibility(View.GONE);
@@ -54,25 +63,62 @@ public class RecommendedActionsActivity extends TestActivity {
             feverCard.setVisibility(View.GONE);
         if(malariaTestResult == null)
             malariaCard.setVisibility(View.GONE);
+        if(diarrhoeaTestResult == null)
+            diarrhoeaCard.setVisibility(View.GONE);
+        if(heartRateTestResult == null)
+            heartCard.setVisibility(View.GONE);
+        if(dangerTestResult == null)
+            dangerCard.setVisibility(View.GONE);
 
-        TextView feverActions = findViewById(R.id.feverActions);
-        TextView feverResult = findViewById(R.id.feverResult);
+        if(feverTestResult != null) {
+            TextView feverActions = findViewById(R.id.feverActions);
+            TextView feverResult = findViewById(R.id.feverResult);
 
-        feverResult.setText(getResources().getString(R.string.degrees, session.getFeverTestResult().getTemperature()));
+            feverResult.setText(getResources().getString(R.string.degrees, session.getFeverTestResult().getTemperature()));
 
-        if(session.getRecommendedActions().isUrgent)
-            feverActions.setTextColor(Color.RED);
-        feverActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.FEVER).getAction());
 
-        TextView breathActions = findViewById(R.id.breathActions);
-        TextView breathResult = findViewById(R.id.breathResult);
+            if (session.getRecommendedActions().isUrgent)
+                feverActions.setTextColor(Color.RED);
+            feverActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.FEVER).getAction());
+        }
 
         if(breathTestResult != null) {
+            TextView breathActions = findViewById(R.id.breathActions);
+            TextView breathResult = findViewById(R.id.breathResult);
             breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
             if (session.getRecommendedActions().isUrgent)
                 breathActions.setTextColor(Color.RED);
             breathActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.BREATH).getAction());
         }
+
+        if(diarrhoeaTestResult != null) {
+            TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
+            if (session.getRecommendedActions().isUrgent)
+                diarrhoeaActions.setTextColor(Color.RED);
+            diarrhoeaActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.DIARRHOEA).getAction());
+        }
+
+        if(dangerTestResult != null) {
+            TextView dangerActions = findViewById(R.id.dangerActions);
+            if(session.getRecommendedActions().isUrgent)
+                dangerActions.setTextColor(Color.RED);
+            dangerActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.DANGER).getAction());
+        }
+
+        if(malariaTestResult != null) {
+            TextView malariaActions = findViewById(R.id.malariaActions);
+            if (session.getRecommendedActions().isUrgent)
+                malariaActions.setTextColor(Color.RED);
+            malariaActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.MALARIA).getAction());
+        }
+
+        if(heartRateTestResult != null) {
+            TextView heartrateActions = findViewById(R.id.heartrateActions);
+            if(session.getRecommendedActions().isUrgent)
+                heartrateActions.setTextColor(Color.RED);
+            heartrateActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.HEART).getAction());
+        }
+
 
     }
 
