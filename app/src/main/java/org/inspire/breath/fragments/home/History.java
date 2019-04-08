@@ -71,6 +71,7 @@ public class History extends FragmentedFragment {
 
     public void setPatient(Patient mPatient) {
         this.currentPatient = mPatient;
+        setupDummyData(currentPatient);
         sessions = getDatabase()
                 .sessionDao()
                 .getRecordings(currentPatient.getPatientId());

@@ -6,17 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.inspire.breath.R;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class SessionListAdapter extends RecyclerView.Adapter {
     public class SessionViewHolder extends RecyclerView.ViewHolder {
 
         View root;
+        TextView date;
         ImageView breathStatus;
         ImageView feverStatus;
         ImageView heartStatus;
@@ -31,6 +37,7 @@ public class SessionListAdapter extends RecyclerView.Adapter {
         }
 
         private void findViews() {
+            date = root.findViewById(R.id.date);
             breathStatus = root.findViewById(R.id.breath_status);
             feverStatus = root.findViewById(R.id.fever_status);
             heartStatus = root.findViewById(R.id.heart_status);
@@ -59,6 +66,9 @@ public class SessionListAdapter extends RecyclerView.Adapter {
                     }
                 }
             }
+            String dateText = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.UK).format(new Date(session.getTimestamp()));
+//             = DateFormat.getDateInstance(DateFormat.SHORT).format(new Date(session.getTimestamp()));
+            date.setText(dateText);
         }
     }
 
