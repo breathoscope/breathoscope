@@ -12,6 +12,7 @@ import org.inspire.breath.data.blobs.HrCountTest;
 
 
 import org.inspire.breath.R;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 import org.inspire.breath.utils.WawReader;
 
 public class HrCountActivity extends TestActivity {
@@ -30,11 +31,14 @@ public class HrCountActivity extends TestActivity {
 
         HrCountTest writer = new HrCountTest();
         writer.setResult(beats);
-        Session a = getSession();
-        a.setHrCountBlob(writer.toBlob());
+        Session session = getSession();
+        session.setHrCountBlob(writer.toBlob());
+        RecommendActionsResult actionsResult = session.getRecommendedActions();
+        actionsResult.addAction(RecommendActionsResult.Test.HEART, "Heart rate is " + beats + "bpm"); //turn into res string
+        session.setRecommendedActionsResultBlob(actionsResult.toBlob());
         AppRoomDatabase.getDatabase()
                 .sessionDao()
-                .insertRecording(a);
+                .upsertRecording(session);
 
 
     }

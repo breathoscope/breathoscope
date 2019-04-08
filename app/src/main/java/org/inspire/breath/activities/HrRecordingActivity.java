@@ -22,6 +22,7 @@ import android.content.DialogInterface;
 
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
+import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.utils.RawToWavConverter;
 import org.inspire.breath.R;
 
@@ -145,8 +146,10 @@ public class HrRecordingActivity extends TestActivity {
     private void stopRecording() {
         toggleVisibleButtons();
         isRecording = false;
-        recorder.stop();
-        recorder.release();
+        if(recorder != null) {
+            recorder.stop();
+            recorder.release();
+        }
         writeThread = null;
 
         storeRecording();
@@ -290,6 +293,7 @@ public class HrRecordingActivity extends TestActivity {
             // replace HrRecordingActivity with heart beat parsing activity
             Intent intent = new Intent(getApplicationContext(), HrCountActivity.class);
             intent.putExtra("HR_FILE", new File(wavOutputPath));
+            intent.putExtra(SESSION_ID_KEY, getSession().getId());
             startActivity(intent);
 
         });
