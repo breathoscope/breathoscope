@@ -10,6 +10,7 @@ import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 
 public class ValidateDiarrhoeaActivity extends TestActivity {
@@ -63,18 +64,19 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                     question.setText(getQuestion(questionNum));
                 }
                 else if (questionNum>=(mQuestions.length-1)){
-                    question.setText(getAnswer(1));
+                    //question.setText(getAnswer(1));
 
                     DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                     writer.setResult(1);
-                    Session a = getSession();
-                    a.setDiarrhoeaTestResultBlob(writer.toBlob());
+                    Session s = getSession();
+                    RecommendActionsResult outcome = s.getRecommendedActions();
+                    outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, getAnswer(questionNum));
+                    s.setRecommendedActionsResultBlob(outcome.toBlob());
+                    s.setDiarrhoeaTestResultBlob(writer.toBlob());
                     AppRoomDatabase.getDatabase()
                                     .sessionDao()
-                                    .insertRecording(a);
-
-                    answerYes.setVisibility(View.GONE);
-                    answerNo.setVisibility(View.GONE);
+                                    .upsertRecording(s);
+                    finish();
                 }
 
 
@@ -85,18 +87,20 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
             @Override
             public void onClick(View v) {
 
-                question.setText(getAnswer(questionNum));
+                //question.setText(getAnswer(questionNum));
 
                 DiarrhoeaTestResult writer = new DiarrhoeaTestResult();
                 writer.setResult(questionNum);
                 Session a = getSession();
+                RecommendActionsResult outcome = a.getRecommendedActions();
+                outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, getAnswer(questionNum));
+                a.setRecommendedActionsResultBlob(outcome.toBlob());
                 a.setDiarrhoeaTestResultBlob(writer.toBlob());
                 AppRoomDatabase.getDatabase()
                         .sessionDao()
-                        .insertRecording(a);
+                        .upsertRecording(a);
 
-                answerYes.setVisibility(View.GONE);
-                answerNo.setVisibility(View.GONE);
+                finish();
 
             }
         });

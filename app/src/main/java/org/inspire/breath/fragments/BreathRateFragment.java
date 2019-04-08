@@ -20,6 +20,7 @@ import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Session;
 import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.BreathTestResult;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 public class BreathRateFragment extends TestFragment {
 
@@ -47,7 +48,7 @@ public class BreathRateFragment extends TestFragment {
                 tapTest.setEnabled(true);
                 count = 0;
                 countAmount.setText(count + "");
-                new CountDownTimer(60000, 1000) {
+                new CountDownTimer(5000, 1000) {
                     public void onTick(long millis) {
                         countdown.setText((millis/1000) + "");
                     }
@@ -68,6 +69,9 @@ public class BreathRateFragment extends TestFragment {
                                             BreathTestResult result = new BreathTestResult();
                                             result.setBreathrate(count);
                                             s.setBreathTestResultBlob(result.toBlob());
+                                            RecommendActionsResult recommendActionsResult = s.getRecommendedActions();
+                                            recommendActionsResult.addAction(RecommendActionsResult.Test.BREATH, "Treat with Amoxicillin");
+                                            s.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
                                             dao.upsertRecording(s);
                                             getActivity().finish();
                                             break;

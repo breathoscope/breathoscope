@@ -10,7 +10,6 @@
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -19,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".activities.HrCountActivity"></activity>
+        <activity
+            android:name=".activities.RecommendedActionsActivity"
+            android:label="@string/title_activity_recommended_actions"></activity>
         <activity android:name=".activities.PatientsActivity" />
         <activity android:name=".activities.MalariaActivity" />
         <activity android:name=".activities.ThermometerActivity" />
