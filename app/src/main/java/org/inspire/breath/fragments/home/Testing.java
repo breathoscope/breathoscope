@@ -86,7 +86,7 @@ public class Testing extends FragmentedFragment {
         this.mHeartTick = root.findViewById(R.id.home_test_heart_tick);
 
         this.mMalariaCard = root.findViewById(R.id.home_test_malaria_card);
-      //  mMalariaCard.setVisibility(View.GONE);
+        mMalariaCard.setVisibility(View.GONE);
         this.mBreathCard = root.findViewById(R.id.home_test_breath_card);
         this.mDiarrhoeaCard = root.findViewById(R.id.home_test_diarrhoea_card);
         this.mFeverCard = root.findViewById(R.id.home_test_fever_card);
