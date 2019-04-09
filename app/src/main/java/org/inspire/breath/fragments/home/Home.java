@@ -16,10 +16,15 @@ import android.widget.TextView;
 import org.inspire.breath.R;
 import org.inspire.breath.activities.RecommendedActionsActivity;
 import org.inspire.breath.activities.TestActivity;
+import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.Session;
+import org.inspire.breath.data.SessionDao;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 import org.inspire.breath.utils.FragmentedFragment;
 import org.inspire.breath.views.StaticPager;
+
+import java.util.Date;
 
 public class Home extends FragmentedFragment implements StaticPager.Focusable {
 
@@ -90,9 +95,14 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
     }
 
     public void onAdd() {
-        Session session = new Session();
-        session.setPatientId(mPatient.getPatientId());
-        testing.setData(session, mPatient);
+        mSession = new Session();
+        mSession.setRecommendedActionsResult(new RecommendActionsResult());
+        mSession.setPatientId(mPatient.getPatientId());
+        SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
+        dao.insertRecording(mSession);
+        // gen id
+        mSession =  dao.getRecordings(mPatient.getPatientId()).get(0);
+        testing.setData(mSession, mPatient);
         fab.hide();
         this.current = testing;
         replaceFrag(R.id.home_main_container, testing);

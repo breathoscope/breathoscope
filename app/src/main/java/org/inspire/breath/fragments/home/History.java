@@ -20,6 +20,7 @@ import org.inspire.breath.data.Session;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 import org.inspire.breath.utils.FragmentedFragment;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -53,6 +54,7 @@ public class History extends FragmentedFragment implements SessionListAdapter.Se
             sessions = AppRoomDatabase.getDatabase()
                     .sessionDao()
                     .getRecordings(currentPatient.getPatientId());
+            logger.warning("" + sessions.size());
             mRecycler.setAdapter(new SessionListAdapter(sessions, this));
         }
     }

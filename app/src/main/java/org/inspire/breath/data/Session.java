@@ -33,6 +33,10 @@ public class Session {
     private int id;
     private int patientId;
 
+    public Session() {
+        setTimestamp(new Date().getTime());
+    }
+
     private long timestamp;
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "Fever")
@@ -58,10 +62,6 @@ public class Session {
 
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB, name = "RecommendedActions")
     private byte[] recommendedActionsResultBlob;
-
-    public Session() {
-        this.timestamp = new Date().getTime();
-    }
 
 
     public int getId() {
