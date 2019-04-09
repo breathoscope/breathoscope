@@ -21,7 +21,7 @@
         <activity
             android:name=".activities.RecommendedActionsActivity"
             android:label="@string/title_activity_recommended_actions"></activity>
-        <activity android:name=".activities.MalariaActivity" />
+        <activity android:name=".activities.MalariaActivity"> </activity>
         <activity android:name=".activities.ThermometerActivity" />
         <activity android:name=".activities.BreathRateActivity" />
         <activity android:name=".activities.HrRecordingActivity" />

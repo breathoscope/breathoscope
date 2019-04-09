@@ -33,6 +33,12 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
             "Uncomplicated diarrhoea: give ORS and Zinc sulfate according to age, plus Albendazole (if not received within last 6 months)"
     };
 
+    public int mSeverity [] = {
+            RecommendActionsResult.Action.OK,
+            RecommendActionsResult.Action.SEVERE,
+            RecommendActionsResult.Action.MED
+    };
+
     public String getQuestion(int a){
         String question = mQuestions[a];
         return question;
@@ -70,7 +76,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                     writer.setResult(1);
                     Session s = getSession();
                     RecommendActionsResult outcome = s.getRecommendedActions();
-                    outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, new RecommendActionsResult.Action(getAnswer(questionNum), RecommendActionsResult.Action.MED));
+                    outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, new RecommendActionsResult.Action(getAnswer(questionNum), mSeverity[questionNum]));
                     s.setRecommendedActionsResultBlob(outcome.toBlob());
                     s.setDiarrhoeaTestResultBlob(writer.toBlob());
                     AppRoomDatabase.getDatabase()
@@ -93,7 +99,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                 writer.setResult(questionNum);
                 Session a = getSession();
                 RecommendActionsResult outcome = a.getRecommendedActions();
-                outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, new RecommendActionsResult.Action(getAnswer(questionNum), RecommendActionsResult.Action.MED));
+                outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, new RecommendActionsResult.Action(getAnswer(questionNum), mSeverity[questionNum]));
                 a.setRecommendedActionsResultBlob(outcome.toBlob());
                 a.setDiarrhoeaTestResultBlob(writer.toBlob());
                 AppRoomDatabase.getDatabase()

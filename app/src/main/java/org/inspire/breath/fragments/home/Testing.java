@@ -1,5 +1,7 @@
 package org.inspire.breath.fragments.home;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -7,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import org.inspire.breath.R;
 import org.inspire.breath.activities.BreathRateActivity;
 import org.inspire.breath.activities.HomeActivity;
+import org.inspire.breath.activities.HrRecordingActivity;
 import org.inspire.breath.activities.MalariaActivity;
 import org.inspire.breath.activities.ThermometerActivity;
 import org.inspire.breath.activities.ValidateDiarrhoeaActivity;
@@ -25,6 +29,8 @@ import org.inspire.breath.data.blobs.BreathTestResult;
 import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
+import org.inspire.breath.data.blobs.HeartRateTestResult;
+import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 import org.inspire.breath.utils.FragmentedFragment;
@@ -37,6 +43,7 @@ public class Testing extends FragmentedFragment {
     private AppCompatCheckBox mDiarrhoeaTick;
     private AppCompatCheckBox mMalariaTick;
     private AppCompatCheckBox mBreathTick;
+    private AppCompatCheckBox mHeartTick;
 
     // Cards
     private CardView mMalariaCard;
@@ -44,19 +51,29 @@ public class Testing extends FragmentedFragment {
     private CardView mDangerCard;
     private CardView mDiarrhoeaCard;
     private CardView mBreathCard;
+    private CardView mHeartCard;
+
     private Patient mPatient;
     private Session mSession;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_testing, container, false);
+        View v = inflater.inflate(R.layout.fragment_testing, container, false);
+        return v;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
+        getData();
+        setupListeners();
+    }
+
+    public void reSetup() {
+        findViews(getView());
+        getData();
         setupListeners();
     }
 
@@ -66,13 +83,15 @@ public class Testing extends FragmentedFragment {
         this.mDiarrhoeaTick = root.findViewById(R.id.home_test_diarrhoea_tick);
         this.mFeverTick = root.findViewById(R.id.home_test_fever_tick);
         this.mMalariaTick = root.findViewById(R.id.home_test_malaria_tick);
+        this.mHeartTick = root.findViewById(R.id.home_test_heart_tick);
 
         this.mMalariaCard = root.findViewById(R.id.home_test_malaria_card);
-        mMalariaCard.setVisibility(View.GONE);
+      //  mMalariaCard.setVisibility(View.GONE);
         this.mBreathCard = root.findViewById(R.id.home_test_breath_card);
         this.mDiarrhoeaCard = root.findViewById(R.id.home_test_diarrhoea_card);
         this.mFeverCard = root.findViewById(R.id.home_test_fever_card);
         this.mDangerCard = root.findViewById(R.id.home_test_danger_card);
+        this.mHeartCard = root.findViewById(R.id.home_test_heart_card);
     }
 
     public void getData() {
@@ -88,18 +107,12 @@ public class Testing extends FragmentedFragment {
         BreathTestResult breathTestResult = this.mSession.getBreathTestResult();
         DiarrhoeaTestResult diarrhoeaTestResult = this.mSession.getDiarrhoeaTestResult();
         DangerTestResult dangerTestResult = this.mSession.getDangerTestResult();
+        HrCountTest heartRateTestResult = this.mSession.getHrCount();
         RecommendActionsResult recommendActionsResult = this.mSession.getRecommendedActions();
 
         if(feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
             mMalariaCard.setVisibility(View.VISIBLE);
 
-        if (recommendActionsResult != null) {
-            //if (recommendActionsResult.isUrgent) {
-            //    Intent i = new Intent(this, RecommendedActionsActivity.class);
-            //    i.putExtra(SESSION_ID_KEY, mSession.getId());
-            //    startActivity(i);
-            //}
-        }
         if (feverTestResult != null)
             mFeverTick.setChecked(true);
         if (malariaTestResult != null)
@@ -110,6 +123,8 @@ public class Testing extends FragmentedFragment {
             mDangerTick.setChecked(true);
         if (breathTestResult != null)
             mBreathTick.setChecked(true);
+        if (heartRateTestResult != null)
+            mHeartTick.setChecked(true);
     }
 
     private void setupListeners() {
@@ -124,7 +139,6 @@ public class Testing extends FragmentedFragment {
         this.mDangerCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "NYI", Toast.LENGTH_SHORT).show();
             }
         });
         this.mFeverCard.setOnClickListener(new View.OnClickListener() {
@@ -146,8 +160,15 @@ public class Testing extends FragmentedFragment {
         this.mDiarrhoeaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "NYI", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), ValidateDiarrhoeaActivity.class);
+                intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
+                startActivity(intent);
+            }
+        });
+        this.mHeartCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HrRecordingActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
                 startActivity(intent);
             }

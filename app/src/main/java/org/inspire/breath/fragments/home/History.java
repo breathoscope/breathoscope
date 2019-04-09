@@ -78,7 +78,7 @@ public class History extends FragmentedFragment implements SessionListAdapter.Se
 
     public void setPatient(Patient mPatient) {
         this.currentPatient = mPatient;
-        setupDummyData(currentPatient);
+        //setupDummyData(currentPatient);
         sessions = getDatabase()
                 .sessionDao()
                 .getRecordings(currentPatient.getPatientId());

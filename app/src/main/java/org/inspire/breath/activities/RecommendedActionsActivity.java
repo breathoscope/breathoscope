@@ -75,51 +75,65 @@ public class RecommendedActionsActivity extends TestActivity {
             TextView feverResult = findViewById(R.id.feverResult);
 
             feverResult.setText(getResources().getString(R.string.degrees, session.getFeverTestResult().getTemperature()));
-
-
-            if (session.getRecommendedActions().isUrgent)
-                feverActions.setTextColor(Color.RED);
-            feverActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.FEVER).getAction());
+            RecommendActionsResult.Action action = session.getRecommendedActions().getAction(RecommendActionsResult.Test.FEVER);
+            if(action != null) {
+                feverActions.setTextColor(getColorForSeverity(action.getSeverity()));
+                feverActions.setText(action.getAction());
+            }
         }
 
         if(breathTestResult != null) {
             TextView breathActions = findViewById(R.id.breathActions);
             TextView breathResult = findViewById(R.id.breathResult);
             breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
-            if (session.getRecommendedActions().isUrgent)
-                breathActions.setTextColor(Color.RED);
-            breathActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.BREATH).getAction());
+            RecommendActionsResult.Action action = session.getRecommendedActions().getAction(RecommendActionsResult.Test.BREATH);
+            breathActions.setTextColor(getColorForSeverity(action.getSeverity()));
+            breathActions.setText(action.getAction());
         }
 
         if(diarrhoeaTestResult != null) {
             TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
-            if (session.getRecommendedActions().isUrgent)
-                diarrhoeaActions.setTextColor(Color.RED);
-            diarrhoeaActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.DIARRHOEA).getAction());
+            RecommendActionsResult.Action action = session.getRecommendedActions().getAction(RecommendActionsResult.Test.DIARRHOEA);
+            diarrhoeaActions.setTextColor(getColorForSeverity(action.getSeverity()));
+            diarrhoeaActions.setText(action.getAction());
         }
 
         if(dangerTestResult != null) {
             TextView dangerActions = findViewById(R.id.dangerActions);
-            if(session.getRecommendedActions().isUrgent)
-                dangerActions.setTextColor(Color.RED);
-            dangerActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.DANGER).getAction());
+            RecommendActionsResult.Action action = session.getRecommendedActions().getAction(RecommendActionsResult.Test.DANGER);
+            dangerActions.setTextColor(getColorForSeverity(action.getSeverity()));
+            dangerActions.setText(action.getAction());
         }
 
         if(malariaTestResult != null) {
             TextView malariaActions = findViewById(R.id.malariaActions);
-            if (session.getRecommendedActions().isUrgent)
-                malariaActions.setTextColor(Color.RED);
-            malariaActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.MALARIA).getAction());
+            TextView malariaResult = findViewById(R.id.malariaResult);
+            malariaResult.setText(session.getMalariaTestResult().getTestResult());
+            RecommendActionsResult.Action action = session.getRecommendedActions().getAction(RecommendActionsResult.Test.MALARIA);
+            malariaActions.setTextColor(getColorForSeverity(action.getSeverity()));
+            malariaActions.setText(action.getAction());
         }
 
         if(heartRateTestResult != null) {
             TextView heartrateActions = findViewById(R.id.heartrateActions);
-            if(session.getRecommendedActions().isUrgent)
-                heartrateActions.setTextColor(Color.RED);
-            heartrateActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.HEART).getAction());
+            RecommendActionsResult.Action action = session.getRecommendedActions().getAction(RecommendActionsResult.Test.HEART);
+            heartrateActions.setTextColor(getColorForSeverity(action.getSeverity()));
+            heartrateActions.setText(action.getAction());
         }
 
 
+    }
+
+    public int getColorForSeverity(int severity) {
+        switch(severity) {
+            case RecommendActionsResult.Action.OK:
+                return Color.GREEN;
+            case RecommendActionsResult.Action.MED:
+                return Color.rgb(255, 165, 0); //orange
+            case RecommendActionsResult.Action.SEVERE:
+                return Color.RED;
+        }
+        return Color.GRAY;
     }
 
 }
