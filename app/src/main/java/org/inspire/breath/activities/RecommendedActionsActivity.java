@@ -3,11 +3,7 @@ package org.inspire.breath.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -24,8 +20,6 @@ import org.inspire.breath.data.blobs.FeverTestResult;
 import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
-
-import java.util.Arrays;
 
 public class RecommendedActionsActivity extends TestActivity {
 
@@ -45,7 +39,7 @@ public class RecommendedActionsActivity extends TestActivity {
         });
         SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
         Session session = dao.getRecordingById(id);
-        session.getRecommendedActions().addAction(RecommendActionsResult.Test.BREATH, "Breath a little slower");
+        session.getRecommendedActions().addAction(RecommendActionsResult.Test.BREATH, new RecommendActionsResult.Action("Breath a little slower", 1));
 
         //Get cards so we can hide ones that don't exist
         CardView feverCard = findViewById(R.id.diagnose_fever_result);
@@ -82,9 +76,10 @@ public class RecommendedActionsActivity extends TestActivity {
 
             feverResult.setText(getResources().getString(R.string.degrees, session.getFeverTestResult().getTemperature()));
 
+
             if (session.getRecommendedActions().isUrgent)
                 feverActions.setTextColor(Color.RED);
-            feverActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.FEVER));
+            feverActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.FEVER).getAction());
         }
 
         if(breathTestResult != null) {
@@ -93,36 +88,35 @@ public class RecommendedActionsActivity extends TestActivity {
             breathResult.setText(breathTestResult.getBreathrate() + " breaths per minute");
             if (session.getRecommendedActions().isUrgent)
                 breathActions.setTextColor(Color.RED);
-            breathActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.BREATH));
-
+            breathActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.BREATH).getAction());
         }
 
         if(diarrhoeaTestResult != null) {
             TextView diarrhoeaActions = findViewById(R.id.diarrhoeaActions);
             if (session.getRecommendedActions().isUrgent)
                 diarrhoeaActions.setTextColor(Color.RED);
-            diarrhoeaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DIARRHOEA));
+            diarrhoeaActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.DIARRHOEA).getAction());
         }
 
         if(dangerTestResult != null) {
             TextView dangerActions = findViewById(R.id.dangerActions);
             if(session.getRecommendedActions().isUrgent)
                 dangerActions.setTextColor(Color.RED);
-            dangerActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.DANGER));
+            dangerActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.DANGER).getAction());
         }
 
         if(malariaTestResult != null) {
             TextView malariaActions = findViewById(R.id.malariaActions);
             if (session.getRecommendedActions().isUrgent)
                 malariaActions.setTextColor(Color.RED);
-            malariaActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.MALARIA));
+            malariaActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.MALARIA).getAction());
         }
 
         if(heartRateTestResult != null) {
             TextView heartrateActions = findViewById(R.id.heartrateActions);
             if(session.getRecommendedActions().isUrgent)
                 heartrateActions.setTextColor(Color.RED);
-            heartrateActions.setText(session.getRecommendedActions().getActions(RecommendActionsResult.Test.HEART));
+            heartrateActions.setText(session.getRecommendedActions().getAction(RecommendActionsResult.Test.HEART).getAction());
         }
 
 

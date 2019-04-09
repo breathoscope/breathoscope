@@ -105,4 +105,5 @@ public class PatientListAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return mPatients.size();
     }
+
 }

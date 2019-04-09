@@ -70,7 +70,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                     writer.setResult(1);
                     Session s = getSession();
                     RecommendActionsResult outcome = s.getRecommendedActions();
-                    outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, getAnswer(questionNum));
+                    outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, new RecommendActionsResult.Action(getAnswer(questionNum), RecommendActionsResult.Action.MED));
                     s.setRecommendedActionsResultBlob(outcome.toBlob());
                     s.setDiarrhoeaTestResultBlob(writer.toBlob());
                     AppRoomDatabase.getDatabase()
@@ -93,7 +93,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
                 writer.setResult(questionNum);
                 Session a = getSession();
                 RecommendActionsResult outcome = a.getRecommendedActions();
-                outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, getAnswer(questionNum));
+                outcome.addAction(RecommendActionsResult.Test.DIARRHOEA, new RecommendActionsResult.Action(getAnswer(questionNum), RecommendActionsResult.Action.MED));
                 a.setRecommendedActionsResultBlob(outcome.toBlob());
                 a.setDiarrhoeaTestResultBlob(writer.toBlob());
                 AppRoomDatabase.getDatabase()

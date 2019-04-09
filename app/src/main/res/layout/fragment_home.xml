@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/viewDiagnosis"
+        android:layout_width="152dp"
+        android:layout_height="79dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/diagnosis_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/home_patient_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/home_patient_picture"
+            android:layout_width="@dimen/home_thumb_width"
+            android:layout_height="@dimen/home_thumb_height"
+            android:layout_margin="8dp"
+            android:src="@mipmap/ic_launcher_round"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/home_patient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/light_outline"
+            android:padding="4dp"
+            android:text="@string/load_failed"
+            app:layout_constraintLeft_toRightOf="@id/home_patient_picture"
+            app:layout_constraintTop_toTopOf="@id/home_patient_picture" />
+
+        <TextView
+            android:id="@+id/home_patient_sex"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/light_outline"
+            android:padding="4dp"
+            android:text="@string/load_failed"
+            app:layout_constraintLeft_toLeftOf="@id/home_patient_name"
+            app:layout_constraintRight_toRightOf="@id/home_patient_name"
+            app:layout_constraintTop_toBottomOf="@id/home_patient_name" />
+
+        <TextView
+            android:id="@+id/home_patient_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/light_outline"
+            android:padding="4dp"
+            android:text="@string/load_failed"
+            app:layout_constraintLeft_toLeftOf="@id/home_patient_sex"
+            app:layout_constraintRight_toRightOf="@id/home_patient_sex"
+            app:layout_constraintTop_toBottomOf="@id/home_patient_sex" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/home_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_patient_details"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

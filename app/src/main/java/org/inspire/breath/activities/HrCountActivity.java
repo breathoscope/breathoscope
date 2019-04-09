@@ -34,7 +34,7 @@ public class HrCountActivity extends TestActivity {
         Session session = getSession();
         session.setHrCountBlob(writer.toBlob());
         RecommendActionsResult actionsResult = session.getRecommendedActions();
-        actionsResult.addAction(RecommendActionsResult.Test.HEART, "Heart rate is " + beats + "bpm"); //turn into res string
+        actionsResult.addAction(RecommendActionsResult.Test.HEART, new RecommendActionsResult.Action("Heart rate is " + beats + "bpm", RecommendActionsResult.Action.MED)); //turn into res string
         session.setRecommendedActionsResultBlob(actionsResult.toBlob());
         AppRoomDatabase.getDatabase()
                 .sessionDao()

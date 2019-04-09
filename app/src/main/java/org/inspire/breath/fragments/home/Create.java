@@ -1,5 +1,6 @@
-package org.inspire.breath.fragments.patients;
+package org.inspire.breath.fragments.home;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -11,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.Constraints;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +25,12 @@ import android.widget.Spinner;
 import org.inspire.breath.R;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
+import android.support.v4.app.Fragment;
+import org.inspire.breath.views.StaticPager;
 
 import java.io.ByteArrayOutputStream;
 
-public class Create extends PatientsFragment {
+public class Create extends Fragment implements StaticPager.Focusable {
 
     private static final int IMAGE_REQUEST_CODE = 1;
 
@@ -65,11 +69,17 @@ public class Create extends PatientsFragment {
         findViews(view);
         setupListeners();
         setupData();
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA},0);
+        }
     }
 
     private void setupListeners() {
-        this.mPictureHolder.setOnClickListener(v -> {
-            startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), IMAGE_REQUEST_CODE);
+        this.mPictureHolder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), IMAGE_REQUEST_CODE);
+            }
         });
 
         this.mSave.setOnClickListener(new View.OnClickListener() {
@@ -112,8 +122,6 @@ public class Create extends PatientsFragment {
 
     @Override
     public void onFocus() {
-        super.onFocus();
-        getPatientsActivity().mAddPatientFAB.hide();
         clearFields();
     }
 
@@ -151,5 +159,10 @@ public class Create extends PatientsFragment {
             layoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
             mProfilePicture.setLayoutParams(layoutParams);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

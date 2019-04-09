@@ -1,9 +1,8 @@
-package org.inspire.breath.fragments.patients;
+package org.inspire.breath.fragments.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,18 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.inspire.breath.R;
-import org.inspire.breath.activities.PatientsActivity;
 import org.inspire.breath.adapters.PatientListAdapter;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
+import org.inspire.breath.views.StaticPager;
 
+import android.support.v4.app.Fragment;
+import android.view.animation.Animation;
+
+
+import java.util.LinkedList;
 import java.util.List;
 
-public class Listings extends PatientsFragment {
+public class Listings extends Fragment implements PatientListAdapter.PatientCallback, StaticPager.Focusable {
 
     private RecyclerView mPatientList;
 
     private View.OnClickListener mListener;
+    private PatientListAdapter.PatientCallback callback;
 
     private void findViews() {
         mPatientList = getView().findViewById(R.id.patient_list_recycler);
@@ -45,6 +50,12 @@ public class Listings extends PatientsFragment {
         initList();
     }
 
+    private void clearDb() {
+        AppRoomDatabase.getDatabase()
+                .patientDao()
+                .deleteAllPatients();
+    }
+
     private List<Patient> getAllPatients() {
         return AppRoomDatabase.getDatabase().patientDao().getAllPatients();
     }
@@ -53,13 +64,11 @@ public class Listings extends PatientsFragment {
     private void initList() {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mPatientList.setLayoutManager(layoutManager);
-        mPatientList.setAdapter(new PatientListAdapter(getAllPatients(), (PatientsActivity) getActivity()));
+        mPatientList.setAdapter(new PatientListAdapter(getAllPatients(), this.callback));
     }
 
     @Override
     public void onFocus() {
-        super.onFocus();
-        getPatientsActivity().mAddPatientFAB.show();
         updateRecycler();
     }
 
@@ -68,5 +77,17 @@ public class Listings extends PatientsFragment {
         if (mPatientList != null) {
             ((PatientListAdapter) mPatientList.getAdapter()).setPatients(patients);
         }
+    }
+
+
+
+    @Override
+    public void onSelected(Patient patient) {
+        callback.onSelected(patient);
+    }
+
+    public Listings setCallback(PatientListAdapter.PatientCallback callback) {
+        this.callback = callback;
+        return this;
     }
 }

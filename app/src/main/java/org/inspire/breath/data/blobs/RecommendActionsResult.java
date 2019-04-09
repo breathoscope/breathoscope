@@ -10,7 +10,57 @@ import java.util.Map;
 
 public class RecommendActionsResult implements IBlobbable {
 
-    Map<Test, String> actions;
+    public static class Action {
+        public static final int OK = 0;
+        public static final int MED = 1;
+        public static final int SEVERE = 2;
+
+        private String mAction;
+        private int mSeverity;
+
+        public Action() {}
+
+        public Action(String action, int severity) {
+            mAction = action;
+            mSeverity = severity;
+        }
+
+        public String getAction() {
+            return mAction;
+        }
+
+        public int getSeverity() {
+            return mSeverity;
+        }
+
+        public byte[] getBytes() {
+            return ByteBuffer.allocate(8 + mAction.getBytes().length)
+                    .putInt(mAction.getBytes().length)
+                    .put(mAction.getBytes())
+                    .putInt(mSeverity)
+                    .array();
+        }
+
+        public Action fromBytes(byte[] bytes) {
+            ByteBuffer bfr = ByteBuffer.wrap(bytes);
+            int length = bfr.getInt();
+            byte[] remedyBytes = new byte[length];
+            bfr.get(remedyBytes);
+
+            int severity = bfr.getInt();
+
+            this.mAction = new String(remedyBytes);
+            this.mSeverity = severity;
+            return this;
+        }
+
+        @Override
+        public String toString() {
+            return getAction() + " " + getSeverity();
+        }
+    }
+
+    Map<Test, Action> actions;
 
     public RecommendActionsResult() {
         actions = new HashMap<>();
@@ -28,16 +78,16 @@ public class RecommendActionsResult implements IBlobbable {
     }
 
     //Because Java doesn't support optional parameters :(
-    public void addAction(Test owner, String remedy, boolean isUrgent) {
+    public void addAction(Test owner, Action remedy, boolean isUrgent) {
         this.isUrgent = isUrgent;
         actions.put(owner, remedy);
     }
 
-    public void addAction(Test owner, String remedy) {
+    public void addAction(Test owner, Action remedy) {
         actions.put(owner, remedy);
     }
 
-    public String getActions(Test t) {
+    public Action getAction(Test t) {
         return actions.get(t);
     }
 
@@ -46,7 +96,7 @@ public class RecommendActionsResult implements IBlobbable {
         //bit rough and ready but DataOutputStream wanted me to catch IOExceptions
         int byteCount = 0;
         List<Test> keys = new ArrayList<>(actions.keySet());
-        List<String> values = new ArrayList<>(actions.values());
+        List<Action> values = new ArrayList<>(actions.values());
         for(int i = 0; i < actions.size(); i++)
             byteCount += values.get(i).getBytes().length + 8;
         ByteBuffer output = ByteBuffer.allocate(byteCount + 1);
@@ -72,12 +122,17 @@ public class RecommendActionsResult implements IBlobbable {
         while(input.hasRemaining()) {
             int key = input.getInt();
             int valueLength = input.getInt();
-            String remedy;
+            Action remedy;
             byte[] remedyBytes = new byte[valueLength];
             input.get(remedyBytes, 0, valueLength);
-            remedy = new String(remedyBytes);
+            remedy = new Action().fromBytes(remedyBytes);
             actions.put(Test.values()[key], remedy);
         }
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return isUrgent + " " + actions.toString();
     }
 }
