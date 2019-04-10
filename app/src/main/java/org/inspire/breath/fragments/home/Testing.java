@@ -119,12 +119,12 @@ public class Testing extends FragmentedFragment {
         if (feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
             mMalariaCard.setVisibility(View.VISIBLE);
 
-        setState(mFeverTick, feverTestResult != null);
-        setState(mFeverTick, malariaTestResult != null);
-        setState(mMalariaTick, diarrhoeaTestResult != null);
-        setState(mDiarrhoeaTick, dangerTestResult != null);
-        setState(mBreathTick, breathTestResult != null);
-        setState(mHeartTick, heartRateTestResult != null);
+        mFeverTick.setChecked(feverTestResult != null);
+        mMalariaTick.setChecked(malariaTestResult != null);
+        mDiarrhoeaTick.setChecked(diarrhoeaTestResult != null);
+        mDangerTick.setChecked(dangerTestResult != null);
+        mBreathTick.setChecked(breathTestResult != null);
+        mHeartTick.setChecked(heartRateTestResult != null);
     }
 
     private void setupListeners() {
