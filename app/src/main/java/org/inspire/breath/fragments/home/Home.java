@@ -102,9 +102,10 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
         dao.insertRecording(mSession);
         // gen id
         mSession =  dao.getRecordings(mPatient.getPatientId()).get(0);
-        testing.setData(mSession, mPatient);
         fab.hide();
+        this.testing = new Testing();
         this.current = testing;
+        testing.setData(mSession, mPatient);
         replaceFrag(R.id.home_main_container, testing);
         diagnoseBtn.setVisibility(View.VISIBLE);
     }
@@ -134,7 +135,10 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
 
     @Override
     public void onFocus() {
-
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        current.onActivityResult(requestCode, resultCode, data);
+    }
 }

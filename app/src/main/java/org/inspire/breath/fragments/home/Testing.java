@@ -13,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import org.inspire.breath.R;
@@ -35,15 +36,21 @@ import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 import org.inspire.breath.utils.FragmentedFragment;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class Testing extends FragmentedFragment {
 
+    private static final Logger logger = Logger.getLogger(Testing.class.toString());
+
+    private static final int TEST_CODE = 1;
     // Tests
-    private AppCompatCheckBox mFeverTick;
-    private AppCompatCheckBox mDangerTick;
-    private AppCompatCheckBox mDiarrhoeaTick;
-    private AppCompatCheckBox mMalariaTick;
-    private AppCompatCheckBox mBreathTick;
-    private AppCompatCheckBox mHeartTick;
+    private CheckBox mHeartTick;
+    private CheckBox mFeverTick;
+    private CheckBox mDangerTick;
+    private CheckBox mDiarrhoeaTick;
+    private CheckBox mMalariaTick;
+    private CheckBox mBreathTick;
 
     // Cards
     private CardView mMalariaCard;
@@ -75,6 +82,7 @@ public class Testing extends FragmentedFragment {
         findViews(getView());
         getData();
         setupListeners();
+        getData();
     }
 
     private void findViews(View root) {
@@ -95,8 +103,7 @@ public class Testing extends FragmentedFragment {
     }
 
     public void getData() {
-
-        if(mSession.getRecommendedActions() == null) {
+        if (mSession.getRecommendedActions() == null) {
             mSession.setRecommendedActionsResultBlob(new RecommendActionsResult().toBlob());
             AppRoomDatabase.getDatabase().sessionDao().upsertRecording(mSession);
         }
@@ -109,22 +116,15 @@ public class Testing extends FragmentedFragment {
         DangerTestResult dangerTestResult = this.mSession.getDangerTestResult();
         HrCountTest heartRateTestResult = this.mSession.getHrCount();
         RecommendActionsResult recommendActionsResult = this.mSession.getRecommendedActions();
-
-        if(feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
+        if (feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
             mMalariaCard.setVisibility(View.VISIBLE);
 
-        if (feverTestResult != null)
-            mFeverTick.setChecked(true);
-        if (malariaTestResult != null)
-            mMalariaTick.setChecked(true);
-        if (diarrhoeaTestResult != null)
-            mDiarrhoeaTick.setChecked(true);
-        if (dangerTestResult != null)
-            mDangerTick.setChecked(true);
-        if (breathTestResult != null)
-            mBreathTick.setChecked(true);
-        if (heartRateTestResult != null)
-            mHeartTick.setChecked(true);
+        mFeverTick.setChecked(feverTestResult != null);
+        mMalariaTick.setChecked(malariaTestResult != null);
+        mDiarrhoeaTick.setChecked(diarrhoeaTestResult != null);
+        mDangerTick.setChecked(dangerTestResult != null);
+        mBreathTick.setChecked(breathTestResult != null);
+        mHeartTick.setChecked(heartRateTestResult != null);
     }
 
     private void setupListeners() {
@@ -133,7 +133,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MalariaActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mDangerCard.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +146,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ThermometerActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+//                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mBreathCard.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +154,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BreathRateActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mDiarrhoeaCard.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +162,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ValidateDiarrhoeaActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mHeartCard.setOnClickListener(new View.OnClickListener() {
@@ -178,5 +178,21 @@ public class Testing extends FragmentedFragment {
     public void setData(Session session, Patient patient) {
         this.mSession = session;
         this.mPatient = patient;
+    }
+
+    private void setState(CheckBox box, boolean state) {
+        if (box.isChecked() != state) {
+            box.toggle();
+        }
+    }
+
+    Session getSession() {
+        return AppRoomDatabase.getDatabase().sessionDao().getRecordings(mPatient.getPatientId()).get(0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mSession = getSession();
+        getData();
     }
 }

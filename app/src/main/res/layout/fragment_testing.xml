@@ -41,7 +41,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
                 android:id="@+id/home_test_breath_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
@@ -93,7 +93,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
                 android:id="@+id/home_test_fever_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
@@ -145,7 +145,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
                 android:id="@+id/home_test_danger_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
@@ -197,7 +197,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
                 android:id="@+id/home_test_diarrhoea_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
@@ -249,7 +249,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
                 android:id="@+id/home_test_malaria_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
@@ -301,7 +301,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
                 android:id="@+id/home_test_heart_tick"
                 android:layout_width="@dimen/checkbox_large_width"
                 android:layout_height="@dimen/checkbox_large_height"
