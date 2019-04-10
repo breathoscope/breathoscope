@@ -208,4 +208,17 @@ public class Session {
     public void setRecommendedActionsResult(RecommendActionsResult result) {
         this.recommendedActionsResultBlob = result.toBlob();
     }
+
+    public String toString() {
+        String out = "";
+        out += getId() + " " + getPatientId() + " " + getRecommendedActions()
+                + " " + getFeverTestResult()
+                + " " + getMalariaTestResult()
+                + " " + getDiarrhoeaTestResult()
+                + " " + getDangerTestResult()
+                + " " + getHrRecording()
+                + " " + getBreathTestResult();
+
+        return out;
+    }
 }
