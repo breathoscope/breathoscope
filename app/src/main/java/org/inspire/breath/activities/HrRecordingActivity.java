@@ -47,11 +47,9 @@ public class HrRecordingActivity extends TestActivity {
             RECORDER_AUDIO_FORMAT
     );
 
-    private final int SECONDS = 60;
+    private final int SECONDS = 10;
 
-    private MediaPlayer mp;
     private CountDownTimer cdt;
-    private AudioRecord recorder;
 
     private boolean isRecording;
     private boolean isPlaying;
@@ -137,7 +135,7 @@ public class HrRecordingActivity extends TestActivity {
         }
 
     }
-
+/**
     private void initRecorder() {
 
         recorder = new AudioRecord.Builder()
@@ -151,19 +149,22 @@ public class HrRecordingActivity extends TestActivity {
                 .build();
 
     }
+ **/
 
     private void stopRecording() {
         toggleVisibleButtons();
         heartAnimation.stop();
         isRecording = false;
+        /**
         if(recorder != null) {
             recorder.stop();
             recorder.release();
         }
+
         writeThread = null;
 
         storeRecording();
-
+         **/
     }
 
     void displaySnackbar() {
@@ -193,6 +194,7 @@ public class HrRecordingActivity extends TestActivity {
         mPlayBtn.setText(R.string.recording_stop);
 
         isPlaying = true;
+        /**
         mp = new MediaPlayer();
         mp.setOnCompletionListener((c) -> {
            isPlaying = false;
@@ -203,9 +205,11 @@ public class HrRecordingActivity extends TestActivity {
             mp.setDataSource(wavOutputPath);
             mp.prepare();
             mp.start();
+
         } catch (IOException e) {
             Toast.makeText(HrRecordingActivity.this, "IOException", Toast.LENGTH_SHORT).show();
         }
+             **/
     }
 
     private void stopPlayingAudio() {
@@ -213,8 +217,10 @@ public class HrRecordingActivity extends TestActivity {
         mPlayBtn.setText(getString(R.string.recording_play));
 
         isPlaying = false;
+        /**
         mp.stop();
         mp.release();
+         **/
     }
 
     private void storeRecording() {
@@ -232,7 +238,7 @@ public class HrRecordingActivity extends TestActivity {
     private void setupListeners() {
         mRecordBtn.setOnClickListener((v) -> {
 
-            initRecorder();
+//            initRecorder();
 
             heartAnimation.start();
 
@@ -241,10 +247,10 @@ public class HrRecordingActivity extends TestActivity {
             mPlayBtn.setVisibility(View.INVISIBLE);
             mConfirmBtn.setVisibility(View.INVISIBLE);
 
-            recorder.startRecording();
+//          recorder.startRecording();
             isRecording = true;
-            writeThread = new Thread(new AudioFileWriter());
-            writeThread.start();
+//            writeThread = new Thread(new AudioFileWriter());
+//            writeThread.start();
 
 
             mCountdown.setVisibility(View.VISIBLE);
@@ -322,7 +328,7 @@ public class HrRecordingActivity extends TestActivity {
             }
             public void onFinish(){
                 stopRecording();
-                rawToWav();
+                //rawToWav();
                 mPlayBtn.setVisibility(View.VISIBLE);
                 mConfirmBtn.setVisibility(View.VISIBLE);
                 initCountdown();
@@ -348,7 +354,7 @@ public class HrRecordingActivity extends TestActivity {
             }
 
             while (isRecording) {
-                recorder.read(audioData, 0, RECORDER_BUF_SIZE);
+                //recorder.read(audioData, 0, RECORDER_BUF_SIZE);
                 try {
                     baos.write(audioData);
                     os.write(audioData, 0, RECORDER_BUF_SIZE );

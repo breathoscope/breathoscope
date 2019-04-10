@@ -170,6 +170,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HrRecordingActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });

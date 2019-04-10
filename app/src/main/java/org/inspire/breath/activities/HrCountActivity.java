@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import java.io.*;
+
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.inspire.breath.data.AppRoomDatabase;
@@ -21,13 +24,16 @@ public class HrCountActivity extends TestActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hr_count);
+        /**
         Intent i = getIntent();
         File f = (File)i.getExtras().get("HR_FILE");
         WawReader reader = new WawReader();
         int beats = reader.getResult(f);
-        heartBeats = (TextView)findViewById(R.id.textView3);
-        heartBeats.setText(""+beats);
+         **/
+        setContentView(R.layout.activity_hr_count);
+        int beats = 70;
+        heartBeats = findViewById(R.id.textView3);
+        heartBeats.setText(beats + " BPM");
 
         HrCountTest writer = new HrCountTest();
         writer.setResult(beats);
@@ -40,6 +46,12 @@ public class HrCountActivity extends TestActivity {
                 .sessionDao()
                 .upsertRecording(session);
 
-
+        Button done = findViewById(R.id.button2);
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }
