@@ -5,9 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.widget.Button;
+import android.widget.Toast;
 
 import org.inspire.breath.R;
+import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Patient;
+import org.inspire.breath.data.PatientDao;
 import org.inspire.breath.fragments.home.Admin;
+import org.inspire.breath.fragments.home.Testing;
 import org.inspire.breath.utils.FragmentedActivity;
 import org.inspire.breath.utils.FragmentedFragment;
 
@@ -24,11 +29,6 @@ public class HomeActivity extends FragmentedActivity {
         setContentView(R.layout.activity_home);
         current = new Admin();
         replaceFrag(R.id.home_container, current);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override

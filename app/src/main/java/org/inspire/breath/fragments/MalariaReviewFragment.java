@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,7 +22,10 @@ import org.inspire.breath.R;
 import org.inspire.breath.activities.HomeActivity;
 import org.inspire.breath.activities.TestActivity;
 import org.inspire.breath.data.AppRoomDatabase;
+import org.inspire.breath.data.Session;
+import org.inspire.breath.data.SessionDao;
 import org.inspire.breath.data.blobs.MalariaTestResult;
+import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 public class MalariaReviewFragment extends TestFragment {
 
@@ -40,19 +44,40 @@ public class MalariaReviewFragment extends TestFragment {
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(View v, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(v, savedInstanceState);
         mViewModel = ViewModelProviders.of(getActivity()).get(MalariaViewModel.class);
-        ImageView image = getView().findViewById(R.id.imageView);
+        ImageView image = v.findViewById(R.id.imageView);
         image.setImageBitmap(mViewModel.image);
-        Button ok = (Button) getView().findViewById(R.id.buttonOK);
-        Button retry = (Button) getView().findViewById(R.id.buttonRETRY);
-        ok.setOnClickListener(new View.OnClickListener()
+        Button retry = getView().findViewById(R.id.buttonRETRY);
+        ImageButton positive = getView().findViewById(R.id.positive);
+        ImageButton invalid = getView().findViewById(R.id.invalid);
+        ImageButton negative = getView().findViewById(R.id.negative);
+
+        positive.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                //TODO save image
+                handleSelection(MalariaTestResult.Results.POSITIVE);
+            }
+        });
+
+        negative.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                handleSelection(MalariaTestResult.Results.NEGATIVE);
+            }
+        });
+
+        invalid.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                handleSelection(MalariaTestResult.Results.INVALID);
             }
         });
 
@@ -68,5 +93,32 @@ public class MalariaReviewFragment extends TestFragment {
                 getFragmentManager().popBackStack();
             }
         });
+    }
+
+    public void handleSelection(MalariaTestResult.Results result) {
+        MalariaViewModel mViewModel =  ViewModelProviders.of(getActivity()).get(MalariaViewModel.class);
+        SessionDao dao = AppRoomDatabase.getDatabase().sessionDao();
+        Session session = AppRoomDatabase.getDatabase().sessionDao().getRecordingById(mViewModel.sessionID);
+        MalariaTestResult testResult = new MalariaTestResult();
+        testResult.setTestResult(result);
+        session.setMalariaTestResult(testResult);
+        RecommendActionsResult recommendActionsResult = session.getRecommendedActions();
+        switch (result) {
+            case POSITIVE:
+                recommendActionsResult.addAction(RecommendActionsResult.Test.MALARIA, new RecommendActionsResult.Action("Give Rectal Artesunate and Refer",
+                        RecommendActionsResult.Action.SEVERE));
+                break;
+            case NEGATIVE:
+                recommendActionsResult.addAction(RecommendActionsResult.Test.MALARIA, new RecommendActionsResult.Action("Fever not Malaria-caused",
+                        RecommendActionsResult.Action.OK));
+                break;
+            case INVALID:
+                recommendActionsResult.addAction(RecommendActionsResult.Test.MALARIA, new RecommendActionsResult.Action("Repeat MRDT",
+                        RecommendActionsResult.Action.MED));
+                break;
+        }
+        session.setRecommendedActionsResultBlob(recommendActionsResult.toBlob());
+        dao.upsertRecording(session);
+        getActivity().finish();
     }
 }

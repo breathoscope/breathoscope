@@ -3,20 +3,28 @@ package org.inspire.breath.data.blobs;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import org.inspire.breath.fragments.MalariaReviewFragment;
 import org.inspire.breath.interfaces.IBlobbable;
 
 import java.util.Arrays;
 
 public class MalariaTestResult implements IBlobbable {
 
-    private String answer;
+    public enum Results {
+        POSITIVE,
+        NEGATIVE,
+        INVALID
+
+    }
+
+    private Results answer;
     private byte[] img;
 
     public MalariaTestResult() {
         this(null, null);
     }
 
-    public MalariaTestResult(String answer, byte[] img) {
+    public MalariaTestResult(Results answer, byte[] img) {
         this.answer = answer;
         if (img != null)
             this.img = img.clone();
@@ -28,13 +36,17 @@ public class MalariaTestResult implements IBlobbable {
         this(null, img);
     }
 
-    public MalariaTestResult(String answer) {
+    public MalariaTestResult(Results answer) {
         this(answer, null);
     }
 
     public Bitmap getPhoto() {
         return BitmapFactory.decodeByteArray(img, 0, img.length);
     }
+
+    public String getTestResult() { return answer.name(); }
+
+    public void setTestResult(Results r) { answer = r; }
 
     @Override
     public byte[] toBlob() {
@@ -43,19 +55,8 @@ public class MalariaTestResult implements IBlobbable {
         if (img == null)
             data = new byte[0];
 
-        switch (answer) {
-            case ("yes"):
-                serialisedAnswer = 0;
-                break;
-            case("no"):
-                serialisedAnswer = 1;
-                break;
-            case("invalid"):
-                serialisedAnswer = 2;
-                break;
-            default:
-                serialisedAnswer = -1;
-        }
+        serialisedAnswer = (byte)answer.ordinal();
+
 
         byte[] out = new byte[data.length + 1];
         out[0] = serialisedAnswer;
@@ -72,13 +73,13 @@ public class MalariaTestResult implements IBlobbable {
 
         switch (blob[0]) {
             case(0):
-                this.answer = "yes";
+                this.answer = Results.POSITIVE;
                 break;
             case(1):
-                this.answer = "no";
+                this.answer = Results.NEGATIVE;
                 break;
             case(2):
-                this.answer = "invalid";
+                this.answer = Results.INVALID;
                 break;
             case(-1):
                 this.answer = null;
