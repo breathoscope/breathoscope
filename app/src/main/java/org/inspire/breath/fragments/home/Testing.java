@@ -37,6 +37,7 @@ import org.inspire.breath.utils.FragmentedFragment;
 
 public class Testing extends FragmentedFragment {
 
+    private static final int TEST_CODE = 1;
     // Tests
     private AppCompatCheckBox mFeverTick;
     private AppCompatCheckBox mDangerTick;
@@ -109,7 +110,7 @@ public class Testing extends FragmentedFragment {
         DangerTestResult dangerTestResult = this.mSession.getDangerTestResult();
         HrCountTest heartRateTestResult = this.mSession.getHrCount();
         RecommendActionsResult recommendActionsResult = this.mSession.getRecommendedActions();
-
+        System.out.println(feverTestResult);
         if(feverTestResult != null && feverTestResult.shouldPerformMalariaTest())
             mMalariaCard.setVisibility(View.VISIBLE);
 
@@ -133,7 +134,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MalariaActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mDangerCard.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +147,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ThermometerActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mBreathCard.setOnClickListener(new View.OnClickListener() {
@@ -154,7 +155,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BreathRateActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mDiarrhoeaCard.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +163,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ValidateDiarrhoeaActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mHeartCard.setOnClickListener(new View.OnClickListener() {
@@ -178,5 +179,15 @@ public class Testing extends FragmentedFragment {
     public void setData(Session session, Patient patient) {
         this.mSession = session;
         this.mPatient = patient;
+    }
+
+    Session getSession() {
+        return AppRoomDatabase.getDatabase().sessionDao().getRecordings(mPatient.getPatientId()).get(0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mSession = getSession();
+        getData();
     }
 }

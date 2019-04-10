@@ -137,4 +137,8 @@ public class Home extends FragmentedFragment implements StaticPager.Focusable {
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        current.onActivityResult(requestCode, resultCode, data);
+    }
 }

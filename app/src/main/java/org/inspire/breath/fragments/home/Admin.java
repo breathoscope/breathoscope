@@ -85,6 +85,8 @@ public class Admin extends FragmentedFragment implements PatientListAdapter.Pati
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (mPager.getCurrentItem() == 1)
             patients.onActivityResult(requestCode, resultCode, data);
+        else
+            home.onActivityResult(requestCode, resultCode, data);
     }
 
 }
