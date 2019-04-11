@@ -1,20 +1,15 @@
 package org.inspire.breath.fragments.home;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.CardView;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import org.inspire.breath.R;
 import org.inspire.breath.activities.BreathRateActivity;
@@ -22,7 +17,7 @@ import org.inspire.breath.activities.HomeActivity;
 import org.inspire.breath.activities.HrRecordingActivity;
 import org.inspire.breath.activities.MalariaActivity;
 import org.inspire.breath.activities.ThermometerActivity;
-import org.inspire.breath.activities.ValidateDiarrhoeaActivity;
+import org.inspire.breath.activities.DiarrhoeaActivity;
 import org.inspire.breath.data.AppRoomDatabase;
 import org.inspire.breath.data.Patient;
 import org.inspire.breath.data.Session;
@@ -30,7 +25,6 @@ import org.inspire.breath.data.blobs.BreathTestResult;
 import org.inspire.breath.data.blobs.DangerTestResult;
 import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.FeverTestResult;
-import org.inspire.breath.data.blobs.HeartRateTestResult;
 import org.inspire.breath.data.blobs.HrCountTest;
 import org.inspire.breath.data.blobs.MalariaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
@@ -146,7 +140,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ThermometerActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-//                getActivity().startActivityForResult(intent, TEST_CODE);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mBreathCard.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +154,7 @@ public class Testing extends FragmentedFragment {
         this.mDiarrhoeaCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ValidateDiarrhoeaActivity.class);
+                Intent intent = new Intent(getActivity(), DiarrhoeaActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
                 getActivity().startActivityForResult(intent, TEST_CODE);
             }
