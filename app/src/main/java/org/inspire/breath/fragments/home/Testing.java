@@ -169,8 +169,9 @@ public class Testing extends FragmentedFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), HrRecordingActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
     }
