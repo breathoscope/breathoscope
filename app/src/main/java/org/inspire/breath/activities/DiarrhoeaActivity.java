@@ -13,7 +13,7 @@ import org.inspire.breath.data.blobs.DiarrhoeaTestResult;
 import org.inspire.breath.data.blobs.RecommendActionsResult;
 
 
-public class ValidateDiarrhoeaActivity extends TestActivity {
+public class DiarrhoeaActivity extends TestActivity {
 
     Button answerYes, answerNo;
     TextView question;
@@ -22,7 +22,7 @@ public class ValidateDiarrhoeaActivity extends TestActivity {
 
 
     public String mQuestions [] = {
-            "Do you have more then 3 loose stools /24h?",
+            "Do you have more than 3 loose stools /24h?",
             "3 weeks without blood or rice water aspect?",
             "Signs of severe dehydration: Sunken eyes, Skin pinch >3 seconds or other danger signs?"
     };
