@@ -312,7 +312,7 @@ public class HrRecordingActivity extends TestActivity {
             Intent intent = new Intent(getApplicationContext(), HrCountActivity.class);
             intent.putExtra("HR_FILE", new File(wavOutputPath));
             intent.putExtra(SESSION_ID_KEY, getSession().getId());
-            startActivity(intent);
+            startActivityForResult(intent, 1);
 
         });
 
@@ -364,6 +364,11 @@ public class HrRecordingActivity extends TestActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        finish();
     }
 
 }
