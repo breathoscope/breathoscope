@@ -140,7 +140,7 @@ public class Testing extends FragmentedFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), ThermometerActivity.class);
                 intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
-//                getActivity().startActivityForResult(intent, TEST_CODE);
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mBreathCard.setOnClickListener(new View.OnClickListener() {

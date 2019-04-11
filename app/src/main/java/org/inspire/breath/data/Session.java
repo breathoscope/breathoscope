@@ -97,7 +97,7 @@ public class Session {
     }
 
     public DangerTestResult getDangerTestResult() {
-        return new DangerTestResult().consumeBlob(this.dangerTestResultBlob);
+        return new DangerTestResult(null).consumeBlob(this.dangerTestResultBlob);
     }
 
     public byte[] getBreathTestResultBlob() {
@@ -220,5 +220,9 @@ public class Session {
                 + " " + getBreathTestResult();
 
         return out;
+    }
+
+    public void setDangerTestResult(DangerTestResult dtr) {
+        this.setDangerTestResultBlob(dtr.toBlob());
     }
 }
