@@ -39,6 +39,7 @@ public class DangerActivity extends TestActivity {
         answers = new Stack<>();
         findViews();
         setupListeners();
+        mQuestion.setText(QUESTIONS[counter]); // init
     }
 
     private void setupListeners() {
@@ -58,9 +59,12 @@ public class DangerActivity extends TestActivity {
             AppRoomDatabase.getDatabase()
                     .sessionDao()
                     .upsertRecording(getSession());
+            finish();
         }
-        counter++;
-        mQuestion.setText(QUESTIONS[counter]);
+        else {
+            counter++;
+            mQuestion.setText(QUESTIONS[counter]);
+        }
     }
 
     private void findViews() {

@@ -13,6 +13,7 @@ import android.widget.CheckBox;
 
 import org.inspire.breath.R;
 import org.inspire.breath.activities.BreathRateActivity;
+import org.inspire.breath.activities.DangerActivity;
 import org.inspire.breath.activities.HomeActivity;
 import org.inspire.breath.activities.HrRecordingActivity;
 import org.inspire.breath.activities.MalariaActivity;
@@ -133,6 +134,9 @@ public class Testing extends FragmentedFragment {
         this.mDangerCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DangerActivity.class);
+                intent.putExtra(HomeActivity.SESSION_ID_KEY, mSession.getId());
+                getActivity().startActivityForResult(intent, TEST_CODE);
             }
         });
         this.mFeverCard.setOnClickListener(new View.OnClickListener() {

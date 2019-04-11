@@ -26,6 +26,7 @@
         <activity android:name=".activities.BreathRateActivity" />
         <activity android:name=".activities.HrRecordingActivity" />
         <activity android:name=".activities.DiarrhoeaActivity" />
+        <activity android:name=".activities.DangerActivity" />
         <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
